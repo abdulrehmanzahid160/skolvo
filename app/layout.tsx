@@ -38,6 +38,14 @@ export const metadata: Metadata = {
       'Home of CampusNova and next-generation SaaS tools built for educational institutions and modern enterprises.',
     url: 'https://skolvo.online',
     siteName: 'Skolvo',
+    images: [
+      {
+        url: '/logo.png',
+        width: 1024,
+        height: 1024,
+        alt: 'Skolvo Logo',
+      },
+    ],
     locale: 'en_US',
     type: 'website',
   },
@@ -46,10 +54,11 @@ export const metadata: Metadata = {
     title: 'Skolvo | Next-Gen Specialized SaaS Products',
     description:
       'Home of CampusNova and next-generation SaaS tools built for educational institutions and modern enterprises.',
+    images: ['/logo.png'],
   },
-  robots: {
-    index: true,
-    follow: true,
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
   },
 };
 

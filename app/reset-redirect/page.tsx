@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import {
   Smartphone as MobileIcon,
   Globe as WebIcon,
   Shield,
-  Layers,
   Loader2,
   Copy,
   Check,
@@ -77,10 +77,14 @@ function RedirectContent() {
       >
         {/* Brand Logo Header */}
         <div className="flex items-center justify-center gap-2">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6D5CFB] to-[#FF6B4A] p-0.5 shadow-lg shadow-[#6D5CFB]/30">
-            <div className="w-full h-full bg-[#0B0B14] rounded-[10px] flex items-center justify-center">
-              <Layers className="w-5 h-5 text-[#8A7DFF]" />
-            </div>
+          <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-[#6D5CFB]/30 bg-white">
+            <Image
+              src="/logo.png"
+              alt="Skolvo Logo"
+              fill
+              className="object-contain p-0.5"
+              priority
+            />
           </div>
           <span className="font-display font-extrabold text-2xl tracking-tight text-white">
             CampusNova

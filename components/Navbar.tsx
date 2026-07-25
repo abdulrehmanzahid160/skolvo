@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sparkles, Layers } from 'lucide-react';
+import { Menu, X, Sparkles } from 'lucide-react';
 import WaitlistModal from './WaitlistModal';
 
 export default function Navbar() {
@@ -45,10 +46,14 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#6D5CFB] to-[#FF6B4A] p-0.5 shadow-lg shadow-[#6D5CFB]/30 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-[#0B0B14] rounded-[10px] flex items-center justify-center">
-                <Layers className="w-5 h-5 text-[#8A7DFF] group-hover:text-[#FF6B4A] transition-colors" />
-              </div>
+            <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-[#6D5CFB]/30 group-hover:scale-105 transition-transform bg-white">
+              <Image
+                src="/logo.png"
+                alt="Skolvo Logo"
+                fill
+                className="object-contain p-0.5"
+                priority
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-display font-extrabold text-xl tracking-tight text-white flex items-center gap-1">

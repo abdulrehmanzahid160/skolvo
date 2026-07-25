@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Layers, Mail, ArrowUpRight, Linkedin, Twitter, Instagram, Shield } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, ArrowUpRight, Linkedin, Twitter, Instagram, Shield } from 'lucide-react';
 import WaitlistModal from './WaitlistModal';
 
 export default function Footer() {
@@ -19,10 +20,13 @@ export default function Footer() {
             {/* Column 1: Brand & Mission */}
             <div className="lg:col-span-2 space-y-4">
               <Link href="/" className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#6D5CFB] to-[#FF6B4A] p-0.5 shadow-md shadow-[#6D5CFB]/20">
-                  <div className="w-full h-full bg-[#0B0B14] rounded-[6px] flex items-center justify-center">
-                    <Layers className="w-4 h-4 text-[#8A7DFF]" />
-                  </div>
+                <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-md shadow-[#6D5CFB]/20 bg-white">
+                  <Image
+                    src="/logo.png"
+                    alt="Skolvo Logo"
+                    fill
+                    className="object-contain p-0.5"
+                  />
                 </div>
                 <span className="font-display font-extrabold text-xl tracking-tight text-white">
                   Skolvo<span className="text-[#FF6B4A]">.</span>
