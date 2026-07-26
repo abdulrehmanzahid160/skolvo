@@ -69,7 +69,7 @@ export default function WaitlistModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-[#0B0B14]/80 backdrop-blur-md"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
           />
 
           {/* Modal Box */}
@@ -78,16 +78,12 @@ export default function WaitlistModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg bg-[#131322] border border-[#6D5CFB]/30 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-[#6D5CFB]/20 overflow-hidden z-10"
+            className="relative w-full max-w-lg bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden z-10 text-[#1A1A1A]"
           >
-            {/* Ambient Background Lights */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#6D5CFB]/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-[#FF6B4A]/15 rounded-full blur-3xl pointer-events-none" />
-
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-colors"
+              className="absolute top-5 right-5 p-2 text-neutral-500 hover:text-black bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -95,24 +91,24 @@ export default function WaitlistModal({
 
             {!submitted ? (
               <div>
-                <div className="flex items-center gap-2 px-3 py-1 bg-[#6D5CFB]/10 border border-[#6D5CFB]/30 rounded-full w-fit mb-4">
-                  <Sparkles className="w-3.5 h-3.5 text-[#8A7DFF]" />
-                  <span className="text-xs font-semibold text-[#8A7DFF] uppercase tracking-wider">
+                <div className="flex items-center gap-2 px-3 py-1 bg-[#E6357F]/10 border border-[#E6357F]/30 rounded-full w-fit mb-4">
+                  <Sparkles className="w-3.5 h-3.5 text-[#E6357F]" />
+                  <span className="text-xs font-bold text-[#E6357F] uppercase tracking-wider">
                     Early Access Priority
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-bold font-display text-white mb-2">
-                  Get Early Access to <span className="text-gradient">{defaultProduct}</span>
+                <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-[#1A1A1A] mb-2">
+                  Get Early Access to <span className="text-[#E6357F]">{defaultProduct}</span>
                 </h3>
 
-                <p className="text-gray-300 text-sm mb-6 leading-relaxed">
+                <p className="text-neutral-600 text-sm mb-6 leading-relaxed">
                   Be among the first educational institutions to transform attendance, parent communication, and fee operations with secure AI.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
                       Work / Personal Email
                     </label>
                     <input
@@ -121,18 +117,18 @@ export default function WaitlistModal({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="owner@academy.com"
-                      className="w-full px-4 py-3 bg-[#0B0B14] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#6D5CFB] focus:ring-1 focus:ring-[#6D5CFB] transition-all text-sm"
+                      className="w-full px-4 py-3 bg-[#FDF6F0] border border-neutral-300 rounded-xl text-[#1A1A1A] placeholder-neutral-400 focus:outline-none focus:border-[#1A1A1A] focus:ring-1 focus:ring-[#1A1A1A] transition-all text-sm font-medium"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
                       Your Primary Role
                     </label>
                     <select
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      className="w-full px-4 py-3 bg-[#0B0B14] border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#6D5CFB] focus:ring-1 focus:ring-[#6D5CFB] transition-all text-sm"
+                      className="w-full px-4 py-3 bg-[#FDF6F0] border border-neutral-300 rounded-xl text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A] focus:ring-1 focus:ring-[#1A1A1A] transition-all text-sm font-medium"
                     >
                       <option value="School / Coaching Owner">Academy Owner / Administrator</option>
                       <option value="School Principal / Director">School Principal / Director</option>
@@ -144,7 +140,7 @@ export default function WaitlistModal({
                   </div>
 
                   {error && (
-                    <p className="text-xs text-red-400 bg-red-950/30 border border-red-800/40 p-2.5 rounded-lg">
+                    <p className="text-xs text-red-600 bg-red-50 border border-red-200 p-2.5 rounded-lg font-medium">
                       {error}
                     </p>
                   )}
@@ -152,7 +148,7 @@ export default function WaitlistModal({
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 px-6 bg-gradient-to-r from-[#6D5CFB] to-[#5343E0] hover:from-[#8A7DFF] hover:to-[#6D5CFB] text-white font-semibold rounded-xl shadow-lg shadow-[#6D5CFB]/25 flex items-center justify-center gap-2 transition-all transform active:scale-95 text-sm"
+                    className="w-full py-3.5 px-6 bg-[#1A1A1A] hover:bg-black text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all transform active:scale-95 text-sm"
                   >
                     {loading ? (
                       <>
@@ -168,25 +164,25 @@ export default function WaitlistModal({
                   </button>
                 </form>
 
-                <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-400">
-                  <ShieldCheck className="w-4 h-4 text-[#FF6B4A]" />
+                <div className="mt-5 flex items-center justify-center gap-2 text-xs text-neutral-500 font-medium">
+                  <ShieldCheck className="w-4 h-4 text-[#E8622C]" />
                   <span>Zero spam. Direct priority invite when public beta opens.</span>
                 </div>
               </div>
             ) : (
               <div className="py-6 text-center">
-                <div className="w-16 h-16 bg-[#6D5CFB]/20 border border-[#6D5CFB]/50 rounded-full flex items-center justify-center mx-auto mb-4 text-[#8A7DFF]">
+                <div className="w-16 h-16 bg-emerald-50 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-600">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="text-2xl font-bold font-display text-white mb-2">
+                <h3 className="text-2xl font-bold font-display text-[#1A1A1A] mb-2">
                   You&apos;re On The List!
                 </h3>
-                <p className="text-gray-300 text-sm leading-relaxed mb-6">
-                  Thank you for joining the <strong className="text-white">{defaultProduct}</strong> early access waitlist. We will notify you directly at <strong className="text-[#8A7DFF]">{email}</strong>.
+                <p className="text-neutral-600 text-sm leading-relaxed mb-6">
+                  Thank you for joining the <strong className="text-[#1A1A1A]">{defaultProduct}</strong> early access waitlist. We will notify you directly at <strong className="text-[#E6357F]">{email}</strong>.
                 </p>
                 <button
                   onClick={onClose}
-                  className="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white font-medium rounded-xl text-sm transition-colors"
+                  className="px-6 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-[#1A1A1A] font-bold rounded-xl text-sm transition-colors"
                 >
                   Close Window
                 </button>

@@ -39,14 +39,14 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#0B0B14]/85 backdrop-blur-xl border-b border-white/10 py-3.5 shadow-xl shadow-black/40'
+            ? 'bg-[#FDF6F0]/90 backdrop-blur-xl border-b border-black/5 py-3.5 shadow-sm'
             : 'bg-transparent py-5'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-[#6D5CFB]/30 group-hover:scale-105 transition-transform bg-white">
+            <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-md border border-neutral-200 group-hover:scale-105 transition-transform bg-white">
               <Image
                 src="/logo.png"
                 alt="Skolvo Logo"
@@ -56,25 +56,25 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-xl tracking-tight text-white flex items-center gap-1">
+              <span className="font-display font-extrabold text-xl tracking-tight text-[#1A1A1A] flex items-center gap-1">
                 Skolvo
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B4A]" />
+                <span className="w-2 h-2 rounded-full bg-[#E6357F]" />
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1 bg-[#131322]/70 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-md">
+          <nav className="hidden md:flex items-center gap-1 bg-white/80 border border-neutral-200/80 rounded-full px-4 py-1.5 backdrop-blur-md shadow-xs">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                     isActive
-                      ? 'bg-[#6D5CFB] text-white shadow-md shadow-[#6D5CFB]/30'
-                      : 'text-gray-300 hover:text-white hover:bg-white/5'
+                      ? 'bg-[#1A1A1A] text-white shadow-sm'
+                      : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
                   }`}
                 >
                   {link.name}
@@ -87,19 +87,17 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => setIsWaitlistOpen(true)}
-              className="relative group px-5 py-2.5 rounded-full bg-gradient-to-r from-[#6D5CFB] to-[#FF6B4A] text-white text-xs font-semibold shadow-lg shadow-[#6D5CFB]/25 hover:shadow-[#FF6B4A]/30 transition-all transform hover:-translate-y-0.5 active:translate-y-0 overflow-hidden"
+              className="relative group px-5 py-2.5 rounded-full bg-[#1A1A1A] hover:bg-black text-white text-xs font-semibold shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 overflow-hidden flex items-center gap-1.5"
             >
-              <span className="relative z-10 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-                Join Waitlist
-              </span>
+              <Sparkles className="w-3.5 h-3.5 text-[#E6357F]" />
+              <span>Join Waitlist</span>
             </button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-300 hover:text-white bg-white/5 border border-white/10 rounded-xl"
+            className="md:hidden p-2 text-neutral-800 hover:text-black bg-white border border-neutral-200 rounded-xl shadow-xs"
             aria-label="Toggle Navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -113,7 +111,7 @@ export default function Navbar() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-[#131322] border-b border-white/10 overflow-hidden"
+              className="md:hidden bg-white border-b border-neutral-200 overflow-hidden shadow-lg"
             >
               <div className="px-4 pt-3 pb-6 space-y-2">
                 {navLinks.map((link) => (
@@ -121,7 +119,7 @@ export default function Navbar() {
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="block px-4 py-2.5 rounded-xl text-sm font-medium text-gray-200 hover:bg-white/5 hover:text-white"
+                    className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 hover:bg-neutral-100 hover:text-black"
                   >
                     {link.name}
                   </Link>
@@ -132,9 +130,9 @@ export default function Navbar() {
                       setMobileMenuOpen(false);
                       setIsWaitlistOpen(true);
                     }}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#6D5CFB] to-[#FF6B4A] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-lg"
+                    className="w-full py-3 rounded-xl bg-[#1A1A1A] hover:bg-black text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md"
                   >
-                    <Sparkles className="w-4 h-4 text-amber-200" />
+                    <Sparkles className="w-4 h-4 text-[#E6357F]" />
                     Join CampusNova Waitlist
                   </button>
                 </div>

@@ -68,8 +68,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} dark scroll-smooth`}>
-      <body className="min-h-screen bg-[#0B0B14] text-[#F3F4F6] flex flex-col font-sans antialiased selection:bg-[#6D5CFB] selection:text-white">
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} scroll-smooth`}>
+      <body className="min-h-screen bg-[#FDF6F0] text-[#1A1A1A] flex flex-col font-sans antialiased selection:bg-[#E6357F] selection:text-white">
         <Navbar />
         <main className="flex-grow pt-20">{children}</main>
         <Footer />
