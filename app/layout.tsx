@@ -17,9 +17,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Skolvo | Next-Gen Specialized SaaS Products',
+  // Title template: sub-pages export `title: 'Page Name'` and automatically
+  // get "Page Name | Skolvo". The `default` is used for the homepage and any
+  // page that doesn't export its own metadata.
+  title: {
+    default: 'Skolvo — Building Purpose-Driven SaaS for the Modern Era',
+    template: '%s | Skolvo',
+  },
   description:
-    'Skolvo is a modern parent SaaS studio crafting intelligent, secure, privacy-first software products. Creators of CampusNova academy management platform.',
+    'Skolvo is a SaaS studio building intelligent, secure, privacy-first software products. Creators of CampusNova — an AI-powered academy and school management platform with biometric attendance, automated fee tracking, and role-gated access control.',
   keywords: [
     'Skolvo',
     'CampusNova',
@@ -31,19 +37,24 @@ export const metadata: Metadata = {
     'EdTech SaaS',
   ],
   authors: [{ name: 'Skolvo Team' }],
-  metadataBase: new URL('https://skolvo.online'),
+  metadataBase: new URL('https://app.skolvo.online'),
   openGraph: {
     title: 'Skolvo | Next-Gen Specialized SaaS Products',
     description:
-      'Home of CampusNova and next-generation SaaS tools built for educational institutions and modern enterprises.',
-    url: 'https://skolvo.online',
+      'Home of CampusNova — AI-powered academy management with biometric attendance, automated fee reminders, and role-gated access control.',
+    url: 'https://app.skolvo.online',
     siteName: 'Skolvo',
+    // NOTE: /logo.png is a square app icon (1024×1024), which works for
+    // summary cards but is not ideal for link previews (1200×630 is the
+    // recommended OG image size). A proper landscape OG banner image
+    // (og-image.png) should be designed and placed in /public/, then
+    // replace '/logo.png' below with '/og-image.png'.
     images: [
       {
         url: '/logo.png',
         width: 1024,
         height: 1024,
-        alt: 'Skolvo Logo',
+        alt: 'Skolvo — Next-Gen SaaS Studio',
       },
     ],
     locale: 'en_US',
@@ -53,7 +64,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Skolvo | Next-Gen Specialized SaaS Products',
     description:
-      'Home of CampusNova and next-generation SaaS tools built for educational institutions and modern enterprises.',
+      'Home of CampusNova — AI-powered academy management with biometric attendance, automated fee reminders, and role-gated access control.',
     images: ['/logo.png'],
   },
   icons: {
