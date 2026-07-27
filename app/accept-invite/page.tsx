@@ -13,9 +13,9 @@ import {
   UserPlus,
 } from 'lucide-react';
 
-// The custom URI scheme used by the Edumaster/CampusNova mobile app.
+// The custom URI scheme used by the CampusNova mobile app.
 // This must match the scheme registered in the Flutter app's AndroidManifest.xml / Info.plist.
-const APP_SCHEME = 'edumaster';
+const APP_SCHEME = 'campusnova';
 
 // How long (ms) to wait after attempting the deep link before concluding
 // the app is not installed and showing the fallback UI.
@@ -53,7 +53,7 @@ function AcceptInviteContent() {
     // Attempt to open the mobile app via custom URI scheme.
     // Email clients strip native schemes, so this page is the bridge:
     //   https://app.skolvo.online/accept-invite?token=XYZ
-    //     → tries edumaster://accept-invite?token=XYZ
+    //     → tries campusnova://accept-invite?token=XYZ
     //       → if app is installed, OS hands off to the app
     //       → if not installed, browser ignores it; timer fires → fallback UI
     const deepLinkUrl = `${APP_SCHEME}://accept-invite?token=${encodeURIComponent(token)}`;
@@ -231,7 +231,7 @@ function AcceptInviteContent() {
         </div>
 
         <h2 className="text-xl font-bold font-display text-white">
-          Opening Skolvo&hellip;
+          Opening CampusNova&hellip;
         </h2>
 
         <p className="text-xs text-gray-300 leading-relaxed">
