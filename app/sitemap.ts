@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next';
 
-// The canonical domain for this marketing/support site.
-// NOTE: /reset-redirect and /accept-invite are intentionally excluded —
-// they are functional deep-link bridges, not content pages, and should
-// never appear in search results.
-const BASE_URL = 'https://app.skolvo.online';
+// Canonical marketing domain. www.skolvo.online is the canonical form —
+// bare skolvo.online redirects to www via middleware.
+// app.skolvo.online is excluded from the sitemap entirely; it hosts only
+// functional auth/deep-link pages with no indexable content.
+const BASE_URL = 'https://www.skolvo.online';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
