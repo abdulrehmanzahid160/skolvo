@@ -80,18 +80,26 @@ const KIND_STYLE: Record<EventKind, { label: string; dot: string; chip: string; 
 const CYCLE_TICKS = 10;
 const TICK_MS = 1100;
 
-export default function WatchdogLoop() {
+/**
+ * Scroll-driven steps for the flagship demo: one idle frame, four record
+ * discoveries, then the compiled digest.
+ */
+export const WATCHDOG_STEP_COUNT = EVENTS.length + 2;
+
+export default function WatchdogLoop({ controlledStep }: { controlledStep?: number } = {}) {
   const reduce = useReducedMotion();
+  const isControlled = typeof controlledStep === 'number';
   const [tick, setTick] = useState(0);
 
   useEffect(() => {
-    if (reduce) return;
+    if (reduce || isControlled) return;
     const id = setInterval(() => setTick((t) => (t + 1) % CYCLE_TICKS), TICK_MS);
     return () => clearInterval(id);
-  }, [reduce]);
+  }, [reduce, isControlled]);
 
-  const found = reduce ? EVENTS.length : Math.min(tick, EVENTS.length);
-  const digest = reduce ? true : tick > EVENTS.length;
+  const active = isControlled ? Math.max(0, controlledStep as number) : tick;
+  const found = reduce && !isControlled ? EVENTS.length : Math.min(active, EVENTS.length);
+  const digest = reduce && !isControlled ? true : active > EVENTS.length;
 
   return (
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">

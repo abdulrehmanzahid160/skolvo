@@ -11,20 +11,20 @@ import { ScanFace, Siren } from 'lucide-react';
 
 const CHANNELS = [
   {
-    product: 'CampusNova',
-    icon: ScanFace,
-    tint: '#0F7A5F',
-    verdict: 'Face matched · liveness passed',
-    value: '182ms',
-    meta: 'processed on the device at the gate — no photo uploaded',
-  },
-  {
     product: 'Regulatory Watchdog',
     icon: Siren,
     tint: '#B4304A',
     verdict: 'Class I recall detected in category',
     value: '4h ago',
     meta: 'found in public FDA enforcement reports while you slept',
+  },
+  {
+    product: 'CampusNova',
+    icon: ScanFace,
+    tint: '#0F7A5F',
+    verdict: 'Face matched · liveness passed',
+    value: '182ms',
+    meta: 'processed on the device at the gate — no photo uploaded',
   },
 ] as const;
 

@@ -28,8 +28,8 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
+    { name: 'Watchdog', href: '/watchdog' },
     { name: 'CampusNova', href: '/#campusnova' },
-    { name: 'Watchdog', href: '/#watchdog' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },

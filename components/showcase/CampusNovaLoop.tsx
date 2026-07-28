@@ -56,16 +56,31 @@ const STEPS = [
   },
 ] as const;
 
-export default function CampusNovaLoop() {
+export const CAMPUSNOVA_STEP_COUNT = STEPS.length;
+
+/**
+ * `controlledStep` lets an outer scroll sequence scrub this demo. When it is
+ * absent the component falls back to its own timer, so it still works standalone.
+ */
+export default function CampusNovaLoop({ controlledStep }: { controlledStep?: number } = {}) {
   const reduce = useReducedMotion();
-  const [step, setStep] = useState(0);
+  const isControlled = typeof controlledStep === 'number';
+  const [internalStep, setInternalStep] = useState(0);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    if (paused) return;
-    const id = setInterval(() => setStep((s) => (s + 1) % STEPS.length), reduce ? 6000 : 3600);
+    if (isControlled || paused) return;
+    const id = setInterval(
+      () => setInternalStep((s) => (s + 1) % STEPS.length),
+      reduce ? 6000 : 3600
+    );
     return () => clearInterval(id);
-  }, [paused, reduce]);
+  }, [isControlled, paused, reduce]);
+
+  const step = isControlled
+    ? Math.min(STEPS.length - 1, Math.max(0, controlledStep as number))
+    : internalStep;
+  const setStep = setInternalStep;
 
   const active = STEPS[step];
   const student = STUDENTS[step % STUDENTS.length];
@@ -82,6 +97,7 @@ export default function CampusNovaLoop() {
               <li key={s.key}>
                 <button
                   onClick={() => {
+                    if (isControlled) return; // scroll owns the step here
                     setStep(i);
                     setPaused(true);
                   }}
@@ -132,7 +148,7 @@ export default function CampusNovaLoop() {
                   </div>
 
                   {/* Station timing bar — doubles as the loop's progress */}
-                  {isActive && !paused && !reduce && (
+                  {isActive && !paused && !reduce && !isControlled && (
                     <div className="mt-3 h-[3px] overflow-hidden rounded-full bg-[#E2E9E4]">
                       <motion.div
                         key={step}
@@ -149,7 +165,7 @@ export default function CampusNovaLoop() {
           })}
         </ol>
 
-        {paused && (
+        {paused && !isControlled && (
           <button
             onClick={() => setPaused(false)}
             className="label-caps mt-4 text-[#0F7A5F] underline underline-offset-4"

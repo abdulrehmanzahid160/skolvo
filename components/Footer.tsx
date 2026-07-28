@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, ArrowUpRight, Linkedin, Twitter, Instagram, Shield } from 'lucide-react';
+import { Mail, ArrowUpRight, Linkedin, Shield } from 'lucide-react';
 import WaitlistModal from './WaitlistModal';
 
 export default function Footer() {
@@ -38,25 +38,20 @@ export default function Footer() {
 
               <div className="flex items-center gap-3 pt-2">
                 <a
-                  href="#"
-                  className="w-8 h-8 rounded-full bg-white border border-neutral-200 shadow-xs flex items-center justify-center text-neutral-700 hover:text-black hover:border-black/30 transition-colors"
-                  aria-label="LinkedIn"
+                  href="https://www.linkedin.com/company/skolvo/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-full bg-white border border-neutral-200 shadow-xs flex items-center justify-center text-neutral-700 hover:text-[#0F7A5F] hover:border-[#0F7A5F]/40 transition-colors"
+                  aria-label="Skolvo on LinkedIn"
                 >
                   <Linkedin className="w-4 h-4" />
                 </a>
                 <a
-                  href="#"
-                  className="w-8 h-8 rounded-full bg-white border border-neutral-200 shadow-xs flex items-center justify-center text-neutral-700 hover:text-black hover:border-black/30 transition-colors"
-                  aria-label="Twitter / X"
+                  href="mailto:support@skolvo.online"
+                  className="w-8 h-8 rounded-full bg-white border border-neutral-200 shadow-xs flex items-center justify-center text-neutral-700 hover:text-[#0F7A5F] hover:border-[#0F7A5F]/40 transition-colors"
+                  aria-label="Email Skolvo"
                 >
-                  <Twitter className="w-4 h-4" />
-                </a>
-                <a
-                  href="#"
-                  className="w-8 h-8 rounded-full bg-white border border-neutral-200 shadow-xs flex items-center justify-center text-neutral-700 hover:text-black hover:border-black/30 transition-colors"
-                  aria-label="Instagram"
-                >
-                  <Instagram className="w-4 h-4" />
+                  <Mail className="w-4 h-4" />
                 </a>
               </div>
             </div>
@@ -69,22 +64,22 @@ export default function Footer() {
               <ul className="space-y-2 text-xs">
                 <li>
                   <Link
-                    href="/#campusnova"
+                    href="/watchdog"
                     className="hover:text-black transition-colors flex items-center gap-1.5 font-medium"
                   >
-                    CampusNova
-                    <span className="px-2 py-0.5 text-[10px] bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 text-[#0F7A5F] font-semibold rounded-full">
-                      Early Access
+                    FDA Regulatory Watchdog
+                    <span className="px-2 py-0.5 text-[10px] bg-[#E0A21B]/12 border border-[#E0A21B]/40 text-[#BE8412] font-semibold rounded-full">
+                      Flagship
                     </span>
                   </Link>
                 </li>
                 <li>
                   <Link
-                    href="/#watchdog"
+                    href="/#campusnova"
                     className="hover:text-black transition-colors flex items-center gap-1.5 font-medium"
                   >
-                    FDA Regulatory Watchdog
-                    <span className="px-2 py-0.5 text-[10px] bg-[#E0A21B]/12 border border-[#E0A21B]/40 text-[#BE8412] font-semibold rounded-full">
+                    CampusNova
+                    <span className="px-2 py-0.5 text-[10px] bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 text-[#0F7A5F] font-semibold rounded-full">
                       Early Access
                     </span>
                   </Link>
@@ -162,15 +157,15 @@ export default function Footer() {
           <div className="pt-8 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-neutral-500">
             <p>© {new Date().getFullYear()} Skolvo. All rights reserved.</p>
             <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-black transition-colors">
+              <Link href="/privacy" className="hover:text-black transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#" className="hover:text-black transition-colors">
+              </Link>
+              <Link href="/terms" className="hover:text-black transition-colors">
                 Terms of Service
-              </a>
-              <a href="#" className="hover:text-black transition-colors">
+              </Link>
+              <Link href="/security" className="hover:text-black transition-colors">
                 Security Architecture
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Fraunces, Public_Sans, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import MagneticCursor from '@/components/motion/MagneticCursor';
 
 // Display: engraved, diploma-adjacent authority. Used with restraint.
 const fraunces = Fraunces({
@@ -97,6 +98,7 @@ export default function RootLayout({
       className={`${fraunces.variable} ${publicSans.variable} ${plexMono.variable} scroll-smooth`}
     >
       <body className="min-h-screen bg-[#EDF1EE] text-[#101C18] flex flex-col antialiased selection:bg-[#0F7A5F] selection:text-white">
+        <MagneticCursor />
         <Navbar />
         <main className="flex-grow pt-20">{children}</main>
         <Footer />

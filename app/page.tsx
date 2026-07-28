@@ -29,7 +29,7 @@ import AiBotMockup from '@/components/mockups/AiBotMockup';
 import VerificationBar from '@/components/hero/VerificationBar';
 import VerificationSpine from '@/components/spine/VerificationSpine';
 import CampusNovaLoop from '@/components/showcase/CampusNovaLoop';
-import WatchdogLoop from '@/components/showcase/WatchdogLoop';
+import WatchdogLoop, { WATCHDOG_STEP_COUNT } from '@/components/showcase/WatchdogLoop';
 import {
   Reveal,
   WordReveal,
@@ -40,19 +40,20 @@ import {
   AtmosphericField,
   GridLines,
 } from '@/components/motion/Primitives';
+import PinnedSequence from '@/components/motion/PinnedSequence';
 
 const SPINE_STATIONS = [
   { id: 'top', label: 'Studio' },
   { id: 'stakes', label: 'Stakes' },
-  { id: 'campusnova', label: 'CampusNova' },
   { id: 'watchdog', label: 'Watchdog' },
+  { id: 'campusnova', label: 'CampusNova' },
   { id: 'studio', label: 'Portfolio' },
   { id: 'access', label: 'Access' },
 ];
 
 export default function HomePage() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-  const [waitlistProduct, setWaitlistProduct] = useState('CampusNova');
+  const [waitlistProduct, setWaitlistProduct] = useState('FDA Regulatory Watchdog');
   const [activeModule, setActiveModule] = useState<'biometrics' | 'comms' | 'fees' | 'ai'>(
     'biometrics'
   );
@@ -122,8 +123,8 @@ export default function HomePage() {
                 className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#3D4F47]"
               >
                 We build a small number of focused tools for industries that cannot absorb a
-                mistake — children&apos;s biometric data at the school gate, and medical-device
-                safety filings at the FDA. Each product does one job completely, and is priced for
+                mistake — medical-device safety filings at the FDA, and children&apos;s biometric
+                data at the school gate. Each product does one job completely, and is priced for
                 the person who actually does that job.
               </motion.p>
 
@@ -134,20 +135,24 @@ export default function HomePage() {
                 className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
               >
                 <a
-                  href="#campusnova"
+                  href="#watchdog"
+                  data-magnetic
+                  data-cursor-label="Flagship"
                   className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-xl transition-transform hover:-translate-y-0.5"
                 >
                   <span className="absolute inset-0 -translate-x-full bg-[#0F7A5F] transition-transform duration-500 ease-out group-hover:translate-x-0" />
-                  <ScanFace className="relative z-10 h-4 w-4" />
-                  <span className="relative z-10">See CampusNova work</span>
+                  <Radar className="relative z-10 h-4 w-4" />
+                  <span className="relative z-10">See Regulatory Watchdog work</span>
                 </a>
 
                 <a
-                  href="#watchdog"
+                  href="#campusnova"
+                  data-magnetic
+                  data-cursor-label="Product two"
                   className="group flex items-center justify-center gap-2 rounded-full border border-[#B4C2B9] bg-white/80 px-7 py-3.5 text-sm font-semibold text-[#101C18] backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-[#0F7A5F]/50"
                 >
-                  <Radar className="h-4 w-4 text-[#0F7A5F]" />
-                  See Regulatory Watchdog
+                  <ScanFace className="h-4 w-4 text-[#0F7A5F]" />
+                  See CampusNova
                   <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                 </a>
               </motion.div>
@@ -193,18 +198,18 @@ export default function HomePage() {
           <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
             {[
               {
-                icon: Lock,
-                tint: '#0F7A5F',
-                who: 'At the school gate',
-                claim: 'A face is the most personal thing you can ask a child for.',
-                body: 'So CampusNova never uploads one. Recognition and liveness happen on the device; the cloud only ever sees a mathematical vector that cannot be turned back into a photograph.',
-              },
-              {
                 icon: Siren,
                 tint: '#E0A21B',
                 who: 'At the FDA',
                 claim: 'The recall you did not read about is still your problem.',
                 body: 'So Regulatory Watchdog reads the public filings for you every week and writes what happened in plain English, with a link to every original record.',
+              },
+              {
+                icon: Lock,
+                tint: '#0F7A5F',
+                who: 'At the school gate',
+                claim: 'A face is the most personal thing you can ask a child for.',
+                body: 'So CampusNova never uploads one. Recognition and liveness happen on the device; the cloud only ever sees a mathematical vector that cannot be turned back into a photograph.',
               },
             ].map((card, i) => {
               const Icon = card.icon;
@@ -231,16 +236,119 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          STATION 03 — CAMPUSNOVA
+          STATION 03 — FDA REGULATORY WATCHDOG
           ============================================================ */}
-      <section id="campusnova" className="relative overflow-hidden py-24">
+      <section
+        id="watchdog"
+        className="relative overflow-hidden py-24"
+      >
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute -right-32 top-1/3 h-[28rem] w-[28rem] rounded-full bg-[#E0A21B]/12 blur-[130px] animate-blob-2" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
+          <Reveal className="max-w-3xl">
+            <StationLabel index="03">Flagship · for regulatory consultants</StationLabel>
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <h2 className="font-display text-4xl font-semibold tracking-tight text-[#101C18] sm:text-5xl">
+                FDA Regulatory Watchdog
+              </h2>
+              <span className="label-caps rounded-full border border-[#E0A21B]/40 bg-[#FBF1DC] px-2.5 py-1 text-[#BE8412]">
+                Early access
+              </span>
+            </div>
+
+            <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-[#3D4F47]">
+              Right now you do this by hand. Every week you open FDA.gov, filter 510(k) clearances,
+              scan adverse-event reports, check the enforcement list, and write your client a
+              summary. It takes hours, it is easy to miss a line, and you cannot bill for most of it.
+            </p>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              {[
+                { icon: Clock, text: 'Hours of manual checking, every week' },
+                { icon: FileCheck2, text: 'Three separate FDA databases' },
+                { icon: Siren, text: 'One missed recall is the whole problem' },
+              ].map((p) => {
+                const Icon = p.icon;
+                return (
+                  <span
+                    key={p.text}
+                    className="inline-flex items-center gap-2 rounded-full border border-[#D2DBD5] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#3D4F47]"
+                  >
+                    <Icon className="h-3.5 w-3.5 text-[#B4304A]" />
+                    {p.text}
+                  </span>
+                );
+              })}
+            </div>
+          </Reveal>
+
+          {/* Flagship demo gets the pinned, scroll-scrubbed treatment. */}
+          <PinnedSequence steps={WATCHDOG_STEP_COUNT} className="mt-12">
+            {(step) => <WatchdogLoop controlledStep={step} />}
+          </PinnedSequence>
+
+          {/* Watchdog boundaries — different trust triggers than CampusNova */}
+          <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {[
+              {
+                icon: Database,
+                title: 'Every line is traceable',
+                body: 'We only read public FDA sources — the 510(k) database, MAUDE adverse-event reports, and weekly Enforcement Reports. Each item links straight to the original record so you can verify it yourself.',
+              },
+              {
+                icon: Radar,
+                title: 'Tuned to your category, not the whole FDA',
+                body: 'You define the product category and the competitors that matter. The digest stays short because it ignores everything outside that scope.',
+              },
+              {
+                icon: Scale,
+                title: 'It reports facts. It does not practise law.',
+                body: 'Watchdog tells you what was filed and when. It does not interpret regulation, assess your compliance, or give legal advice — that judgement stays yours, which is the part clients pay you for.',
+              },
+            ].map((c, i) => {
+              const Icon = c.icon;
+              return (
+                <Reveal key={c.title} delay={i * 0.1}>
+                  <div className="h-full rounded-3xl border border-[#D2DBD5] bg-white p-6 shadow-sm">
+                    <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#E9C46A] bg-[#FBF1DC] text-[#BE8412]">
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <h4 className="font-display text-base font-semibold text-[#101C18]">{c.title}</h4>
+                    <p className="mt-2 text-[12.5px] leading-relaxed text-[#3D4F47]">{c.body}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          <Reveal delay={0.1} className="mt-10">
+            <button
+              onClick={() => openWaitlist('FDA Regulatory Watchdog')}
+              className="group inline-flex items-center gap-2 rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5"
+            >
+              Get Watchdog early access
+              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============================================================
+          STATION 04 — CAMPUSNOVA
+          ============================================================ */}
+      <section
+        id="campusnova"
+        className="relative overflow-hidden border-y border-[#D2DBD5] bg-[#E2E9E4]/70 py-24"
+      >
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -left-40 top-1/4 h-[30rem] w-[30rem] rounded-full bg-[#0F7A5F]/10 blur-[130px] animate-blob-1" />
         </div>
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
           <Reveal className="max-w-3xl">
-            <StationLabel index="03">Product one · for academies &amp; schools</StationLabel>
+            <StationLabel index="04">Product two · for academies &amp; schools</StationLabel>
             <div className="mt-5 flex flex-wrap items-center gap-3">
               <h2 className="font-display text-4xl font-semibold tracking-tight text-[#101C18] sm:text-5xl">
                 CampusNova
@@ -357,105 +465,6 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================
-          STATION 04 — FDA REGULATORY WATCHDOG
-          ============================================================ */}
-      <section
-        id="watchdog"
-        className="relative overflow-hidden border-y border-[#D2DBD5] bg-[#E2E9E4]/70 py-24"
-      >
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-32 top-1/3 h-[28rem] w-[28rem] rounded-full bg-[#E0A21B]/12 blur-[130px] animate-blob-2" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <Reveal className="max-w-3xl">
-            <StationLabel index="04">Product two · for regulatory consultants</StationLabel>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <h2 className="font-display text-4xl font-semibold tracking-tight text-[#101C18] sm:text-5xl">
-                FDA Regulatory Watchdog
-              </h2>
-              <span className="label-caps rounded-full border border-[#E0A21B]/40 bg-[#FBF1DC] px-2.5 py-1 text-[#BE8412]">
-                Early access
-              </span>
-            </div>
-
-            <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-[#3D4F47]">
-              Right now you do this by hand. Every week you open FDA.gov, filter 510(k) clearances,
-              scan adverse-event reports, check the enforcement list, and write your client a
-              summary. It takes hours, it is easy to miss a line, and you cannot bill for most of it.
-            </p>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              {[
-                { icon: Clock, text: 'Hours of manual checking, every week' },
-                { icon: FileCheck2, text: 'Three separate FDA databases' },
-                { icon: Siren, text: 'One missed recall is the whole problem' },
-              ].map((p) => {
-                const Icon = p.icon;
-                return (
-                  <span
-                    key={p.text}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#D2DBD5] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#3D4F47]"
-                  >
-                    <Icon className="h-3.5 w-3.5 text-[#B4304A]" />
-                    {p.text}
-                  </span>
-                );
-              })}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.12} className="mt-12">
-            <WatchdogLoop />
-          </Reveal>
-
-          {/* Watchdog boundaries — different trust triggers than CampusNova */}
-          <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {[
-              {
-                icon: Database,
-                title: 'Every line is traceable',
-                body: 'We only read public FDA sources — the 510(k) database, MAUDE adverse-event reports, and weekly Enforcement Reports. Each item links straight to the original record so you can verify it yourself.',
-              },
-              {
-                icon: Radar,
-                title: 'Tuned to your category, not the whole FDA',
-                body: 'You define the product category and the competitors that matter. The digest stays short because it ignores everything outside that scope.',
-              },
-              {
-                icon: Scale,
-                title: 'It reports facts. It does not practise law.',
-                body: 'Watchdog tells you what was filed and when. It does not interpret regulation, assess your compliance, or give legal advice — that judgement stays yours, which is the part clients pay you for.',
-              },
-            ].map((c, i) => {
-              const Icon = c.icon;
-              return (
-                <Reveal key={c.title} delay={i * 0.1}>
-                  <div className="h-full rounded-3xl border border-[#D2DBD5] bg-white p-6 shadow-sm">
-                    <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#E9C46A] bg-[#FBF1DC] text-[#BE8412]">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h4 className="font-display text-base font-semibold text-[#101C18]">{c.title}</h4>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-[#3D4F47]">{c.body}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-
-          <Reveal delay={0.1} className="mt-10">
-            <button
-              onClick={() => openWaitlist('FDA Regulatory Watchdog')}
-              className="group inline-flex items-center gap-2 rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5"
-            >
-              Get Watchdog early access
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================
           STATION 05 — THE STUDIO PORTFOLIO
           ============================================================ */}
       <section id="studio" className="relative overflow-hidden py-24">
@@ -477,21 +486,21 @@ export default function HomePage() {
               {[
                 {
                   code: 'P01',
+                  name: 'FDA Regulatory Watchdog',
+                  audience: 'Independent regulatory consultants, small device makers',
+                  status: 'Early access · flagship',
+                  live: true,
+                  href: '#watchdog',
+                  tint: '#E0A21B',
+                },
+                {
+                  code: 'P02',
                   name: 'CampusNova',
                   audience: 'Academies, schools, coaching centres',
                   status: 'Early access',
                   live: true,
                   href: '#campusnova',
                   tint: '#0F7A5F',
-                },
-                {
-                  code: 'P02',
-                  name: 'FDA Regulatory Watchdog',
-                  audience: 'Independent regulatory consultants, small device makers',
-                  status: 'Early access',
-                  live: true,
-                  href: '#watchdog',
-                  tint: '#E0A21B',
                 },
                 {
                   code: 'P03',
@@ -589,24 +598,6 @@ export default function HomePage() {
 
                 <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <button
-                    onClick={() => openWaitlist('CampusNova')}
-                    className="group rounded-2xl border border-white/15 bg-white/[0.06] p-5 text-left backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#0F7A5F]/60 hover:bg-white/[0.1]"
-                  >
-                    <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F7A5F] text-white">
-                      <ScanFace className="h-5 w-5" />
-                    </span>
-                    <h3 className="font-display text-lg font-semibold text-white">CampusNova</h3>
-                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">
-                      I run an academy or school and I want attendance, parent messaging, and fees
-                      handled.
-                    </p>
-                    <span className="label-caps mt-3 inline-flex items-center gap-1 text-[#E9C46A]">
-                      Request access
-                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </button>
-
-                  <button
                     onClick={() => openWaitlist('FDA Regulatory Watchdog')}
                     className="group rounded-2xl border border-white/15 bg-white/[0.06] p-5 text-left backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#E0A21B]/60 hover:bg-white/[0.1]"
                   >
@@ -618,6 +609,24 @@ export default function HomePage() {
                     </h3>
                     <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">
                       I track FDA activity for clients and I want that week back.
+                    </p>
+                    <span className="label-caps mt-3 inline-flex items-center gap-1 text-[#E9C46A]">
+                      Request access
+                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={() => openWaitlist('CampusNova')}
+                    className="group rounded-2xl border border-white/15 bg-white/[0.06] p-5 text-left backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#0F7A5F]/60 hover:bg-white/[0.1]"
+                  >
+                    <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F7A5F] text-white">
+                      <ScanFace className="h-5 w-5" />
+                    </span>
+                    <h3 className="font-display text-lg font-semibold text-white">CampusNova</h3>
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">
+                      I run an academy or school and I want attendance, parent messaging, and fees
+                      handled.
                     </p>
                     <span className="label-caps mt-3 inline-flex items-center gap-1 text-[#E9C46A]">
                       Request access

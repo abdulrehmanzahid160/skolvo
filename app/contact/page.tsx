@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, CheckCircle2, Linkedin, Twitter, Instagram, Sparkles, Building2, User, MessageSquare, Loader2 } from 'lucide-react';
+import { Mail, Send, CheckCircle2, Linkedin, Sparkles, Building2, User, MessageSquare, Loader2 } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -222,34 +222,33 @@ export default function ContactPage() {
             {/* Social Links Box */}
             <div className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-xl space-y-4 text-[#101C18]">
               <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-500">
-                Connect On Social Media
+                Where To Find Us
               </h4>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <a
-                  href="#"
-                  className="p-3 bg-[#E2E9E4] border border-neutral-200 rounded-xl flex flex-col items-center justify-center gap-1.5 text-neutral-600 hover:text-[#101C18] hover:border-neutral-300 transition-all group shadow-2xs"
+                  href="https://www.linkedin.com/company/skolvo/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-3 bg-[#E2E9E4] border border-neutral-200 rounded-xl flex flex-col items-center justify-center gap-1.5 text-neutral-600 hover:text-[#101C18] hover:border-[#0F7A5F]/40 transition-all group shadow-2xs"
                 >
                   <Linkedin className="w-5 h-5 text-[#0F7A5F] group-hover:scale-110 transition-transform" />
                   <span className="text-[11px] font-bold">LinkedIn</span>
                 </a>
 
                 <a
-                  href="#"
-                  className="p-3 bg-[#E2E9E4] border border-neutral-200 rounded-xl flex flex-col items-center justify-center gap-1.5 text-neutral-600 hover:text-[#101C18] hover:border-neutral-300 transition-all group shadow-2xs"
+                  href="mailto:support@skolvo.online"
+                  className="p-3 bg-[#E2E9E4] border border-neutral-200 rounded-xl flex flex-col items-center justify-center gap-1.5 text-neutral-600 hover:text-[#101C18] hover:border-[#0F7A5F]/40 transition-all group shadow-2xs"
                 >
-                  <Twitter className="w-5 h-5 text-[#E0A21B] group-hover:scale-110 transition-transform" />
-                  <span className="text-[11px] font-bold">Twitter / X</span>
-                </a>
-
-                <a
-                  href="#"
-                  className="p-3 bg-[#E2E9E4] border border-neutral-200 rounded-xl flex flex-col items-center justify-center gap-1.5 text-neutral-600 hover:text-[#101C18] hover:border-neutral-300 transition-all group shadow-2xs"
-                >
-                  <Instagram className="w-5 h-5 text-[#0F7A5F] group-hover:scale-110 transition-transform" />
-                  <span className="text-[11px] font-bold">Instagram</span>
+                  <Mail className="w-5 h-5 text-[#E0A21B] group-hover:scale-110 transition-transform" />
+                  <span className="text-[11px] font-bold">Email</span>
                 </a>
               </div>
+
+              <p className="text-[11px] leading-relaxed text-neutral-500">
+                We don&apos;t run a Twitter or Instagram account yet. When we do, they&apos;ll appear
+                here — we&apos;d rather show two links that work than five that don&apos;t.
+              </p>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Layers, ShieldCheck, Code2, Cpu, Bot, Sparkles, Linkedin, Twitter, Mail, ArrowRight } from 'lucide-react';
+import { Layers, ShieldCheck, Code2, Cpu, Bot, Linkedin, Mail, ArrowRight } from 'lucide-react';
 import WaitlistModal from '@/components/WaitlistModal';
 
 export default function AboutPage() {
@@ -16,6 +16,7 @@ export default function AboutPage() {
       avatarInitial: 'AR',
       skills: ['Generative AI', 'RAG Systems', 'LLM Evaluation', 'Agentic Pipelines'],
       gradient: 'from-[#0F7A5F] to-[#0A5C47]',
+      linkedin: 'https://www.linkedin.com/in/abdul-rehman-5845373a4/',
     },
     {
       name: 'Muhammad Hammad',
@@ -24,6 +25,7 @@ export default function AboutPage() {
       avatarInitial: 'MH',
       skills: ['Computer Vision', 'On-Device ML', 'Liveness Detection', 'AI Integration'],
       gradient: 'from-[#E0A21B] to-[#E9C46A]',
+      linkedin: 'https://www.linkedin.com/in/muhammad-hammad-9a8905379/',
     },
     {
       name: 'Waqar Ahmad',
@@ -32,6 +34,7 @@ export default function AboutPage() {
       avatarInitial: 'WA',
       skills: ['Full-Stack Next.js', 'Role Security', 'MongoDB Atlas', 'Real-time APIs'],
       gradient: 'from-[#128A6B] to-[#0F7A5F]',
+      linkedin: 'https://www.linkedin.com/in/waqar-ahmed-2592aa332/',
     },
   ];
 
@@ -159,24 +162,23 @@ export default function AboutPage() {
                 </div>
 
                 <div className="mt-8 pt-4 border-t border-neutral-100 flex items-center gap-3 text-neutral-500">
-                  <a
-                    href="#"
-                    className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#101C18] hover:bg-neutral-200 transition-colors"
-                    aria-label="LinkedIn Profile"
-                  >
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                  <a
-                    href="#"
-                    className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#101C18] hover:bg-neutral-200 transition-colors"
-                    aria-label="Twitter Profile"
-                  >
-                    <Twitter className="w-4 h-4" />
-                  </a>
+                  {/* Only rendered when a real profile exists — an icon that
+                      links to "#" is worse than no icon at all. */}
+                  {member.linkedin && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#0F7A5F] hover:bg-[#E4F1EC] transition-colors"
+                      aria-label={`${member.name} on LinkedIn`}
+                    >
+                      <Linkedin className="w-4 h-4" />
+                    </a>
+                  )}
                   <a
                     href="mailto:support@skolvo.online"
-                    className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#101C18] hover:bg-neutral-200 transition-colors"
-                    aria-label="Email Contact"
+                    className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#0F7A5F] hover:bg-[#E4F1EC] transition-colors"
+                    aria-label={`Email about ${member.name}`}
                   >
                     <Mail className="w-4 h-4" />
                   </a>
