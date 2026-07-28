@@ -113,7 +113,7 @@ export default function HomePage() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-[#1A1A1A] max-w-4xl mx-auto leading-[1.12]"
           >
-            Building Purpose-Driven SaaS Products for the Modern Era.
+            Building Production-Grade Generative AI Systems for the Modern Era.
           </motion.h1>
 
           {/* Subtitle / Positioning Statement */}
@@ -123,7 +123,7 @@ export default function HomePage() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-lg sm:text-xl text-neutral-600 max-w-2xl mx-auto leading-relaxed font-medium"
           >
-            Skolvo is a next-generation software house engineering privacy-first, role-gated, and AI-accelerated platforms. Starting with <strong className="text-[#1A1A1A]">CampusNova</strong> for academies and schools.
+            Skolvo is a next-generation software house engineering privacy-first, role-gated, and AI-accelerated platforms &mdash; backed by hyper-granular structured data infrastructure, RAG pipelines, and agentic systems. Starting with <strong className="text-[#1A1A1A]">CampusNova</strong> for academies and schools.
           </motion.p>
 
           {/* CTAs */}

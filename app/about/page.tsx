@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Layers, ShieldCheck, Code2, Cpu, Smartphone, Sparkles, Linkedin, Twitter, Mail, ArrowRight } from 'lucide-react';
+import { Layers, ShieldCheck, Code2, Cpu, Bot, Sparkles, Linkedin, Twitter, Mail, ArrowRight } from 'lucide-react';
 import WaitlistModal from '@/components/WaitlistModal';
 
 export default function AboutPage() {
@@ -11,10 +11,10 @@ export default function AboutPage() {
   const teamMembers = [
     {
       name: 'Abdul Rehman',
-      role: 'Mobile Engineering & System Architecture',
-      bio: 'Experienced mobile systems engineer specializing in high-performance cross-platform application design, secure client-side state synchronization, and scalable SaaS infrastructure.',
+      role: 'Generative AI Developer',
+      bio: 'Building hyper-granular structured data infrastructure for AI companies, with production LLM systems spanning RAG, LLM evaluation, and agentic pipelines.',
       avatarInitial: 'AR',
-      skills: ['Flutter & Cross-Platform', 'Mobile Architecture', 'State Management', 'SaaS Systems'],
+      skills: ['Generative AI', 'RAG Systems', 'LLM Evaluation', 'Agentic Pipelines'],
       gradient: 'from-[#6D5CFB] to-[#5343E0]',
     },
     {
@@ -79,7 +79,7 @@ export default function AboutPage() {
                   <ShieldCheck className="w-4 h-4 text-emerald-600" /> Privacy-First Architecture
                 </span>
                 <span className="flex items-center gap-1.5 px-3 py-1 bg-[#FAF4F0] border border-neutral-200 rounded-full">
-                  <Smartphone className="w-4 h-4 text-[#E6357F]" /> Native Cross-Platform Performance
+                  <Bot className="w-4 h-4 text-[#E6357F]" /> Production LLM & Agentic Systems
                 </span>
               </div>
             </div>
@@ -110,7 +110,7 @@ export default function AboutPage() {
               Meet the Team Behind Skolvo
             </h2>
             <p className="text-neutral-600 text-sm font-medium">
-              Our core team brings together expertise in mobile development, machine learning, and cloud software engineering.
+              Our core team brings together expertise in generative AI systems, machine learning, and cloud software engineering.
             </p>
           </div>
 
