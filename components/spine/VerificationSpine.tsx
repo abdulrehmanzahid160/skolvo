@@ -66,13 +66,6 @@ export default function VerificationSpine({ stations }: { stations: SpineStation
             })}
           </div>
 
-          {/* Rotated caption — reads as instrument labelling, not decoration */}
-          <span
-            className="label-caps absolute bottom-6 whitespace-nowrap text-[#67796F]"
-            style={{ writingMode: 'vertical-rl' }}
-          >
-            Verification Spine
-          </span>
         </div>
       </div>
     </>

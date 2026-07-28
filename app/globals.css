@@ -63,7 +63,11 @@ body {
   background-color: var(--paper);
   color: var(--ink);
   font-family: var(--font-public-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
-  overflow-x: hidden;
+  /* `clip`, not `hidden`. `overflow-x: hidden` on body turns body into a
+     scroll container, which silently breaks every `position: sticky`
+     descendant — including the pinned product sequences. `clip` contains the
+     blurred field layers without creating a scrollport. */
+  overflow-x: clip;
   font-feature-settings: 'ss01', 'cv05';
 }
 

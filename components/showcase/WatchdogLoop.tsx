@@ -81,10 +81,11 @@ const CYCLE_TICKS = 10;
 const TICK_MS = 1100;
 
 /**
- * Scroll-driven steps for the flagship demo: one idle frame, four record
- * discoveries, then the compiled digest.
+ * Scroll-driven steps: four record discoveries, then the compiled digest.
+ * There is deliberately no empty "0 matched" frame — landing on a panel of
+ * greyed-out rows reads as a broken feed rather than one about to fill.
  */
-export const WATCHDOG_STEP_COUNT = EVENTS.length + 2;
+export const WATCHDOG_STEP_COUNT = EVENTS.length + 1;
 
 export default function WatchdogLoop({ controlledStep }: { controlledStep?: number } = {}) {
   const reduce = useReducedMotion();
@@ -97,7 +98,9 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
     return () => clearInterval(id);
   }, [reduce, isControlled]);
 
-  const active = isControlled ? Math.max(0, controlledStep as number) : tick;
+  // Controlled mode is 1-based against the tick scale, so the first pinned
+  // frame already shows one match instead of an empty feed.
+  const active = isControlled ? Math.max(0, (controlledStep as number) + 1) : tick;
   const found = reduce && !isControlled ? EVENTS.length : Math.min(active, EVENTS.length);
   const digest = reduce && !isControlled ? true : active > EVENTS.length;
 

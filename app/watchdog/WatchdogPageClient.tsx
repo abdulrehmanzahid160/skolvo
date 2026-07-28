@@ -34,7 +34,7 @@ export default function WatchdogPageClient() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
 
   return (
-    <div className="relative overflow-hidden bg-[#EDF1EE] text-[#101C18]">
+    <div className="relative overflow-x-clip bg-[#EDF1EE] text-[#101C18]">
       {/* ── Hero ───────────────────────────────────────────────── */}
       <section className="relative overflow-hidden pb-20 pt-14 sm:pt-20">
         <AtmosphericField a="#E0A21B" b="#0F7A5F" />

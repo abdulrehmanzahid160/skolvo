@@ -71,7 +71,7 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="relative overflow-hidden bg-[#EDF1EE] text-[#101C18]">
+    <div className="relative overflow-x-clip bg-[#EDF1EE] text-[#101C18]">
       <VerificationSpine stations={SPINE_STATIONS} />
 
       {/* ============================================================
@@ -240,7 +240,7 @@ export default function HomePage() {
           ============================================================ */}
       <section
         id="watchdog"
-        className="relative overflow-hidden py-24"
+        className="relative overflow-x-clip py-24"
       >
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -right-32 top-1/3 h-[28rem] w-[28rem] rounded-full bg-[#E0A21B]/12 blur-[130px] animate-blob-2" />
