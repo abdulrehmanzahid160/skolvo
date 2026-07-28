@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import WaitlistModal from '@/components/WaitlistModal';
 import WatchdogLoop, { WATCHDOG_STEP_COUNT } from '@/components/showcase/WatchdogLoop';
+import WatchdogRadar from '@/components/hero/WatchdogRadar';
+import PatrolBot from '@/components/mascot/PatrolBot';
 import {
   Reveal,
   WordReveal,
@@ -41,6 +43,8 @@ export default function WatchdogPageClient() {
         <GridLines />
 
         <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
           <motion.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -119,6 +123,17 @@ export default function WatchdogPageClient() {
           >
             No sales call. No demo to schedule. No procurement department required.
           </motion.p>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5"
+          >
+            <WatchdogRadar className="mx-auto max-w-[380px]" />
+          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -431,6 +446,8 @@ export default function WatchdogPageClient() {
           </Reveal>
         </div>
       </section>
+
+      <PatrolBot variant="watchdog" />
 
       <WaitlistModal
         isOpen={isWaitlistOpen}

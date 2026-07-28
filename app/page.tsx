@@ -28,6 +28,8 @@ import FeeTrackingMockup from '@/components/mockups/FeeTrackingMockup';
 import AiBotMockup from '@/components/mockups/AiBotMockup';
 import VerificationBar from '@/components/hero/VerificationBar';
 import VerificationSpine from '@/components/spine/VerificationSpine';
+import WatchdogRadar from '@/components/hero/WatchdogRadar';
+import PatrolBot from '@/components/mascot/PatrolBot';
 import CampusNovaLoop from '@/components/showcase/CampusNovaLoop';
 import WatchdogLoop, { WATCHDOG_STEP_COUNT } from '@/components/showcase/WatchdogLoop';
 import {
@@ -163,8 +165,9 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5 lg:flex lg:justify-end"
+              className="lg:col-span-5 flex flex-col items-center gap-6 lg:items-end"
             >
+              <WatchdogRadar className="w-full max-w-[300px]" />
               <VerificationBar />
             </motion.div>
           </div>
@@ -242,6 +245,13 @@ export default function HomePage() {
         id="watchdog"
         className="relative overflow-x-clip py-24"
       >
+        {/* Unit-01 patrols the flagship section. */}
+        <PatrolBot
+          variant="watchdog"
+          positionClass="absolute bottom-8 left-0 z-20"
+          range={['3vw', '50vw']}
+          duration={33}
+        />
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -right-32 top-1/3 h-[28rem] w-[28rem] rounded-full bg-[#E0A21B]/12 blur-[130px] animate-blob-2" />
         </div>
@@ -342,6 +352,13 @@ export default function HomePage() {
         id="campusnova"
         className="relative overflow-hidden border-y border-[#D2DBD5] bg-[#E2E9E4]/70 py-24"
       >
+        {/* Unit-02 patrols only inside CampusNova's own territory. */}
+        <PatrolBot
+          variant="campus"
+          positionClass="absolute bottom-8 left-0 z-20"
+          range={['3vw', '50vw']}
+          duration={30}
+        />
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <div className="absolute -left-40 top-1/4 h-[30rem] w-[30rem] rounded-full bg-[#0F7A5F]/10 blur-[130px] animate-blob-1" />
         </div>
