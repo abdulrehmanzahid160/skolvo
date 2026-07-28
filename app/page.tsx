@@ -30,6 +30,17 @@ import BiometricMockup from '@/components/mockups/BiometricMockup';
 import MassCommsMockup from '@/components/mockups/MassCommsMockup';
 import FeeTrackingMockup from '@/components/mockups/FeeTrackingMockup';
 import AiBotMockup from '@/components/mockups/AiBotMockup';
+import LiveHeroPanel from '@/components/hero/LiveHeroPanel';
+import {
+  ScrollProgressBar,
+  Reveal,
+  WordReveal,
+  Counter,
+  TiltCard,
+  Marquee,
+  AuroraBackdrop,
+  GridLines,
+} from '@/components/motion/Primitives';
 
 export default function HomePage() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
@@ -83,108 +94,147 @@ export default function HomePage() {
 
   return (
     <div className="relative overflow-hidden bg-[#FDF6F0] text-[#1A1A1A]">
+      <ScrollProgressBar />
+
       {/* ============================================================ */}
       {/* 1. HERO SECTION */}
       {/* ============================================================ */}
-      <section className="relative min-h-[82vh] flex items-center justify-center pt-6 pb-16 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-8">
-          {/* Top Pill Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E6357F]/10 border border-[#E6357F]/30 shadow-xs"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#E6357F] animate-pulse" />
-            <span className="text-xs font-bold text-[#E6357F] uppercase tracking-wider">
-              FLAGSHIP PRODUCT
-            </span>
-            <span className="text-neutral-300">•</span>
-            <span className="text-xs font-semibold text-[#1A1A1A] flex items-center gap-1">
-              Introducing Skolvo SaaS Studio & CampusNova
-              <ArrowRight className="w-3.5 h-3.5 text-[#E6357F]" />
-            </span>
-          </motion.div>
+      <section className="relative min-h-[92vh] flex items-center pt-10 pb-20 overflow-hidden">
+        <AuroraBackdrop />
+        <GridLines />
 
-          {/* Main Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-[#1A1A1A] max-w-4xl mx-auto leading-[1.12]"
-          >
-            Building Production-Grade Generative AI Systems for the Modern Era.
-          </motion.h1>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            {/* Left: copy */}
+            <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
+              {/* Top Pill Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: -16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="shimmer-badge inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-[#E6357F]/25 shadow-sm backdrop-blur-md"
+              >
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#E6357F] opacity-70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#E6357F]" />
+                </span>
+                <span className="text-[11px] font-extrabold text-[#E6357F] uppercase tracking-[0.14em]">
+                  Flagship Product
+                </span>
+                <span className="text-neutral-300">•</span>
+                <span className="text-xs font-semibold text-[#1A1A1A] flex items-center gap-1">
+                  Skolvo SaaS Studio &amp; CampusNova
+                  <ArrowRight className="w-3.5 h-3.5 text-[#E6357F]" />
+                </span>
+              </motion.div>
 
-          {/* Subtitle / Positioning Statement */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-lg sm:text-xl text-neutral-600 max-w-2xl mx-auto leading-relaxed font-medium"
-          >
-            Skolvo is a next-generation software house engineering privacy-first, role-gated, and AI-accelerated platforms &mdash; backed by hyper-granular structured data infrastructure, RAG pipelines, and agentic systems. Starting with <strong className="text-[#1A1A1A]">CampusNova</strong> for academies and schools.
-          </motion.p>
+              {/* Main Headline */}
+              <h1 className="text-[2.6rem] sm:text-6xl lg:text-[4.4rem] font-extrabold font-display tracking-[-0.03em] text-[#1A1A1A] leading-[1.04]">
+                <WordReveal text="Production-Grade" />{' '}
+                <span className="relative inline-block">
+                  <WordReveal text="Generative AI" className="relative z-10 text-[#E6357F]" delay={0.1} />
+                  <motion.span
+                    aria-hidden
+                    className="absolute -bottom-1 left-0 h-[0.42em] w-full origin-left rounded-sm bg-[#F2A93B]/35"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.9, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                </span>{' '}
+                <WordReveal text="Systems, Shipped." delay={0.25} />
+              </h1>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
-          >
-            <a
-              href="#campusnova"
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#1A1A1A] hover:bg-black text-white font-bold text-sm shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+              {/* Subtitle / Positioning Statement */}
+              <motion.p
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="text-base sm:text-lg text-neutral-600 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium"
+              >
+                Skolvo engineers privacy-first, role-gated platforms on top of hyper-granular structured data infrastructure &mdash; RAG, LLM evaluation, and agentic pipelines that hold up in production. Starting with{' '}
+                <strong className="text-[#1A1A1A]">CampusNova</strong> for academies and schools.
+              </motion.p>
+
+              {/* CTAs */}
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.62, ease: [0.16, 1, 0.3, 1] }}
+                className="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-3.5 pt-1"
+              >
+                <a
+                  href="#campusnova"
+                  className="group relative w-full sm:w-auto overflow-hidden px-8 py-4 rounded-full bg-[#1A1A1A] text-white font-bold text-sm shadow-xl transition-all hover:-translate-y-0.5 hover:shadow-2xl active:translate-y-0 flex items-center justify-center gap-2"
+                >
+                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-[#E6357F] to-[#E8622C] transition-transform duration-500 ease-out group-hover:translate-x-0" />
+                  <span className="relative z-10">Explore CampusNova</span>
+                  <ArrowRight className="relative z-10 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                </a>
+
+                <button
+                  onClick={() => setIsWaitlistOpen(true)}
+                  className="w-full sm:w-auto px-8 py-4 rounded-full bg-white/80 hover:bg-white text-[#1A1A1A] font-bold text-sm border border-neutral-300 shadow-sm backdrop-blur-md transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4 text-[#E6357F]" />
+                  Join Early Access
+                </button>
+              </motion.div>
+
+              {/* Quick Metrics Bar */}
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto lg:mx-0"
+              >
+                {[
+                  { value: <Counter to={100} suffix="%" />, label: 'On-Device Face Privacy' },
+                  { value: <Counter to={182} suffix="ms" />, label: 'Biometric Recognition' },
+                  { value: '1-Click', label: 'Mass WhatsApp Personalization' },
+                  { value: 'Zero', label: 'Unauthorized Access' },
+                ].map((stat, i) => (
+                  <div
+                    key={i}
+                    className="group rounded-2xl border border-neutral-200/80 bg-white/70 p-3.5 shadow-sm backdrop-blur-md transition-all hover:-translate-y-1 hover:border-[#E6357F]/40 hover:shadow-lg"
+                  >
+                    <span className="block font-display text-xl sm:text-2xl font-extrabold text-[#1A1A1A]">
+                      {stat.value}
+                    </span>
+                    <span className="text-[11px] font-semibold leading-tight text-neutral-500">{stat.label}</span>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+
+            {/* Right: live animated panel */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 24 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 flex justify-center lg:justify-end"
             >
-              Explore CampusNova
-              <ArrowRight className="w-4 h-4 text-white" />
-            </a>
-
-            <button
-              onClick={() => setIsWaitlistOpen(true)}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white hover:bg-neutral-100 text-[#1A1A1A] font-bold text-sm border border-neutral-300 shadow-sm transition-all flex items-center justify-center gap-2"
-            >
-              <Sparkles className="w-4 h-4 text-[#E6357F]" />
-              Join Early Access Waitlist
-            </button>
-          </motion.div>
-
-          {/* Quick Metrics Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="pt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto"
-          >
-            <div className="p-4 rounded-2xl bg-white border border-neutral-200/90 shadow-md">
-              <span className="block text-2xl font-extrabold text-[#1A1A1A] font-display">100%</span>
-              <span className="text-xs font-semibold text-neutral-500">On-Device Face Privacy</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-white border border-neutral-200/90 shadow-md">
-              <span className="block text-2xl font-extrabold text-[#1A1A1A] font-display">&lt; 200ms</span>
-              <span className="text-xs font-semibold text-neutral-500">Biometric Recognition</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-white border border-neutral-200/90 shadow-md">
-              <span className="block text-2xl font-extrabold text-[#1A1A1A] font-display">1-Click</span>
-              <span className="text-xs font-semibold text-neutral-500">Mass WhatsApp Personalization</span>
-            </div>
-            <div className="p-4 rounded-2xl bg-white border border-neutral-200/90 shadow-md">
-              <span className="block text-2xl font-extrabold text-[#1A1A1A] font-display">Zero</span>
-              <span className="text-xs font-semibold text-neutral-500">Unauthorized Access</span>
-            </div>
-          </motion.div>
+              <div className="animate-float">
+                <LiveHeroPanel />
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ============================================================ */}
       {/* 2. WHAT IS SKOLVO SECTION (BOLD COLOR BLOCKING: SOLID MAGENTA) */}
       {/* ============================================================ */}
-      <section className="py-20 bg-[#E6357F] text-white relative shadow-xl">
+      <section className="py-20 bg-[#E6357F] text-white relative shadow-xl overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-32 -right-20 h-[26rem] w-[26rem] rounded-full bg-[#E8622C]/45 blur-[100px] animate-blob-2" />
+          <div className="absolute -bottom-40 -left-16 h-[24rem] w-[24rem] rounded-full bg-[#F2A93B]/30 blur-[100px] animate-blob-1" />
+          <div className="bg-noise" />
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Content */}
-            <div className="lg:col-span-6 space-y-6">
+            <Reveal className="lg:col-span-6 space-y-6">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/15 border border-white/30 rounded-full text-xs font-bold text-white uppercase tracking-wider backdrop-blur-md">
                 <Layers className="w-4 h-4 text-white" />
                 The Parent Company Strategy
@@ -223,11 +273,11 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Reveal>
 
             {/* Right Interactive Diagram Card */}
-            <div className="lg:col-span-6">
-              <div className="relative p-6 sm:p-8 rounded-3xl bg-white text-[#1A1A1A] border border-white/20 shadow-2xl space-y-6">
+            <Reveal delay={0.15} className="lg:col-span-6 [perspective:1400px]">
+              <TiltCard className="relative p-6 sm:p-8 rounded-3xl bg-white text-[#1A1A1A] border border-white/20 shadow-2xl space-y-6">
                 <div className="flex items-center justify-between border-b border-neutral-200 pb-4">
                   <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">
                     Skolvo Ecosystem Roadmap
@@ -287,8 +337,8 @@ export default function HomePage() {
                     </span>
                   </div>
                 </div>
-              </div>
-            </div>
+              </TiltCard>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -299,54 +349,36 @@ export default function HomePage() {
       <section id="campusnova" className="py-16 bg-[#FDF6F0]">
         {/* Interactive Mockup Preview Switcher Bar */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
-          <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 bg-white border border-neutral-200/90 rounded-2xl max-w-2xl mx-auto shadow-sm">
-            <button
-              onClick={() => setActiveMockupTab('biometrics')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                activeMockupTab === 'biometrics'
-                  ? 'bg-[#E6357F] text-white shadow-sm'
-                  : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
-              }`}
-            >
-              <ScanFace className="w-3.5 h-3.5" />
-              Biometric Attendance
-            </button>
-
-            <button
-              onClick={() => setActiveMockupTab('comms')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                activeMockupTab === 'comms'
-                  ? 'bg-[#E8622C] text-white shadow-sm'
-                  : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
-              }`}
-            >
-              <MessageSquare className="w-3.5 h-3.5" />
-              Mass WhatsApp & SMS
-            </button>
-
-            <button
-              onClick={() => setActiveMockupTab('fees')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                activeMockupTab === 'fees'
-                  ? 'bg-[#E6357F] text-white shadow-sm'
-                  : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
-              }`}
-            >
-              <DollarSign className="w-3.5 h-3.5" />
-              Fee Tracking
-            </button>
-
-            <button
-              onClick={() => setActiveMockupTab('ai')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-                activeMockupTab === 'ai'
-                  ? 'bg-[#E8622C] text-white shadow-sm'
-                  : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
-              }`}
-            >
-              <Bot className="w-3.5 h-3.5" />
-              24/7 AI Bot
-            </button>
+          <div className="flex flex-wrap items-center justify-center gap-1 p-1.5 bg-white border border-neutral-200/90 rounded-2xl max-w-2xl mx-auto shadow-sm">
+            {[
+              { key: 'biometrics' as const, label: 'Biometric Attendance', icon: ScanFace, color: '#E6357F' },
+              { key: 'comms' as const, label: 'Mass WhatsApp & SMS', icon: MessageSquare, color: '#E8622C' },
+              { key: 'fees' as const, label: 'Fee Tracking', icon: DollarSign, color: '#E6357F' },
+              { key: 'ai' as const, label: '24/7 AI Bot', icon: Bot, color: '#E8622C' },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeMockupTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveMockupTab(tab.key)}
+                  className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 ${
+                    isActive ? 'text-white' : 'text-neutral-700 hover:text-black'
+                  }`}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="mockup-tab-pill"
+                      className="absolute inset-0 rounded-xl shadow-sm"
+                      style={{ backgroundColor: tab.color }}
+                      transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  <Icon className="relative z-10 w-3.5 h-3.5" />
+                  <span className="relative z-10">{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
@@ -379,7 +411,7 @@ export default function HomePage() {
       <section className="py-20 bg-[#FDF6F0] border-y border-neutral-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           {/* Header */}
-          <div className="max-w-2xl mx-auto text-center space-y-3">
+          <Reveal className="max-w-2xl mx-auto text-center space-y-3">
             <span className="px-3 py-1 bg-[#E8622C]/10 border border-[#E8622C]/30 text-[#E8622C] rounded-full text-xs font-bold uppercase tracking-wider inline-block">
               Security & Credibility
             </span>
@@ -389,90 +421,100 @@ export default function HomePage() {
             <p className="text-neutral-600 text-sm sm:text-base font-medium">
               Designed for leading educational institutions, biometric privacy standards, and enterprise-grade role permissions.
             </p>
-          </div>
+          </Reveal>
 
-          {/* Logo Wall Grid */}
+          {/* Animated Logo Marquee */}
           <div className="pt-2 pb-6 border-b border-neutral-200/80">
             <p className="text-center text-xs font-bold text-neutral-400 uppercase tracking-widest mb-6">
               PREPARING LAUNCH WITH TOP INSTITUTIONAL PARTNERS
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12 opacity-85">
+            <Marquee>
               {trustedLogos.map((logo) => (
                 <div
                   key={logo.name}
-                  className="px-5 py-3 rounded-xl bg-white border border-neutral-200/80 shadow-xs flex items-center gap-2 hover:shadow-md transition-all"
+                  className="shrink-0 px-5 py-3 rounded-xl bg-white border border-neutral-200/80 shadow-xs flex items-center gap-2 transition-all hover:-translate-y-0.5 hover:border-[#E6357F]/40 hover:shadow-md"
                 >
                   <Building2 className="w-4 h-4 text-[#E6357F]" />
-                  <div>
-                    <span className="block text-xs font-extrabold text-[#1A1A1A]">{logo.name}</span>
+                  <div className="text-left">
+                    <span className="block text-xs font-extrabold text-[#1A1A1A] whitespace-nowrap">{logo.name}</span>
                     <span className="text-[10px] text-neutral-500 font-medium">{logo.location}</span>
                   </div>
                 </div>
               ))}
-            </div>
+            </Marquee>
           </div>
 
           {/* Layered Overlapping Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative pt-4 items-stretch">
-            {/* Card 1 */}
-            <div className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-xl hover:-translate-y-1 transition-all duration-300 relative z-10 flex flex-col justify-between space-y-4">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#E6357F]/10 border border-[#E6357F]/30 flex items-center justify-center text-[#E6357F] mb-4 shadow-2xs">
-                  <Lock className="w-6 h-6" />
-                </div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl font-extrabold text-[#1A1A1A] font-display">100%</span>
-                  <span className="text-xs font-bold text-[#E6357F] bg-[#E6357F]/10 px-2 py-0.5 rounded-full">Invite-Only</span>
-                </div>
-                <h4 className="text-lg font-extrabold text-[#1A1A1A] mb-1">Invite-Only Access</h4>
-                <p className="text-xs text-neutral-600 leading-relaxed font-medium">
-                  Zero public registration forms. Academy owners hold complete control over token-based onboarding for Admins, Teachers, and Staff.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-neutral-100 flex items-center gap-1.5 text-[11px] font-bold text-emerald-700">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Token Link Protection
-              </div>
-            </div>
-
-            {/* Card 2 (Overlapping elevation offset) */}
-            <div className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-2xl hover:-translate-y-1 transition-all duration-300 relative z-20 md:-translate-y-3 flex flex-col justify-between space-y-4">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#E8622C]/10 border border-[#E8622C]/30 flex items-center justify-center text-[#E8622C] mb-4 shadow-2xs">
-                  <Cpu className="w-6 h-6" />
-                </div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl font-extrabold text-[#1A1A1A] font-display">0 Bytes</span>
-                  <span className="text-xs font-bold text-[#E8622C] bg-[#E8622C]/10 px-2 py-0.5 rounded-full">On-Device AI</span>
-                </div>
-                <h4 className="text-lg font-extrabold text-[#1A1A1A] mb-1">On-Device Facial Biometrics</h4>
-                <p className="text-xs text-neutral-600 leading-relaxed font-medium">
-                  100% on-device blink-liveness facial recognition. No raw face photographs are ever stored or uploaded to cloud servers.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-neutral-100 flex items-center gap-1.5 text-[11px] font-bold text-emerald-700">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Vectorized Liveness Check
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-xl hover:-translate-y-1 transition-all duration-300 relative z-10 flex flex-col justify-between space-y-4">
-              <div>
-                <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-700 mb-4 shadow-2xs">
-                  <Zap className="w-6 h-6" />
-                </div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl font-extrabold text-[#1A1A1A] font-display">1-Click</span>
-                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">Automation</span>
-                </div>
-                <h4 className="text-lg font-extrabold text-[#1A1A1A] mb-1">Automated Fee Reminders</h4>
-                <p className="text-xs text-neutral-600 leading-relaxed font-medium">
-                  Eliminate manual fee follow-ups with personalized WhatsApp & SMS reminders, individual due balances, and graphic receipts.
-                </p>
-              </div>
-              <div className="pt-3 border-t border-neutral-100 flex items-center gap-1.5 text-[11px] font-bold text-emerald-700">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Dynamic Canvas Receipts
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative pt-4 items-stretch [perspective:1400px]">
+            {[
+              {
+                icon: Lock,
+                iconClass: 'bg-[#E6357F]/10 border-[#E6357F]/30 text-[#E6357F]',
+                stat: <Counter to={100} suffix="%" />,
+                pill: 'Invite-Only',
+                pillClass: 'text-[#E6357F] bg-[#E6357F]/10',
+                title: 'Invite-Only Access',
+                body: 'Zero public registration forms. Academy owners hold complete control over token-based onboarding for Admins, Teachers, and Staff.',
+                footer: 'Token Link Protection',
+                offset: '',
+                z: 'z-10',
+                shadow: 'shadow-xl',
+              },
+              {
+                icon: Cpu,
+                iconClass: 'bg-[#E8622C]/10 border-[#E8622C]/30 text-[#E8622C]',
+                stat: <>0 Bytes</>,
+                pill: 'On-Device AI',
+                pillClass: 'text-[#E8622C] bg-[#E8622C]/10',
+                title: 'On-Device Facial Biometrics',
+                body: '100% on-device blink-liveness facial recognition. No raw face photographs are ever stored or uploaded to cloud servers.',
+                footer: 'Vectorized Liveness Check',
+                offset: 'md:-translate-y-3',
+                z: 'z-20',
+                shadow: 'shadow-2xl',
+              },
+              {
+                icon: Zap,
+                iconClass: 'bg-[#F2A93B]/15 border-[#F2A93B]/40 text-[#B87613]',
+                stat: <>1-Click</>,
+                pill: 'Automation',
+                pillClass: 'text-[#B87613] bg-[#F2A93B]/15',
+                title: 'Automated Fee Reminders',
+                body: 'Eliminate manual fee follow-ups with personalized WhatsApp & SMS reminders, individual due balances, and graphic receipts.',
+                footer: 'Dynamic Canvas Receipts',
+                offset: '',
+                z: 'z-10',
+                shadow: 'shadow-xl',
+              },
+            ].map((card, i) => {
+              const Icon = card.icon;
+              return (
+                <Reveal key={card.title} delay={i * 0.12} className={`relative ${card.z} ${card.offset}`}>
+                  <TiltCard
+                    className={`group h-full p-6 rounded-3xl bg-white border border-neutral-200 ${card.shadow} transition-colors duration-300 hover:border-[#E6357F]/40 flex flex-col justify-between space-y-4`}
+                  >
+                    <div>
+                      <div
+                        className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-4 shadow-2xs transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3 ${card.iconClass}`}
+                      >
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-2xl font-extrabold text-[#1A1A1A] font-display">{card.stat}</span>
+                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${card.pillClass}`}>
+                          {card.pill}
+                        </span>
+                      </div>
+                      <h4 className="text-lg font-extrabold text-[#1A1A1A] mb-1">{card.title}</h4>
+                      <p className="text-xs text-neutral-600 leading-relaxed font-medium">{card.body}</p>
+                    </div>
+                    <div className="pt-3 border-t border-neutral-100 flex items-center gap-1.5 text-[11px] font-bold text-emerald-700">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" /> {card.footer}
+                    </div>
+                  </TiltCard>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -498,7 +540,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Teaser Slot 1 */}
-            <div className="p-8 rounded-3xl bg-white border border-dashed border-neutral-300 hover:border-neutral-400 transition-all flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md">
+            <Reveal className="p-8 rounded-3xl bg-white border border-dashed border-neutral-300 hover:border-neutral-400 transition-all hover:-translate-y-1 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-lg">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF4F0] text-neutral-700 border border-neutral-200">
                   Product #02 • In Development
@@ -519,10 +561,10 @@ export default function HomePage() {
               >
                 Notify me when announced <ChevronRight className="w-3.5 h-3.5" />
               </button>
-            </div>
+            </Reveal>
 
             {/* Teaser Slot 2 */}
-            <div className="p-8 rounded-3xl bg-white border border-dashed border-neutral-300 hover:border-neutral-400 transition-all flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md">
+            <Reveal delay={0.1} className="p-8 rounded-3xl bg-white border border-dashed border-neutral-300 hover:border-neutral-400 transition-all hover:-translate-y-1 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-lg">
               <div className="flex items-center justify-between">
                 <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#FAF4F0] text-neutral-700 border border-neutral-200">
                   Product #03 • Ideation Phase
@@ -543,7 +585,7 @@ export default function HomePage() {
               >
                 Join roadmap focus group <ChevronRight className="w-3.5 h-3.5" />
               </button>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -553,9 +595,21 @@ export default function HomePage() {
       {/* ============================================================ */}
       <section className="py-16 sm:py-20 relative bg-[#FDF6F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-3xl bg-[#1A1A1A] p-8 sm:p-12 text-center text-white shadow-2xl overflow-hidden">
+          <Reveal className="relative rounded-3xl p-[2px] overflow-hidden shadow-2xl">
+            <div
+              aria-hidden
+              className="absolute inset-[-60%] animate-spin-slow"
+              style={{
+                background:
+                  'conic-gradient(from 0deg, #E6357F, #E8622C, #F2A93B, #E6357F)',
+              }}
+            />
+            <div className="relative rounded-3xl bg-[#1A1A1A] p-8 sm:p-12 text-center text-white overflow-hidden">
+            <div aria-hidden className="pointer-events-none absolute inset-0">
+              <div className="bg-noise" />
+            </div>
             <div className="relative z-10 max-w-3xl mx-auto space-y-6">
-              <span className="px-3.5 py-1 bg-[#E6357F] rounded-full text-xs font-extrabold uppercase tracking-wider text-white inline-block shadow-sm">
+              <span className="shimmer-badge px-3.5 py-1 bg-[#E6357F] rounded-full text-xs font-extrabold uppercase tracking-wider text-white inline-block shadow-sm">
                 Early Access Invites Open
               </span>
 
@@ -583,7 +637,8 @@ export default function HomePage() {
                 </Link>
               </div>
             </div>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
