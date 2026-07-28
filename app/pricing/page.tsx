@@ -101,24 +101,24 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="relative py-12 sm:py-20 overflow-hidden bg-[#FDF6F0] text-[#1A1A1A]">
+    <div className="relative py-12 sm:py-20 overflow-hidden bg-[#EDF1EE] text-[#101C18]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-16">
         {/* Page Header */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#E6357F]/10 border border-[#E6357F]/30 rounded-full text-xs font-bold text-[#E6357F] uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 rounded-full text-xs font-bold text-[#0F7A5F] uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             Transparent Early Pricing
           </div>
 
-          <h1 className="text-4xl sm:text-5xl font-extrabold font-display text-[#1A1A1A] tracking-tight">
-            Simple, Transparent Tiers for <span className="text-[#E6357F]">CampusNova</span>
+          <h1 className="text-4xl sm:text-5xl font-extrabold font-display text-[#101C18] tracking-tight">
+            Simple, Transparent Tiers for <span className="text-[#0F7A5F]">CampusNova</span>
           </h1>
 
           <p className="text-neutral-600 text-base sm:text-lg leading-relaxed font-medium">
             Choose the tier tailored to your institution size. Join the early access waitlist to lock in launch discounts.
           </p>
 
-          <div className="p-3 bg-[#FAF4F0] border border-amber-300 rounded-xl text-amber-900 text-xs font-semibold inline-block shadow-2xs">
+          <div className="p-3 bg-[#E2E9E4] border border-amber-300 rounded-xl text-amber-900 text-xs font-semibold inline-block shadow-2xs">
             ⚠️ <em>Early access pricing, subject to change before public launch. No credit card required to join waitlist.</em>
           </div>
         </div>
@@ -130,21 +130,21 @@ export default function PricingPage() {
               key={tier.name}
               className={`relative rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
                 tier.popular
-                  ? 'bg-white border-2 border-[#E6357F] shadow-2xl scale-102 lg:-translate-y-2'
+                  ? 'bg-white border-2 border-[#0F7A5F] shadow-2xl scale-102 lg:-translate-y-2'
                   : 'bg-white border border-neutral-200 shadow-lg hover:border-neutral-300'
               }`}
             >
               {tier.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#E6357F] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-[#0F7A5F] text-white text-xs font-bold uppercase tracking-wider rounded-full shadow-md">
                   {tier.badge}
                 </div>
               )}
 
               <div>
                 <div className="flex items-center justify-between">
-                  <h3 className="text-2xl font-bold font-display text-[#1A1A1A]">{tier.name}</h3>
+                  <h3 className="text-2xl font-bold font-display text-[#101C18]">{tier.name}</h3>
                   {!tier.popular && (
-                    <span className="text-[10px] uppercase font-bold text-[#E6357F] bg-[#E6357F]/10 px-2 py-0.5 rounded-full border border-[#E6357F]/30">
+                    <span className="text-[10px] uppercase font-bold text-[#0F7A5F] bg-[#0F7A5F]/10 px-2 py-0.5 rounded-full border border-[#0F7A5F]/30">
                       {tier.badge}
                     </span>
                   )}
@@ -153,7 +153,7 @@ export default function PricingPage() {
                 <p className="text-xs text-neutral-500 font-medium mt-2 min-h-[36px]">{tier.tagline}</p>
 
                 <div className="my-6 pb-6 border-b border-neutral-200">
-                  <span className="text-xl sm:text-2xl font-extrabold text-[#1A1A1A] font-display">
+                  <span className="text-xl sm:text-2xl font-extrabold text-[#101C18] font-display">
                     {tier.price}
                   </span>
                 </div>
@@ -161,7 +161,7 @@ export default function PricingPage() {
                 <ul className="space-y-3 mb-8">
                   {tier.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-xs text-neutral-700 font-medium">
-                      <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <Check className="w-4 h-4 text-[#0F7A5F] shrink-0 mt-0.5" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -173,7 +173,7 @@ export default function PricingPage() {
                   setSelectedTier(tier.name);
                   setIsWaitlistOpen(true);
                 }}
-                className="w-full py-3.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 bg-[#1A1A1A] hover:bg-black text-white"
+                className="w-full py-3.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 bg-[#101C18] hover:bg-black text-white"
               >
                 {tier.ctaText}
                 <ArrowRight className="w-4 h-4" />
@@ -185,7 +185,7 @@ export default function PricingPage() {
         {/* FAQ Accordion Section */}
         <div className="pt-16 max-w-4xl mx-auto space-y-8">
           <div className="text-center space-y-2">
-            <h2 className="text-3xl font-extrabold font-display text-[#1A1A1A]">
+            <h2 className="text-3xl font-extrabold font-display text-[#101C18]">
               Frequently Asked Questions
             </h2>
             <p className="text-neutral-600 text-sm font-medium">
@@ -203,12 +203,12 @@ export default function PricingPage() {
                 >
                   <button
                     onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                    className="w-full p-5 text-left font-bold text-sm text-[#1A1A1A] flex items-center justify-between gap-4 hover:text-[#E6357F] transition-colors"
+                    className="w-full p-5 text-left font-bold text-sm text-[#101C18] flex items-center justify-between gap-4 hover:text-[#0F7A5F] transition-colors"
                   >
                     <span>{faq.question}</span>
                     <ChevronDown
                       className={`w-5 h-5 text-neutral-400 shrink-0 transition-transform duration-300 ${
-                        isOpen ? 'rotate-180 text-[#E6357F]' : ''
+                        isOpen ? 'rotate-180 text-[#0F7A5F]' : ''
                       }`}
                     />
                   </button>

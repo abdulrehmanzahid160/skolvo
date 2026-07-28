@@ -1,39 +1,108 @@
 @import "tailwindcss";
 
+/* ============================================================
+   SKOLVO DESIGN SYSTEM
+   Palette grounded in the subject, not in SaaS convention:
+   - Chalk Slate  : chalkboard + surgical drape (education / clinical)
+   - Verdigris    : aged institutional brass, verified, permanent
+   - Signal Amber : vigilance, the thing being watched
+   - Stamp Crimson: recall / regulatory alarm, used sparingly
+   - Cool Paper   : ledger + document stock under fluorescent light
+   ============================================================ */
+
 @layer base {
   :root {
-    --bg-light: #FDF6F0;
-    --bg-card: #FFFFFF;
-    --bg-card-subtle: #FAF4F0;
-    --accent-magenta: #E6357F;
-    --accent-magenta-hover: #D02B70;
-    --accent-orange: #E8622C;
-    --accent-orange-hover: #D4531E;
-    --text-primary: #1A1A1A;
-    --text-secondary: #555555;
-    --text-muted: #777777;
-    --border-light: #E8E2DC;
-    --border-strong: #D5CEC7;
+    /* Surfaces */
+    --paper: #EDF1EE;
+    --paper-sunk: #E2E9E4;
+    --paper-deep: #DFE7E1;
+    --surface: #FFFFFF;
+
+    /* Ink */
+    --ink: #101C18;
+    --ink-soft: #3D4F47;
+    --ink-mute: #67796F;
+
+    /* Accents */
+    --verdigris: #0F7A5F;
+    --verdigris-deep: #0A5C47;
+    --verdigris-lift: #128A6B;
+    --verdigris-wash: #E4F1EC;
+
+    --amber: #E0A21B;
+    --amber-deep: #BE8412;
+    --amber-lift: #E9C46A;
+    --amber-wash: #FBF1DC;
+
+    --crimson: #B4304A;
+    --crimson-wash: #F8E7EA;
+
+    /* Lines */
+    --line: #D2DBD5;
+    --line-strong: #B4C2B9;
   }
 }
 
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-mute: var(--ink-mute);
+  --color-verdigris: var(--verdigris);
+  --color-amber: var(--amber);
+  --color-crimson: var(--crimson);
+  --color-line: var(--line);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-public-sans);
+  --font-mono: var(--font-plex-mono);
+}
+
 body {
-  background-color: var(--bg-light);
-  color: var(--text-primary);
-  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-public-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
   overflow-x: hidden;
+  font-feature-settings: 'ss01', 'cv05';
 }
 
-/* Typography Helpers */
+/* ── Typography roles ────────────────────────────────────────
+   Fraunces  : engraved / diploma / official document authority
+   Public Sans: designed for US federal government services
+   IBM Plex Mono: lab instrumentation, IDs, timestamps
+   ─────────────────────────────────────────────────────────── */
 .font-display {
-  font-family: var(--font-space), var(--font-inter), sans-serif;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-variation-settings: 'SOFT' 0, 'WONK' 1;
+  letter-spacing: -0.022em;
 }
 
-/* Clean Panel & Card Utilities */
+.font-data {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-feature-settings: 'zero' 1;
+}
+
+.label-caps {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ── Focus visibility (keyboard) ─────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--verdigris);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Surfaces ────────────────────────────────────────────── */
 .clay-card {
-  background: #FFFFFF;
-  border: 1px solid var(--border-light);
-  box-shadow: 0 4px 20px -2px rgba(26, 26, 26, 0.05), 0 2px 6px -1px rgba(26, 26, 26, 0.03);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 4px 20px -2px rgba(16, 28, 24, 0.05), 0 2px 6px -1px rgba(16, 28, 24, 0.03);
 }
 
 .clay-card-hover {
@@ -41,48 +110,61 @@ body {
 }
 .clay-card-hover:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px -4px rgba(26, 26, 26, 0.08), 0 4px 12px -2px rgba(26, 26, 26, 0.04);
-  border-color: var(--border-strong);
+  box-shadow: 0 12px 30px -4px rgba(16, 28, 24, 0.09), 0 4px 12px -2px rgba(16, 28, 24, 0.04);
+  border-color: var(--line-strong);
 }
 
-/* Solid Bold Text Highlights (Replacing Gradient Text Fills) */
-.text-highlight-magenta {
-  color: var(--accent-magenta);
+.text-highlight-magenta { color: var(--verdigris); }
+.text-highlight-orange { color: var(--amber); }
+
+/* Ruled ledger paper — used behind attendance/registry surfaces */
+.ledger-rule {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    rgba(16, 28, 24, 0.055) 27px,
+    rgba(16, 28, 24, 0.055) 28px
+  );
 }
 
-.text-highlight-orange {
-  color: var(--accent-orange);
-}
-
-/* Custom Light Scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #F5EEE8;
-}
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--paper-deep); }
 ::-webkit-scrollbar-thumb {
-  background: #D5CEC7;
-  border-radius: 4px;
+  background: var(--line-strong);
+  border-radius: 5px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #1A1A1A;
-}
+::-webkit-scrollbar-thumb:hover { background: var(--verdigris); }
 
-/* Keyframe Animations */
+/* ============================================================
+   MOTION
+   Every keyframe below serves one of three ideas:
+   verification (sweep), vigilance (pulse/tick), settling (float).
+   ============================================================ */
+
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-8px); }
 }
+.animate-float { animation: float 5s ease-in-out infinite; }
 
-.animate-float {
-  animation: float 5s ease-in-out infinite;
+/* The signature motif: a verification sweep travelling across an instrument.
+   Animating `left` alongside the transform guarantees a full traversal at any
+   container width, which a fixed translateX percentage cannot. */
+@keyframes sweep-x {
+  0% { left: 0%; transform: translateX(-100%); }
+  100% { left: 100%; transform: translateX(0%); }
 }
+.animate-sweep-x { animation: sweep-x 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
 
-/* ============================================================ */
-/* Premium Motion & Texture Utilities (Landing Page)             */
-/* ============================================================ */
+@keyframes sweep-y {
+  0%, 100% { top: 8%; }
+  50% { top: 88%; }
+}
+.animate-sweep-y { animation: sweep-y 2.6s ease-in-out infinite; }
 
+/* Slow drift for atmospheric field layers */
 @keyframes blob-move-1 {
   0%, 100% { transform: translate(0, 0) scale(1); }
   33% { transform: translate(60px, -40px) scale(1.15); }
@@ -93,36 +175,42 @@ body {
   33% { transform: translate(-70px, 40px) scale(1.1); }
   66% { transform: translate(50px, -30px) scale(0.92); }
 }
-.animate-blob-1 { animation: blob-move-1 16s ease-in-out infinite; }
-.animate-blob-2 { animation: blob-move-2 20s ease-in-out infinite; }
+.animate-blob-1 { animation: blob-move-1 18s ease-in-out infinite; }
+.animate-blob-2 { animation: blob-move-2 22s ease-in-out infinite; }
 
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
-.animate-marquee { animation: marquee 26s linear infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
 
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin-slow { to { transform: rotate(360deg); } }
 .animate-spin-slow { animation: spin-slow 9s linear infinite; }
+
+/* Vigilance: a soft breathing ring on "watching" indicators */
+@keyframes watch-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.08; transform: scale(1.9); }
+}
+.animate-watch-pulse { animation: watch-pulse 2.8s ease-in-out infinite; }
 
 @keyframes shimmer-sweep {
   0% { background-position: -150% 0; }
   100% { background-position: 250% 0; }
 }
-.shimmer-badge {
-  position: relative;
-  overflow: hidden;
-}
+.shimmer-badge { position: relative; overflow: hidden; }
 .shimmer-badge::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
   background-size: 200% 100%;
-  animation: shimmer-sweep 3.2s ease-in-out infinite;
+  animation: shimmer-sweep 3.4s ease-in-out infinite;
 }
+
+/* Caret for self-typing copy */
+@keyframes caret-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+.animate-caret { animation: caret-blink 1s step-end infinite; }
 
 .bg-noise {
   position: absolute;
@@ -133,3 +221,13 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* ── Reduced motion: keep meaning, drop movement ─────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .bg-noise { display: none; }
+}

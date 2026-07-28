@@ -1,18 +1,29 @@
 import type { Metadata } from 'next';
-import { Space_Grotesk, Inter } from 'next/font/google';
+import { Fraunces, Public_Sans, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-const spaceGrotesk = Space_Grotesk({
+// Display: engraved, diploma-adjacent authority. Used with restraint.
+const fraunces = Fraunces({
   subsets: ['latin'],
-  variable: '--font-space',
+  variable: '--font-fraunces',
   display: 'swap',
 });
 
-const inter = Inter({
+// Body: Public Sans is the typeface of the US federal design system —
+// a deliberate choice for a studio whose product reads FDA data.
+const publicSans = Public_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-public-sans',
+  display: 'swap',
+});
+
+// Utility: instrumentation, record IDs, timestamps, 510(k) numbers.
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-plex-mono',
   display: 'swap',
 });
 
@@ -21,27 +32,29 @@ export const metadata: Metadata = {
   // get "Page Name | Skolvo". The `default` is used for the homepage and any
   // page that doesn't export its own metadata.
   title: {
-    default: 'Skolvo — Building Purpose-Driven SaaS for the Modern Era',
+    default: 'Skolvo — Software for Places Where Being Wrong Is Expensive',
     template: '%s | Skolvo',
   },
   description:
-    'Skolvo is a SaaS studio building intelligent, secure, privacy-first software products. Creators of CampusNova — an AI-powered academy and school management platform with biometric attendance, automated fee tracking, and role-gated access control.',
+    'Skolvo is a software studio building focused, privacy-first tools for high-stakes industries. Makers of CampusNova (on-device biometric attendance and fee automation for academies) and FDA Regulatory Watchdog (weekly plain-English FDA monitoring for regulatory consultants).',
   keywords: [
     'Skolvo',
     'CampusNova',
-    'SaaS Parent Company',
+    'FDA Regulatory Watchdog',
+    'FDA 510(k) monitoring',
+    'FDA recall alerts',
+    'regulatory consultant software',
+    'medical device regulatory monitoring',
     'Academy Management System',
     'Biometric Attendance',
-    'AI Academy Chatbot',
-    'Mass WhatsApp Reminders',
-    'EdTech SaaS',
+    'On-Device Facial Recognition',
   ],
   authors: [{ name: 'Skolvo Team' }],
   metadataBase: new URL('https://app.skolvo.online'),
   openGraph: {
-    title: 'Skolvo | Next-Gen Specialized SaaS Products',
+    title: 'Skolvo | A Studio for High-Stakes Software',
     description:
-      'Home of CampusNova — AI-powered academy management with biometric attendance, automated fee reminders, and role-gated access control.',
+      'Two products live: CampusNova for academies, and FDA Regulatory Watchdog for medical-device regulatory consultants.',
     url: 'https://app.skolvo.online',
     siteName: 'Skolvo',
     // NOTE: /logo.png is a square app icon (1024×1024), which works for
@@ -62,9 +75,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Skolvo | Next-Gen Specialized SaaS Products',
+    title: 'Skolvo | A Studio for High-Stakes Software',
     description:
-      'Home of CampusNova — AI-powered academy management with biometric attendance, automated fee reminders, and role-gated access control.',
+      'Two products live: CampusNova for academies, and FDA Regulatory Watchdog for medical-device regulatory consultants.',
     images: ['/logo.png'],
   },
   icons: {
@@ -79,8 +92,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} scroll-smooth`}>
-      <body className="min-h-screen bg-[#FDF6F0] text-[#1A1A1A] flex flex-col font-sans antialiased selection:bg-[#E6357F] selection:text-white">
+    <html
+      lang="en"
+      className={`${fraunces.variable} ${publicSans.variable} ${plexMono.variable} scroll-smooth`}
+    >
+      <body className="min-h-screen bg-[#EDF1EE] text-[#101C18] flex flex-col antialiased selection:bg-[#0F7A5F] selection:text-white">
         <Navbar />
         <main className="flex-grow pt-20">{children}</main>
         <Footer />

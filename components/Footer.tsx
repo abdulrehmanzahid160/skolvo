@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="bg-[#FAF4F0] border-t border-neutral-200 relative overflow-hidden text-neutral-600 text-sm">
+      <footer className="bg-[#E2E9E4] border-t border-neutral-200 relative overflow-hidden text-neutral-600 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
             {/* Column 1: Brand & Mission */}
@@ -25,13 +25,15 @@ export default function Footer() {
                     className="object-contain p-0.5"
                   />
                 </div>
-                <span className="font-display font-extrabold text-xl tracking-tight text-[#1A1A1A]">
-                  Skolvo<span className="text-[#E6357F]">.</span>
+                <span className="font-display font-extrabold text-xl tracking-tight text-[#101C18]">
+                  Skolvo<span className="text-[#0F7A5F]">.</span>
                 </span>
               </Link>
 
               <p className="text-neutral-600 text-xs sm:text-sm leading-relaxed max-w-sm">
-                Skolvo is a forward-thinking parent SaaS studio dedicated to building specialized, secure, and AI-driven software products for institutions and modern businesses worldwide.
+                Skolvo is a software studio building focused tools for industries where a mistake is
+                expensive — children&apos;s biometric data at the school gate, and medical-device
+                safety filings at the FDA.
               </p>
 
               <div className="flex items-center gap-3 pt-2">
@@ -61,7 +63,7 @@ export default function Footer() {
 
             {/* Column 2: Products */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1A1A1A]">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#101C18]">
                 SaaS Products
               </h4>
               <ul className="space-y-2 text-xs">
@@ -71,8 +73,19 @@ export default function Footer() {
                     className="hover:text-black transition-colors flex items-center gap-1.5 font-medium"
                   >
                     CampusNova
-                    <span className="px-2 py-0.5 text-[10px] bg-[#E6357F]/10 border border-[#E6357F]/30 text-[#E6357F] font-semibold rounded-full">
-                      Coming Soon
+                    <span className="px-2 py-0.5 text-[10px] bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 text-[#0F7A5F] font-semibold rounded-full">
+                      Early Access
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/#watchdog"
+                    className="hover:text-black transition-colors flex items-center gap-1.5 font-medium"
+                  >
+                    FDA Regulatory Watchdog
+                    <span className="px-2 py-0.5 text-[10px] bg-[#E0A21B]/12 border border-[#E0A21B]/40 text-[#BE8412] font-semibold rounded-full">
+                      Early Access
                     </span>
                   </Link>
                 </li>
@@ -81,8 +94,8 @@ export default function Footer() {
                     onClick={() => setIsWaitlistOpen(true)}
                     className="hover:text-black transition-colors flex items-center gap-1 text-left font-medium"
                   >
-                    Future Product Pipeline
-                    <ArrowUpRight className="w-3 h-3 text-[#E8622C]" />
+                    Roadmap &amp; what&apos;s next
+                    <ArrowUpRight className="w-3 h-3 text-[#E0A21B]" />
                   </button>
                 </li>
               </ul>
@@ -90,7 +103,7 @@ export default function Footer() {
 
             {/* Column 3: Navigation */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1A1A1A]">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#101C18]">
                 Company & Pages
               </h4>
               <ul className="space-y-2 text-xs font-medium">
@@ -124,7 +137,7 @@ export default function Footer() {
 
             {/* Column 4: Support & Legal */}
             <div className="space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1A1A1A]">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#101C18]">
                 Support & Inquiries
               </h4>
               <div className="space-y-2 text-xs">
@@ -132,13 +145,13 @@ export default function Footer() {
                   href="mailto:support@skolvo.online"
                   className="flex items-center gap-2 text-neutral-800 hover:text-black transition-colors group font-medium"
                 >
-                  <Mail className="w-4 h-4 text-[#E8622C] group-hover:scale-110 transition-transform" />
+                  <Mail className="w-4 h-4 text-[#E0A21B] group-hover:scale-110 transition-transform" />
                   <span>support@skolvo.online</span>
                 </a>
                 <p className="text-neutral-500 text-[11px] leading-relaxed pt-1">
-                  Official Skolvo corporate domain: <strong className="text-[#1A1A1A]">skolvo.online</strong>
+                  Official Skolvo corporate domain: <strong className="text-[#101C18]">skolvo.online</strong>
                 </p>
-                <div className="flex items-center gap-1.5 text-[11px] text-emerald-700 font-semibold pt-1">
+                <div className="flex items-center gap-1.5 text-[11px] text-[#0A5C47] font-semibold pt-1">
                   <Shield className="w-3.5 h-3.5" />
                   <span>Enterprise Privacy & Encryption</span>
                 </div>

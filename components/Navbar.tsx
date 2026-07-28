@@ -29,6 +29,7 @@ export default function Navbar() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'CampusNova', href: '/#campusnova' },
+    { name: 'Watchdog', href: '/#watchdog' },
     { name: 'Pricing', href: '/pricing' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' },
@@ -39,7 +40,7 @@ export default function Navbar() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#FDF6F0]/90 backdrop-blur-xl border-b border-black/5 py-3.5 shadow-sm'
+            ? 'bg-[#EDF1EE]/90 backdrop-blur-xl border-b border-black/5 py-3.5 shadow-sm'
             : 'bg-transparent py-5'
         }`}
       >
@@ -56,9 +57,9 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-extrabold text-xl tracking-tight text-[#1A1A1A] flex items-center gap-1">
+              <span className="font-display font-semibold text-xl tracking-tight text-[#101C18] flex items-center gap-1.5">
                 Skolvo
-                <span className="w-2 h-2 rounded-full bg-[#E6357F]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0F7A5F]" />
               </span>
             </div>
           </Link>
@@ -73,7 +74,7 @@ export default function Navbar() {
                   href={link.href}
                   className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
                     isActive
-                      ? 'bg-[#1A1A1A] text-white shadow-sm'
+                      ? 'bg-[#101C18] text-white shadow-sm'
                       : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
                   }`}
                 >
@@ -87,9 +88,9 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => setIsWaitlistOpen(true)}
-              className="relative group px-5 py-2.5 rounded-full bg-[#1A1A1A] hover:bg-black text-white text-xs font-semibold shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 overflow-hidden flex items-center gap-1.5"
+              className="relative group px-5 py-2.5 rounded-full bg-[#101C18] hover:bg-black text-white text-xs font-semibold shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 overflow-hidden flex items-center gap-1.5"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#E6357F]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#0F7A5F]" />
               <span>Join Waitlist</span>
             </button>
           </div>
@@ -130,9 +131,9 @@ export default function Navbar() {
                       setMobileMenuOpen(false);
                       setIsWaitlistOpen(true);
                     }}
-                    className="w-full py-3 rounded-xl bg-[#1A1A1A] hover:bg-black text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md"
+                    className="w-full py-3 rounded-xl bg-[#101C18] hover:bg-black text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md"
                   >
-                    <Sparkles className="w-4 h-4 text-[#E6357F]" />
+                    <Sparkles className="w-4 h-4 text-[#0F7A5F]" />
                     Join CampusNova Waitlist
                   </button>
                 </div>
