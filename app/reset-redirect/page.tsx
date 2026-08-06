@@ -122,8 +122,8 @@ function RedirectContent() {
       <PageShell>
         <div className="space-y-3 pt-2">
           <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-            <div className="absolute inset-0 rounded-full bg-[#0F7A5F]/10 border border-[#0F7A5F]/30" />
-            <MobileIcon className="w-7 h-7 text-[#128A6B]" />
+            <div className="absolute inset-0 rounded-full bg-[#0F6B54]/10 border border-[#0F6B54]/30" />
+            <MobileIcon className="w-7 h-7 text-[#0F6B54]" />
           </div>
 
           <h2 className="text-xl font-bold font-display text-white">
@@ -140,7 +140,7 @@ function RedirectContent() {
         <div className="pt-4 border-t border-white/10 space-y-2.5 text-xs">
           <a
             href={deepLinkUrl}
-            className="w-full py-3 px-4 bg-gradient-to-r from-[#0F7A5F] to-[#0A5C47] hover:from-[#128A6B] hover:to-[#0F7A5F] text-white font-semibold rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all"
+            className="w-full py-3 px-4 bg-gradient-to-r from-[#0F6B54] to-[#0C5744] hover:from-[#0F6B54] hover:to-[#0F6B54] text-white font-semibold rounded-xl shadow-lg flex items-center justify-center gap-2 transition-all"
           >
             <MobileIcon className="w-4 h-4" />
             Open CampusNova app
@@ -155,7 +155,7 @@ function RedirectContent() {
           >
             <Download className="w-4 h-4 text-[#E0A21B]" />
             Get the app
-            <span className="ml-auto text-[10px] font-normal bg-white/10 px-2 py-0.5 rounded-full text-gray-400">
+            <span className="ml-auto text-data font-normal bg-white/10 px-2 py-0.5 rounded-full text-gray-400">
               Coming soon
             </span>
           </button>
@@ -163,7 +163,7 @@ function RedirectContent() {
           {token && (
             <button
               onClick={handleCopyToken}
-              className="w-full py-2 px-3 bg-white/5 hover:bg-white/10 text-gray-300 text-[11px] rounded-lg flex items-center justify-center gap-1.5 transition-colors"
+              className="w-full py-2 px-3 bg-white/5 hover:bg-white/10 text-gray-300 text-data rounded-lg flex items-center justify-center gap-1.5 transition-colors"
             >
               {copied ? (
                 <>
@@ -190,8 +190,8 @@ function RedirectContent() {
     <PageShell>
       <div className="space-y-3 pt-2">
         <div className="relative w-16 h-16 mx-auto flex items-center justify-center">
-          <div className="absolute inset-0 rounded-full border-2 border-t-[#0F7A5F] border-r-[#E0A21B] border-b-transparent border-l-transparent animate-spin" />
-          <KeyRound className="w-7 h-7 text-[#128A6B] animate-pulse" />
+          <div className="absolute inset-0 rounded-full border-2 border-t-[#0F6B54] border-r-[#E0A21B] border-b-transparent border-l-transparent animate-spin" />
+          <KeyRound className="w-7 h-7 text-[#0F6B54] animate-pulse" />
         </div>
 
         <h2 className="text-xl font-bold font-display text-white">
@@ -203,7 +203,7 @@ function RedirectContent() {
           can set a new password.
         </p>
 
-        <div className="px-3 py-1.5 bg-[#0B0B14] border border-white/10 rounded-full w-fit mx-auto text-[11px] text-[#128A6B] font-mono">
+        <div className="px-3 py-1.5 bg-[#0B0B14] border border-white/10 rounded-full w-fit mx-auto text-data text-[#0F6B54] font-mono">
           Redirecting&hellip;
         </div>
       </div>
@@ -227,16 +227,16 @@ function RedirectContent() {
 function PageShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-[80vh] flex items-center justify-center p-4 sm:p-6 overflow-hidden font-sans">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#0F7A5F]/20 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#0F6B54]/20 rounded-full blur-[140px] pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative w-full max-w-md bg-[#131322] border border-[#0F7A5F]/40 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-[#0F7A5F]/20 text-center space-y-6 overflow-hidden"
+        className="relative w-full max-w-md bg-[#131322] border border-[#0F6B54]/40 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-[#0F6B54]/20 text-center space-y-6 overflow-hidden"
       >
         <div className="flex items-center justify-center gap-2">
-          <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-[#0F7A5F]/30 bg-white">
+          <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-[#0F6B54]/30 bg-white">
             <Image
               src="/logo.png"
               alt="Skolvo Logo"
@@ -258,7 +258,7 @@ function PageShell({ children }: { children: React.ReactNode }) {
 
 function SecurityFooter() {
   return (
-    <div className="flex items-center justify-center gap-1.5 text-[10px] text-gray-500">
+    <div className="flex items-center justify-center gap-1.5 text-data text-gray-500">
       <Shield className="w-3.5 h-3.5 text-[#3FAE8C]" />
       <span>Encrypted Auth Portal • Official Domain skolvo.online</span>
     </div>
@@ -270,7 +270,7 @@ export default function ResetRedirectPage() {
     <Suspense
       fallback={
         <div className="min-h-[70vh] flex items-center justify-center text-white">
-          <Loader2 className="w-8 h-8 animate-spin text-[#0F7A5F]" />
+          <Loader2 className="w-8 h-8 animate-spin text-[#0F6B54]" />
         </div>
       }
     >
