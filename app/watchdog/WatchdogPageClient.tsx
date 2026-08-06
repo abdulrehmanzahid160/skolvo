@@ -1,286 +1,303 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import {
-  Radar,
-  Siren,
-  FileCheck2,
   AlertTriangle,
-  Clock,
-  Scale,
-  Database,
-  Mail,
   ArrowRight,
   Check,
+  Clock,
+  Database,
+  FileCheck2,
+  Mail,
+  Radar,
+  Scale,
+  Siren,
   X,
 } from 'lucide-react';
-import WaitlistModal from '@/components/WaitlistModal';
-import WatchdogLoop, { WATCHDOG_STEP_COUNT } from '@/components/showcase/WatchdogLoop';
+import WatchdogLoop from '@/components/showcase/WatchdogLoop';
 import WatchdogRadar from '@/components/hero/WatchdogRadar';
-import PatrolBot from '@/components/mascot/PatrolBot';
+import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import {
-  Reveal,
-  WordReveal,
   Counter,
-  StationLabel,
-  AtmosphericField,
-  GridLines,
+  HeroItem,
+  HeroSequence,
+  LineReveal,
+  Reveal,
+  RevealGroup,
+  RevealItem,
+  SectionHeading,
 } from '@/components/motion/Primitives';
-import PinnedSequence from '@/components/motion/PinnedSequence';
 
 const PRODUCT = 'FDA Regulatory Watchdog';
 
+/* ============================================================
+   WATCHDOG PRODUCT PAGE
+
+   Six sections, six layout families:
+     1  hero          asymmetric split, radar right
+     2  the routine   numbered 4-step grid
+     3  the demo      full-width, unpinned
+     4  comparison    two-column split panel
+     5  boundaries    definition rows
+     6  close         inverted panel
+
+   Section 2 keeps numbered markers, unlike the rest of the site.
+   Here the content genuinely is an ordered procedure the reader
+   performs, so the numbers carry information rather than decorate.
+
+   Only one section inverts to dark (the close), so the page reads
+   as one theme rather than alternating light and dark bands.
+   ============================================================ */
+
+const ROUTINE = [
+  {
+    n: '01',
+    t: 'Open the 510(k) database',
+    d: 'Filter by product code. Read the new clearances. Work out which ones are actually competitors.',
+  },
+  {
+    n: '02',
+    t: 'Search MAUDE',
+    d: "Look for adverse events on devices like your client's. Skim reports written in inconsistent free text.",
+  },
+  {
+    n: '03',
+    t: 'Check the Enforcement Report',
+    d: 'Scan the weekly recall list for anything in the category. Miss one and it is your problem.',
+  },
+  {
+    n: '04',
+    t: 'Write the client summary',
+    d: 'Translate all of it into something a non-regulatory reader understands. Bill for barely any of it.',
+  },
+];
+
+/* Three record kinds. The colour mapping is semantic and matches the digest
+   panel elsewhere on the site, and every kind is also named in text, so nothing
+   depends on colour alone. */
+const KINDS = [
+  {
+    icon: FileCheck2,
+    tone: 'border-accent-line bg-accent-wash text-accent',
+    label: '510(k) clearances',
+    title: 'Who just entered your category',
+    body: 'New clearances matching your product codes, so you learn about a competitor from us rather than from your client asking why you did not mention it.',
+  },
+  {
+    icon: AlertTriangle,
+    tone: 'border-mark-line bg-mark-wash text-mark',
+    label: 'Adverse events',
+    title: 'What is being complained about',
+    body: 'MAUDE reports involving comparable devices, with the failure mode summarised. Useful signal for risk files and design reviews.',
+  },
+  {
+    icon: Siren,
+    tone: 'border-danger/25 bg-danger-wash text-danger',
+    label: 'Recalls',
+    title: 'The one you cannot afford to miss',
+    body: 'Enforcement Report entries in your category, with classification and reason. This is the line that justifies the whole subscription.',
+  },
+];
+
+const BOUNDARIES = [
+  {
+    icon: Database,
+    title: 'Every line is traceable',
+    body: 'Only public FDA sources: the 510(k) database, MAUDE adverse-event reports, and the weekly Enforcement Reports. Each item links to the original record, so you can verify it yourself before you advise anyone.',
+  },
+  {
+    icon: Radar,
+    title: 'Your category, not the whole FDA',
+    body: 'You define the product codes and competitors that matter. The digest stays short because it ignores everything outside that scope. A long report you skim is worse than a short one you read.',
+  },
+  {
+    icon: Scale,
+    title: 'It reports facts. It does not practise law.',
+    body: 'Watchdog tells you what was filed and when. It will not interpret regulation, assess your compliance, or give legal advice. That judgement is the part your clients pay you for, and it stays yours.',
+  },
+];
+
 export default function WatchdogPageClient() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const { openWaitlist } = useWaitlist();
 
   return (
-    <div className="relative overflow-x-clip bg-[#EDF1EE] text-[#101C18]">
-      {/* ── Hero ───────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pb-20 pt-14 sm:pt-20">
-        <AtmosphericField a="#E0A21B" b="#0F7A5F" />
-        <GridLines />
+    <>
+      {/* ── 1. Hero ─────────────────────────────────────────────── */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pb-[var(--section-y)] pt-16 sm:px-6 lg:px-8 lg:pt-24">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+            <HeroSequence className="lg:col-span-7">
+              <HeroItem>
+                <p className="label">Skolvo flagship · early access open</p>
+              </HeroItem>
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-7">
-          <motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2.5 rounded-full border border-[#E0A21B]/35 bg-white/70 px-3.5 py-1.5 backdrop-blur-md"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-[#E0A21B] animate-watch-pulse" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#E0A21B]" />
-            </span>
-            <span className="label-caps text-[#BE8412]">Skolvo flagship</span>
-            <span className="text-[#B4C2B9]">·</span>
-            <span className="font-data text-[10.5px] font-semibold text-[#3D4F47]">
-              early access open
-            </span>
-          </motion.div>
+              <h1 className="font-display-lg mt-5 text-display-lg text-ink">
+                <LineReveal
+                  delay={0.12}
+                  lines={['You should not have to', <>read the FDA by hand.</>]}
+                />
+              </h1>
 
-          <h1 className="font-display mt-6 max-w-3xl text-[2.5rem] font-semibold leading-[1.04] tracking-tight sm:text-[3.6rem]">
-            <WordReveal text="You should not have to" />{' '}
-            <span className="relative inline-block">
-              <WordReveal text="read the FDA" className="relative z-10 text-[#BE8412]" delay={0.16} />
-              <motion.span
-                aria-hidden
-                className="absolute -bottom-0.5 left-0 h-[0.36em] w-full origin-left rounded-sm bg-[#E9C46A]/50"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.9, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              />
-            </span>{' '}
-            <WordReveal text="by hand." delay={0.3} />
-          </h1>
+              <HeroItem>
+                <p className="prose-measure mt-6 text-lead text-ink-soft">
+                  Every week Watchdog reads the public FDA record for your category and emails you
+                  what happened, in plain English.
+                </p>
+              </HeroItem>
 
-          <motion.p
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-6 max-w-2xl text-[17px] leading-relaxed text-[#3D4F47]"
-          >
-            Every week, Regulatory Watchdog reads the public FDA record for your product category —
-            competitor clearances, adverse-event filings, recalls — and emails you what happened in
-            plain English, with a link to every original document. Four minutes on Monday instead of
-            two hours on Friday.
-          </motion.p>
+              <HeroItem>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Button onClick={() => openWaitlist(PRODUCT)}>
+                    <Radar aria-hidden className="h-4 w-4" />
+                    Get early access
+                  </Button>
+                  <ButtonLink href="/pricing" variant="secondary">
+                    See pricing
+                    <ArrowRight aria-hidden className="h-3.5 w-3.5" />
+                  </ButtonLink>
+                </div>
+              </HeroItem>
 
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.62 }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-          >
-            <button
-              onClick={() => setIsWaitlistOpen(true)}
-              data-magnetic
-              data-cursor-label="Request access"
-              className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-xl transition-transform hover:-translate-y-0.5"
-            >
-              <span className="absolute inset-0 -translate-x-full bg-[#E0A21B] transition-transform duration-500 ease-out group-hover:translate-x-0" />
-              <Radar className="relative z-10 h-4 w-4" />
-              <span className="relative z-10">Get early access</span>
-            </button>
+              <HeroItem>
+                <p className="mt-4 text-body-sm text-ink-mute">
+                  No sales call, no demo to schedule, no procurement department.
+                </p>
+              </HeroItem>
+            </HeroSequence>
 
-            <Link
-              href="/pricing"
-              className="flex items-center justify-center gap-2 rounded-full border border-[#B4C2B9] bg-white/80 px-7 py-3.5 text-sm font-semibold backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-[#E0A21B]/60"
-            >
-              See pricing
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.9 }}
-            className="font-data mt-4 text-[11px] text-[#67796F]"
-          >
-            No sales call. No demo to schedule. No procurement department required.
-          </motion.p>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5"
-          >
-            <WatchdogRadar className="mx-auto max-w-[380px]" />
-          </motion.div>
+            <HeroSequence className="lg:col-span-5">
+              <HeroItem y={20}>
+                <div className="panel p-6">
+                  <WatchdogRadar className="mx-auto w-full max-w-[320px]" />
+                </div>
+              </HeroItem>
+            </HeroSequence>
           </div>
         </div>
       </section>
 
-      {/* ── The manual routine we replace ───────────────────────── */}
-      <section className="relative border-y border-[#D2DBD5] bg-[#101C18] py-20 text-white">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[#E0A21B]/18 blur-[110px] animate-blob-2" />
-          <div className="bg-noise" />
-        </div>
+      {/* ── 2. The routine we replace ───────────────────────────── */}
+      <section className="border-b border-line bg-sunk">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading
+            label="The Friday afternoon problem"
+            title="This is the routine you already run."
+          />
 
-        <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal className="max-w-2xl">
-            <StationLabel index="01">The Friday afternoon problem</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-tight sm:text-[2.5rem]">
-              This is the routine you already run.
-            </h2>
-          </Reveal>
-
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-4">
-            {[
-              {
-                n: '01',
-                t: 'Open the 510(k) database',
-                d: 'Filter by product code. Read the new clearances. Work out which ones are actually competitors.',
-              },
-              {
-                n: '02',
-                t: 'Search MAUDE',
-                d: 'Look for adverse events on devices like your client\'s. Skim reports written in inconsistent free text.',
-              },
-              {
-                n: '03',
-                t: 'Check the Enforcement Report',
-                d: 'Scan the weekly recall list for anything in the category. Miss one and it is your problem.',
-              },
-              {
-                n: '04',
-                t: 'Write the client summary',
-                d: 'Translate all of it into something a non-regulatory reader understands. Bill for barely any of it.',
-              },
-            ].map((s, i) => (
-              <Reveal key={s.n} delay={i * 0.09}>
-                <div className="h-full rounded-2xl border border-white/12 bg-white/[0.05] p-5">
-                  <span className="font-data text-[11px] font-bold text-[#E9C46A]">{s.n}</span>
-                  <h3 className="font-display mt-2 text-[15px] font-semibold leading-snug">{s.t}</h3>
-                  <p className="mt-2 text-[12.5px] leading-relaxed text-white/60">{s.d}</p>
+          <RevealGroup className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {ROUTINE.map((s) => (
+              <RevealItem key={s.n}>
+                <div className="border-t-2 border-line-strong pt-4">
+                  <span className="font-data text-data font-semibold text-mark">{s.n}</span>
+                  <h3 className="font-display mt-2 text-body font-semibold text-ink">{s.t}</h3>
+                  <p className="mt-2 text-body-sm text-ink-soft">{s.d}</p>
                 </div>
-              </Reveal>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
 
-          <Reveal delay={0.2} className="mt-10">
-            <div className="flex flex-wrap items-center gap-x-8 gap-y-4 rounded-2xl border border-[#E0A21B]/30 bg-[#E0A21B]/10 p-6">
+          <Reveal delay={0.15} className="mt-12">
+            <div className="panel flex flex-wrap items-center gap-x-10 gap-y-6 p-6">
               <div>
-                <p className="font-display text-3xl font-semibold text-[#E9C46A]">
+                <p className="font-display text-display text-ink">
                   <Counter to={2} suffix="+ hrs" />
                 </p>
-                <p className="mt-1 text-[12px] text-white/60">per client, every week</p>
+                <p className="mt-1 text-body-sm text-ink-mute">per client, every week</p>
               </div>
-              <div className="h-10 w-px bg-white/15" />
+              <div className="hidden h-12 w-px bg-line sm:block" />
               <div>
-                <p className="font-display text-3xl font-semibold text-[#E9C46A]">
+                <p className="font-display text-display text-ink">
                   <Counter to={3} /> databases
                 </p>
-                <p className="mt-1 text-[12px] text-white/60">none of which talk to each other</p>
+                <p className="mt-1 text-body-sm text-ink-mute">none of which talk to each other</p>
               </div>
-              <div className="h-10 w-px bg-white/15" />
-              <p className="max-w-xs text-[13px] leading-relaxed text-white/70">
-                Watchdog does this pass automatically and hands you the finished summary.
+              <div className="hidden h-12 w-px bg-line lg:block" />
+              <p className="max-w-xs text-body-sm text-ink-soft">
+                Watchdog runs this pass automatically and hands you the finished summary.
               </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {/* ── The product working ─────────────────────────────────── */}
-      <section className="relative py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal className="max-w-2xl">
-            <StationLabel index="02">How it works</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-tight sm:text-[2.4rem]">
-              Watch a week compile itself.
-            </h2>
-            <p className="mt-4 text-[15.5px] leading-relaxed text-[#3D4F47]">
-              The playhead sweeps the public record. Matches surface as they are found. On Monday
-              morning the digest is already written.
-            </p>
-          </Reveal>
+      {/* ── 3. The product working ──────────────────────────────── */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading
+            title="Watch a week compile itself."
+            body="The playhead sweeps the public record and matches surface as they are found. By Monday morning the digest is already written."
+          />
 
-          <PinnedSequence steps={WATCHDOG_STEP_COUNT} className="mt-10">
-            {(step) => <WatchdogLoop controlledStep={step} />}
-          </PinnedSequence>
+          <RevealGroup className="mt-10 grid gap-6 md:grid-cols-3">
+            {KINDS.map((c) => {
+              const Icon = c.icon;
+              return (
+                <RevealItem key={c.label}>
+                  <div className="flex h-full flex-col">
+                    <span
+                      className={`flex h-10 w-10 items-center justify-center rounded-control border ${c.tone}`}
+                    >
+                      <Icon aria-hidden className="h-4 w-4" />
+                    </span>
+                    <p className="label mt-3">{c.label}</p>
+                    <h3 className="font-display mt-1 text-body font-semibold text-ink">
+                      {c.title}
+                    </h3>
+                    <p className="mt-2 text-body-sm text-ink-soft">{c.body}</p>
+                  </div>
+                </RevealItem>
+              );
+            })}
+          </RevealGroup>
+
+          <Reveal className="mt-12">
+            <WatchdogLoop />
+          </Reveal>
         </div>
       </section>
 
-      {/* ── Comparison ──────────────────────────────────────────── */}
-      <section className="relative border-y border-[#D2DBD5] bg-[#E2E9E4]/70 py-20">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <Reveal className="max-w-2xl">
-            <StationLabel index="03">Why this does not exist yet</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-tight sm:text-[2.4rem]">
-              Everything else in this category is built for Medtronic.
-            </h2>
-            <p className="mt-4 text-[15.5px] leading-relaxed text-[#3D4F47]">
-              Enterprise regulatory intelligence platforms are excellent and completely inaccessible
-              — five figures a year, an annual contract, and a sales process before you can even see
-              the interface. If you are one consultant serving a handful of clients, nobody has built
-              for you. That is the whole gap.
-            </p>
-          </Reveal>
+      {/* ── 4. Comparison ──────────────────────────────────────── */}
+      <section className="border-b border-line bg-sunk">
+        <div className="mx-auto max-w-5xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading
+            title="Everything else in this category is built for Medtronic."
+            body="Enterprise regulatory intelligence platforms are excellent and completely inaccessible: five figures a year, an annual contract, and a sales process before you can even see the interface. If you are one consultant serving a handful of clients, nobody has built for you."
+          />
 
-          <Reveal delay={0.12} className="mt-10 overflow-hidden rounded-3xl border border-[#D2DBD5] bg-white shadow-xl">
-            <div className="grid grid-cols-1 sm:grid-cols-2">
-              <div className="border-b border-[#D2DBD5] p-7 sm:border-b-0 sm:border-r">
-                <span className="label-caps text-[#67796F]">Enterprise platforms</span>
-                <p className="font-display mt-2 text-2xl font-semibold text-[#67796F]">
-                  $15,000+ / year
-                </p>
-                <ul className="mt-5 space-y-2.5">
+          <Reveal delay={0.12} className="mt-10">
+            <div className="grid overflow-hidden rounded-card border border-line bg-surface sm:grid-cols-2">
+              <div className="border-b border-line p-7 sm:border-b-0 sm:border-r">
+                <p className="label">Enterprise platforms</p>
+                <p className="font-display mt-2 text-title text-ink-mute">$15,000+ per year</p>
+                <ul className="mt-5 space-y-3">
                   {[
                     'Annual contract, negotiated',
                     'Sales call before you see it',
                     'Built for a regulatory department',
                     'Features you will never open',
                   ].map((t) => (
-                    <li key={t} className="flex items-start gap-2 text-[13px] text-[#3D4F47]">
-                      <X className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#B4304A]" />
+                    <li key={t} className="flex items-start gap-2.5 text-body-sm text-ink-soft">
+                      <X aria-hidden className="mt-1 h-3.5 w-3.5 shrink-0 text-danger" />
                       {t}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="bg-[#E4F1EC]/60 p-7">
-                <span className="label-caps text-[#0A5C47]">Regulatory Watchdog</span>
-                <p className="font-display mt-2 text-2xl font-semibold text-[#0A5C47]">
-                  Priced for one person
-                </p>
-                <ul className="mt-5 space-y-2.5">
+              <div className="bg-accent-wash p-7">
+                <p className="label text-accent">Regulatory Watchdog</p>
+                <p className="font-display mt-2 text-title text-accent">Priced for one person</p>
+                <ul className="mt-5 space-y-3">
                   {[
                     'Self-serve signup, cancel anytime',
                     'See it working before you pay',
                     'Built for an independent consultant',
                     'One job, done completely',
                   ].map((t) => (
-                    <li key={t} className="flex items-start gap-2 text-[13px] text-[#101C18]">
-                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#0F7A5F]" />
+                    <li key={t} className="flex items-start gap-2.5 text-body-sm text-ink">
+                      <Check aria-hidden className="mt-1 h-3.5 w-3.5 shrink-0 text-accent" />
                       {t}
                     </li>
                   ))}
@@ -291,169 +308,70 @@ export default function WatchdogPageClient() {
         </div>
       </section>
 
-      {/* ── Boundaries ──────────────────────────────────────────── */}
-      <section className="relative py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal className="max-w-2xl">
-            <StationLabel index="04">Where the edges are</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-tight sm:text-[2.4rem]">
-              What it does, and what it refuses to do.
-            </h2>
-          </Reveal>
+      {/* ── 5. Boundaries ──────────────────────────────────────── */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-5xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading title="What it does, and what it refuses to do." />
 
-          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {[
-              {
-                icon: Database,
-                title: 'Every line is traceable',
-                body: 'Only public FDA sources: the 510(k) database, MAUDE adverse-event reports, and weekly Enforcement Reports. Each item links to the original record so you can verify it yourself before you advise anyone.',
-              },
-              {
-                icon: Radar,
-                title: 'Your category, not the whole FDA',
-                body: 'You define the product codes and competitors that matter. The digest stays short because it ignores everything outside that scope — a long report you skim is worse than a short one you read.',
-              },
-              {
-                icon: Scale,
-                title: 'It reports facts. It does not practise law.',
-                body: 'Watchdog tells you what was filed and when. It will not interpret regulation, assess your compliance, or give legal advice. That judgement is the part your clients pay you for, and it stays yours.',
-              },
-            ].map((c, i) => {
-              const Icon = c.icon;
-              return (
-                <Reveal key={c.title} delay={i * 0.1}>
-                  <div className="h-full rounded-3xl border border-[#D2DBD5] bg-white p-6 shadow-sm">
-                    <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#E9C46A] bg-[#FBF1DC] text-[#BE8412]">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h3 className="font-display text-base font-semibold">{c.title}</h3>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-[#3D4F47]">{c.body}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
+          <RevealGroup className="mt-10">
+            <dl className="border-t border-line">
+              {BOUNDARIES.map((c) => {
+                const Icon = c.icon;
+                return (
+                  <RevealItem key={c.title}>
+                    <div className="grid gap-3 border-b border-line py-7 md:grid-cols-12 md:gap-8">
+                      <dt className="flex items-start gap-3 md:col-span-5">
+                        <Icon aria-hidden className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+                        <span className="font-display text-body font-semibold text-ink">
+                          {c.title}
+                        </span>
+                      </dt>
+                      <dd className="text-body-sm text-ink-soft md:col-span-7">{c.body}</dd>
+                    </div>
+                  </RevealItem>
+                );
+              })}
+            </dl>
+          </RevealGroup>
         </div>
       </section>
 
-      {/* ── What lands in your inbox ────────────────────────────── */}
-      <section className="relative border-t border-[#D2DBD5] bg-[#E2E9E4]/70 py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal className="max-w-2xl">
-            <StationLabel index="05">What you get</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-tight sm:text-[2.4rem]">
-              Three kinds of thing, one email.
+      {/* ── 6. Close ───────────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="on-dark rounded-card bg-ink p-8 sm:p-14">
+            <h2 className="font-display max-w-[24ch] text-display text-white">
+              Get next Monday&apos;s digest.
             </h2>
-          </Reveal>
+            <p className="prose-measure mt-4 text-body text-[color:var(--ink-invert-soft)]">
+              Tell us the product category you track and we will set up the watch. If the first
+              digest is not worth the four minutes it takes to read, say so and we will stop sending
+              it.
+            </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {[
-              {
-                icon: FileCheck2,
-                tint: '#0F7A5F',
-                wash: '#E4F1EC',
-                label: '510(k) clearances',
-                title: 'Who just entered your category',
-                body: 'New clearances matching your product codes — so you learn about a competitor from us, not from your client asking why you did not mention it.',
-              },
-              {
-                icon: AlertTriangle,
-                tint: '#E0A21B',
-                wash: '#FBF1DC',
-                label: 'Adverse events',
-                title: 'What is being complained about',
-                body: 'MAUDE reports involving comparable devices, with the failure mode summarised — useful signal for risk files and design reviews.',
-              },
-              {
-                icon: Siren,
-                tint: '#B4304A',
-                wash: '#F8E7EA',
-                label: 'Recalls',
-                title: 'The one you cannot afford to miss',
-                body: 'Enforcement Report entries in your category, with classification and reason. This is the line that justifies the whole subscription.',
-              },
-            ].map((c, i) => {
-              const Icon = c.icon;
-              return (
-                <Reveal key={c.label} delay={i * 0.1}>
-                  <div className="h-full rounded-3xl border border-[#D2DBD5] bg-white p-6 shadow-sm">
-                    <span
-                      className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: c.wash, color: c.tint }}
-                    >
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <span className="label-caps" style={{ color: c.tint }}>
-                      {c.label}
-                    </span>
-                    <h3 className="font-display mt-1.5 text-base font-semibold">{c.title}</h3>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-[#3D4F47]">{c.body}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Close ───────────────────────────────────────────────── */}
-      <section className="relative py-20">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <Reveal>
-            <div className="relative overflow-hidden rounded-3xl border border-[#D2DBD5] bg-[#101C18] p-8 sm:p-14">
-              <div aria-hidden className="pointer-events-none absolute inset-0">
-                <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[#E0A21B]/22 blur-[100px] animate-blob-1" />
-                <div className="bg-noise" />
-              </div>
-
-              <div className="relative z-10 max-w-2xl">
-                <StationLabel index="06">Early access</StationLabel>
-                <h2 className="font-display mt-5 text-3xl font-semibold leading-tight text-white sm:text-[2.6rem]">
-                  Get next Monday&apos;s digest.
-                </h2>
-                <p className="mt-4 text-[15px] leading-relaxed text-white/65">
-                  Tell us the product category you track and we will set up the watch. If the first
-                  digest is not worth the four minutes it takes to read, say so and we will stop
-                  sending it.
-                </p>
-
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <button
-                    onClick={() => setIsWaitlistOpen(true)}
-                    data-magnetic
-                    data-cursor-label="Monday 7AM"
-                    className="group inline-flex items-center justify-center gap-2 rounded-full bg-[#E0A21B] px-7 py-3.5 text-sm font-semibold text-[#101C18] shadow-lg transition-transform hover:-translate-y-0.5"
-                  >
-                    <Mail className="h-4 w-4" />
-                    Request early access
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                  </button>
-
-                  <Link
-                    href="/#campusnova"
-                    className="text-[13px] font-semibold text-white/70 underline underline-offset-4 hover:text-white"
-                  >
-                    Or see CampusNova, our other product
-                  </Link>
-                </div>
-
-                <p className="font-data mt-6 flex items-center gap-2 text-[11px] text-white/45">
-                  <Clock className="h-3 w-3" />
-                  Digests send Monday 7:00 AM in your timezone.
-                </p>
-              </div>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <Button
+                onClick={() => openWaitlist(PRODUCT)}
+                className="bg-white text-ink hover:bg-[color:var(--ink-invert-soft)]"
+              >
+                <Mail aria-hidden className="h-4 w-4" />
+                Request early access
+              </Button>
+              <Link
+                href="/#campusnova"
+                className="link-underline min-h-11 content-center text-body-sm font-semibold text-[color:var(--ink-invert-soft)] hover:text-white"
+              >
+                Or see CampusNova, our other product
+              </Link>
             </div>
-          </Reveal>
-        </div>
+
+            <p className="mt-8 flex items-center gap-2 text-body-sm text-[color:var(--ink-invert-soft)]">
+              <Clock aria-hidden className="h-3.5 w-3.5" />
+              Digests send Monday 7:00 AM in your timezone.
+            </p>
+          </div>
+        </Reveal>
       </section>
-
-      <PatrolBot variant="watchdog" />
-
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-        defaultProduct={PRODUCT}
-      />
-    </div>
+    </>
   );
 }
