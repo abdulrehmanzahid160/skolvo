@@ -45,7 +45,7 @@ export default function FeeTrackingMockup() {
               { k: 'Student', v: 'Sarah Farooq' },
               { k: 'Method', v: 'Bank transfer' },
               { k: 'Fee month', v: 'October 2026' },
-              { k: 'Amount', v: '$150.00', mono: true },
+              { k: 'Amount', v: 'Rs. 4,500', mono: true },
             ].map((r) => (
               <div key={r.k}>
                 <dt className="text-data text-ink-mute">{r.k}</dt>
