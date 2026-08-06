@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Skolvo
 
-## Getting Started
+Marketing site for Skolvo, a software studio building focused tools for industries where a
+mistake is expensive.
 
-First, run the development server:
+Two products are in early access:
+
+- **FDA Regulatory Watchdog** — weekly plain-English monitoring of public FDA data (510(k)
+  clearances, MAUDE adverse-event reports, and Enforcement Reports) for independent regulatory
+  consultants.
+- **CampusNova** — on-device biometric attendance, parent messaging, and fee automation for
+  academies and coaching centres.
+
+## Getting started
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The dev server runs at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run start` | Serve the production build |
+| `npm run lint` | Run ESLint |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copy `.env.example` to `.env.local` and fill in the values before running anything that touches
+the database or the contact and waitlist endpoints.
 
-## Learn More
+## Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Next.js 15** (App Router) and **React 19**
+- **Tailwind CSS v4**, configured through CSS custom properties in `app/globals.css`
+- **Motion** (`framer-motion`) for all animation
+- **MongoDB** via Mongoose, for the waitlist and contact submissions
+- **Fonts:** Geist (display), Public Sans (body), IBM Plex Mono (record IDs and timestamps)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/                 Routes, API handlers, and page metadata
+  api/               Contact and waitlist endpoints
+  legal/             Shared shell for the privacy, terms, and security pages
+components/
+  motion/            Reveal, HeroSequence, LineReveal, ScrollProgress, Counter
+  ui/                Button primitives
+  mockups/           Per-module CampusNova previews
+  showcase/          The two product walkthrough demos
+  waitlist/          Single app-wide waitlist dialog provider
+lib/                 Database connection
+models/              Mongoose schemas
+```
 
-## Deploy on Vercel
+## Design system
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+All colour, type, spacing, radius, and motion values are defined as CSS custom properties in
+[`app/globals.css`](app/globals.css). Components reference tokens rather than literal values.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A few conventions worth knowing before adding UI:
+
+- **One accent.** Verdigris is the only accent. Amber identifies FDA Regulatory Watchdog and is
+  used nowhere else; crimson is reserved for error states.
+- **Contrast.** Every foreground and surface pair is verified at WCAG AA (4.5:1) against paper,
+  white, sunk, and both wash surfaces. Verify any new colour before shipping it.
+- **Type scale.** Eight steps, from `--text-data` (12px, the floor) to `--text-display-lg`. Avoid
+  arbitrary sizes like `text-[13.5px]`.
+- **Radius.** Three values only: cards 16px, inputs and small controls 10px, buttons and badges
+  fully rounded.
+- **Motion.** One shared rhythm (`--ease`, `--dur-enter`, `--dur-exit`). Marketing pages run no
+  ambient infinite loops; animation inside a product demo should be demonstrating something.
+  Everything honours `prefers-reduced-motion`.
+
+## Known issues
+
+- `eslint.config.mjs` throws `nextVitals is not iterable` on ESLint 9, because
+  `eslint-config-next` 15.5 exports flat-config objects rather than arrays. Lint is silently
+  skipped during builds as a result. Fixing it surfaces two pre-existing
+  `@typescript-eslint/no-explicit-any` errors in the API routes.
+- `/logo.png` is a square 1024×1024 icon used as the Open Graph image. Link previews want a
+  landscape 1200×630 banner.
+- The site has no real photography. Components that need it carry `TODO(assets)` comments with
+  the expected dimensions.
