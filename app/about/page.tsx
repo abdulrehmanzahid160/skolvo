@@ -1,206 +1,218 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Layers, ShieldCheck, Code2, Cpu, Bot, Linkedin, Mail, ArrowRight } from 'lucide-react';
-import WaitlistModal from '@/components/WaitlistModal';
+import React from 'react';
+import { ArrowRight, Cpu, Linkedin, Mail, ShieldCheck } from 'lucide-react';
+import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
+import { Button } from '@/components/ui/Button';
+import {
+  Reveal,
+  RevealGroup,
+  RevealItem,
+  SectionHeading,
+} from '@/components/motion/Primitives';
+
+/* ============================================================
+   ABOUT
+
+   The team cards previously used gradient-filled rounded squares
+   with the member's initials knocked out of them. That treatment
+   is a recognisable stock pattern and it also implied a brand
+   gradient that exists nowhere else on the site. Initials now sit
+   flat on the accent wash, with the same information and less
+   costume.
+
+   TODO(assets): if real team photographs become available, drop
+   them in at 400x400 (square, rendered at 56px) and the initials
+   become the loading fallback.
+   ============================================================ */
+
+const TEAM = [
+  {
+    name: 'Abdul Rehman',
+    role: 'Generative AI',
+    bio: 'Builds structured data infrastructure for AI companies, with production LLM systems spanning retrieval, evaluation, and agentic pipelines.',
+    initials: 'AR',
+    skills: ['Generative AI', 'RAG systems', 'LLM evaluation', 'Agentic pipelines'],
+    linkedin: 'https://www.linkedin.com/in/abdul-rehman-5845373a4/',
+  },
+  {
+    name: 'Muhammad Hammad',
+    role: 'Machine learning and biometrics',
+    bio: 'Works on real-time computer vision, on-device facial recognition, liveness verification, and privacy-preserving models.',
+    initials: 'MH',
+    skills: ['Computer vision', 'On-device ML', 'Liveness detection', 'Model integration'],
+    linkedin: 'https://www.linkedin.com/in/muhammad-hammad-9a8905379/',
+  },
+  {
+    name: 'Waqar Ahmad',
+    role: 'Full-stack and infrastructure',
+    bio: 'Full-stack engineer across cloud ecosystems, role-gated backend APIs, real-time messaging pipelines, and database performance.',
+    initials: 'WA',
+    skills: ['Next.js', 'Role security', 'MongoDB Atlas', 'Real-time APIs'],
+    linkedin: 'https://www.linkedin.com/in/waqar-ahmed-2592aa332/',
+  },
+];
 
 export default function AboutPage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-
-  const teamMembers = [
-    {
-      name: 'Abdul Rehman',
-      role: 'Generative AI Developer',
-      bio: 'Building hyper-granular structured data infrastructure for AI companies, with production LLM systems spanning RAG, LLM evaluation, and agentic pipelines.',
-      avatarInitial: 'AR',
-      skills: ['Generative AI', 'RAG Systems', 'LLM Evaluation', 'Agentic Pipelines'],
-      gradient: 'from-[#0F7A5F] to-[#0A5C47]',
-      linkedin: 'https://www.linkedin.com/in/abdul-rehman-5845373a4/',
-    },
-    {
-      name: 'Muhammad Hammad',
-      role: 'Machine Learning & Biometric Intelligence',
-      bio: 'Machine learning practitioner focused on real-time computer vision, on-device facial recognition algorithms, liveness verification, and privacy-preserving AI models.',
-      avatarInitial: 'MH',
-      skills: ['Computer Vision', 'On-Device ML', 'Liveness Detection', 'AI Integration'],
-      gradient: 'from-[#E0A21B] to-[#E9C46A]',
-      linkedin: 'https://www.linkedin.com/in/muhammad-hammad-9a8905379/',
-    },
-    {
-      name: 'Waqar Ahmad',
-      role: 'Full-Stack Engineering & Cloud Infrastructure',
-      bio: 'Versatile full-stack engineer adept in modern cloud ecosystems, secure role-gated backend APIs, real-time messaging pipelines, and database optimization.',
-      avatarInitial: 'WA',
-      skills: ['Full-Stack Next.js', 'Role Security', 'MongoDB Atlas', 'Real-time APIs'],
-      gradient: 'from-[#128A6B] to-[#0F7A5F]',
-      linkedin: 'https://www.linkedin.com/in/waqar-ahmed-2592aa332/',
-    },
-  ];
+  const { openWaitlist } = useWaitlist();
 
   return (
-    <div className="relative py-12 sm:py-20 overflow-hidden bg-[#EDF1EE] text-[#101C18]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-20">
-        {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 rounded-full text-xs font-bold text-[#0F7A5F] uppercase tracking-wider">
-            <Layers className="w-3.5 h-3.5" />
-            Our Mission & Purpose
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl font-extrabold font-display text-[#101C18] tracking-tight">
-            Crafting Software That <span className="text-[#0F7A5F]">Empowers Institutions</span>
-          </h1>
-
-          <p className="text-neutral-600 text-base sm:text-lg leading-relaxed font-medium">
-            Skolvo was built on a simple conviction: modern software should be private by design, role-secure, and driven by intelligent automation.
-          </p>
-        </div>
-
-        {/* Company Story Section */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-neutral-200 shadow-xl relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#E0A21B]">
-                The Skolvo Story
-              </span>
-
-              <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-[#101C18]">
-                From Practical Need to Next-Gen Product Suite
-              </h2>
-
-              <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                Educational institutions and modern businesses are flooded with bloated legacy software that suffers from security loopholes, complex user interfaces, and manual overhead.
-              </p>
-
-              <p className="text-neutral-600 text-sm leading-relaxed font-medium">
-                Skolvo is building a suite of practical, specialized software products starting with <strong className="text-[#101C18]">CampusNova</strong>. We combine touchless biometric liveness detection, automated WhatsApp reminders, and autonomous AI assistants into one seamless platform.
-              </p>
-
-              <div className="pt-2 flex flex-wrap gap-4 text-xs font-semibold text-neutral-700">
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-[#E2E9E4] border border-neutral-200 rounded-full">
-                  <ShieldCheck className="w-4 h-4 text-[#0F7A5F]" /> Privacy-First Architecture
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1 bg-[#E2E9E4] border border-neutral-200 rounded-full">
-                  <Bot className="w-4 h-4 text-[#0F7A5F]" /> Production LLM & Agentic Systems
-                </span>
-              </div>
-            </div>
-
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-[#E2E9E4] border border-neutral-200/80 space-y-2">
-                <Code2 className="w-6 h-6 text-[#0F7A5F]" />
-                <h4 className="text-sm font-bold text-[#101C18]">Clean Code</h4>
-                <p className="text-xs text-neutral-500 font-medium">Strictly modular, extensible architecture.</p>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-[#E2E9E4] border border-neutral-200/80 space-y-2">
-                <Cpu className="w-6 h-6 text-[#E0A21B]" />
-                <h4 className="text-sm font-bold text-[#101C18]">On-Device AI</h4>
-                <p className="text-xs text-neutral-500 font-medium">Zero cloud facial storage for maximum privacy.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Team Showcase Section */}
-        <div className="space-y-10">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#0F7A5F]">
-              Engineering Excellence
-            </span>
-            <h2 className="text-3xl font-extrabold font-display text-[#101C18]">
-              Meet the Team Behind Skolvo
-            </h2>
-            <p className="text-neutral-600 text-sm font-medium">
-              Our core team brings together expertise in generative AI systems, machine learning, and cloud software engineering.
+    <>
+      {/* ── Header ──────────────────────────────────────────────── */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pb-14 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+          <Reveal>
+            <p className="label">About Skolvo</p>
+            <h1 className="font-display-lg mt-4 max-w-[24ch] text-display-lg text-ink">
+              We build for the jobs where nobody gets a second try.
+            </h1>
+            <p className="prose-measure mt-5 text-lead text-ink-soft">
+              Software for high-stakes work should be private by default, role-secure, and small
+              enough to understand.
             </p>
-          </div>
+          </Reveal>
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {teamMembers.map((member) => (
-              <div
-                key={member.name}
-                className="group relative rounded-3xl bg-white border border-neutral-200 hover:border-[#0F7A5F]/50 p-6 sm:p-8 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 shadow-lg hover:shadow-xl"
-              >
-                <div>
-                  {/* Avatar Icon */}
-                  <div className="flex items-center gap-4 mb-6">
-                    <div
-                      className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0F7A5F] to-[#E0A21B] p-0.5 shadow-md flex items-center justify-center"
-                    >
-                      <div className="w-full h-full bg-[#EDF1EE] rounded-[14px] flex items-center justify-center text-xl font-extrabold font-display text-[#101C18]">
-                        {member.avatarInitial}
+      {/* ── Story: split, text beside two claim tiles ───────────── */}
+      <section className="border-b border-line bg-sunk">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <h2 className="font-display text-display text-ink">
+                  A studio, not one app with a company page attached.
+                </h2>
+                <div className="prose-measure mt-5 space-y-4 text-body text-ink-soft">
+                  <p>
+                    Institutions run on software that grew heavy: security gaps, interfaces nobody
+                    can teach, and manual work the software was supposed to remove.
+                  </p>
+                  <p>
+                    So we build a small number of products instead of one large one. Each gets its
+                    own audience, its own pricing, and its own release schedule. CampusNova handles
+                    the school gate. Regulatory Watchdog handles the FDA record. Both inherit the
+                    same engineering standard.
+                  </p>
+                </div>
+              </Reveal>
+            </div>
+
+            <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
+              {[
+                {
+                  icon: ShieldCheck,
+                  title: 'Private by default',
+                  body: 'Biometric processing happens on the device. There is no photo archive to breach, subpoena, or lose.',
+                },
+                {
+                  icon: Cpu,
+                  title: 'Small enough to audit',
+                  body: 'Each product does one job completely, which keeps the surface area small enough to reason about.',
+                },
+              ].map((c) => {
+                const Icon = c.icon;
+                return (
+                  <RevealItem key={c.title}>
+                    <div className="panel p-6">
+                      <Icon aria-hidden className="h-5 w-5 text-accent" />
+                      <h3 className="font-display mt-3 text-body font-semibold text-ink">
+                        {c.title}
+                      </h3>
+                      <p className="mt-2 text-body-sm text-ink-soft">{c.body}</p>
+                    </div>
+                  </RevealItem>
+                );
+              })}
+            </RevealGroup>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Team: rows, not floating cards ──────────────────────── */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading title="Who builds it." />
+
+          <RevealGroup className="mt-10">
+            <ul className="border-t border-line">
+              {TEAM.map((m) => (
+                <RevealItem key={m.name}>
+                  <li className="grid gap-5 border-b border-line py-8 md:grid-cols-12 md:gap-8">
+                    <div className="flex items-center gap-4 md:col-span-4">
+                      <span
+                        aria-hidden
+                        className="font-display flex h-14 w-14 shrink-0 items-center justify-center rounded-control border border-accent-line bg-accent-wash text-body font-semibold text-accent"
+                      >
+                        {m.initials}
+                      </span>
+                      <div className="min-w-0">
+                        <h3 className="font-display text-body font-semibold text-ink">{m.name}</h3>
+                        <p className="mt-0.5 text-body-sm text-ink-mute">{m.role}</p>
                       </div>
                     </div>
 
-                    <div>
-                      <h3 className="text-xl font-bold font-display text-[#101C18] group-hover:text-[#0F7A5F] transition-colors">
-                        {member.name}
-                      </h3>
-                      <p className="text-xs text-[#E0A21B] font-extrabold mt-0.5">{member.role}</p>
+                    <div className="md:col-span-6">
+                      <p className="text-body-sm text-ink-soft">{m.bio}</p>
+                      <ul className="mt-3 flex flex-wrap gap-1.5">
+                        {m.skills.map((s) => (
+                          <li
+                            key={s}
+                            className="rounded-full border border-line bg-sunk px-2.5 py-1 text-data font-medium text-ink-soft"
+                          >
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  </div>
 
-                  <p className="text-xs text-neutral-600 leading-relaxed mb-6 font-medium">{member.bio}</p>
-
-                  <div className="space-y-2">
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
-                      Core Specializations
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {member.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2.5 py-1 bg-[#E2E9E4] border border-neutral-200 rounded-lg text-[11px] text-neutral-700 font-semibold"
+                    <div className="flex items-start gap-2 md:col-span-2 md:justify-end">
+                      {/* Rendered only when a real profile exists. An icon that
+                          links to "#" is worse than no icon at all. */}
+                      {m.linkedin && (
+                        <a
+                          href={m.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                          aria-label={`${m.name} on LinkedIn`}
                         >
-                          {skill}
-                        </span>
-                      ))}
+                          <Linkedin aria-hidden className="h-4 w-4" />
+                        </a>
+                      )}
+                      <a
+                        href="mailto:support@skolvo.online"
+                        className="flex h-11 w-11 items-center justify-center rounded-full border border-line bg-surface text-ink-soft transition-colors hover:border-accent hover:text-accent"
+                        aria-label={`Email us about ${m.name}`}
+                      >
+                        <Mail aria-hidden className="h-4 w-4" />
+                      </a>
                     </div>
-                  </div>
-                </div>
+                  </li>
+                </RevealItem>
+              ))}
+            </ul>
+          </RevealGroup>
+        </div>
+      </section>
 
-                <div className="mt-8 pt-4 border-t border-neutral-100 flex items-center gap-3 text-neutral-500">
-                  {/* Only rendered when a real profile exists — an icon that
-                      links to "#" is worse than no icon at all. */}
-                  {member.linkedin && (
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#0F7A5F] hover:bg-[#E4F1EC] transition-colors"
-                      aria-label={`${member.name} on LinkedIn`}
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </a>
-                  )}
-                  <a
-                    href="mailto:support@skolvo.online"
-                    className="p-2 bg-[#E2E9E4] rounded-lg hover:text-[#0F7A5F] hover:bg-[#E4F1EC] transition-colors"
-                    aria-label={`Email about ${member.name}`}
-                  >
-                    <Mail className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            ))}
+      {/* ── Close ───────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="on-dark flex flex-col gap-6 rounded-card bg-ink p-8 sm:p-14 md:flex-row md:items-center md:justify-between">
+            <h2 className="font-display max-w-[26ch] text-display text-white">
+              Both products are in early access.
+            </h2>
+            <Button
+              onClick={() => openWaitlist()}
+              className="shrink-0 bg-white text-ink hover:bg-[color:var(--ink-invert-soft)]"
+            >
+              Request access
+              <ArrowRight aria-hidden className="h-4 w-4" />
+            </Button>
           </div>
-        </div>
-
-        {/* Join CTA */}
-        <div className="text-center pt-4">
-          <button
-            onClick={() => setIsWaitlistOpen(true)}
-            className="px-8 py-4 rounded-full bg-[#101C18] hover:bg-black text-white font-bold text-sm shadow-lg transition-all inline-flex items-center gap-2"
-          >
-            Connect With Our Team & Join Waitlist
-            <ArrowRight className="w-4 h-4 text-white" />
-          </button>
-        </div>
-      </div>
-
-      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
-    </div>
+        </Reveal>
+      </section>
+    </>
   );
 }

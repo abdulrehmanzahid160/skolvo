@@ -2,236 +2,343 @@
 
 /* ============================================================
    SKOLVO DESIGN SYSTEM
-   Palette grounded in the subject, not in SaaS convention:
-   - Chalk Slate  : chalkboard + surgical drape (education / clinical)
-   - Verdigris    : aged institutional brass, verified, permanent
-   - Signal Amber : vigilance, the thing being watched
-   - Stamp Crimson: recall / regulatory alarm, used sparingly
-   - Cool Paper   : ledger + document stock under fluorescent light
+
+   One accent, one type scale, one spacing rhythm, one motion
+   rhythm. The palette is grounded in the subject rather than in
+   SaaS convention: cool ledger paper, institutional verdigris,
+   and a single amber product mark reserved for Watchdog.
+
+   Every foreground/surface pair below is verified at WCAG AA
+   (>= 4.5:1) against paper, white, sunk, and both wash surfaces.
+   If you introduce a new colour, verify it before shipping.
    ============================================================ */
 
 @layer base {
   :root {
-    /* Surfaces */
-    --paper: #EDF1EE;
-    --paper-sunk: #E2E9E4;
-    --paper-deep: #DFE7E1;
-    --surface: #FFFFFF;
+    /* ── Surfaces ───────────────────────────────────────────
+       Four only. `sunk` is the alternating section tone; there
+       is no fifth "deep" surface, because a page that alternates
+       between five greys reads as noise, not structure. */
+    --paper: #f1f4f0;
+    --sunk: #e9eee9;
+    --surface: #ffffff;
+    --ink: #111c18;
 
-    /* Ink */
-    --ink: #101C18;
-    --ink-soft: #3D4F47;
-    --ink-mute: #67796F;
+    /* ── Ink ────────────────────────────────────────────────
+       Three weights. `mute` is the floor: nothing lighter than
+       this is ever used for text on any surface. */
+    --ink-soft: #46564e;
+    --ink-mute: #5a6a62;
+    --ink-invert: #ffffff;
+    --ink-invert-soft: #b8c4bd;
 
-    /* Accents */
-    --verdigris: #0F7A5F;
-    --verdigris-deep: #0A5C47;
-    --verdigris-lift: #128A6B;
-    --verdigris-wash: #E4F1EC;
+    /* ── Accent (the only accent) ───────────────────────────
+       Verdigris: aged institutional brass, verified, permanent.
+       Used for links, focus, active state, and accent fills.
+       It is NOT the primary button colour; ink is. */
+    --accent: #0f6b54;
+    --accent-hover: #0c5744;
+    --accent-lift: #5fd0ae; /* on dark surfaces only */
+    --accent-wash: #e6f0eb;
+    --accent-line: #bcd8cc;
 
-    --amber: #E0A21B;
-    --amber-deep: #BE8412;
-    --amber-lift: #E9C46A;
-    --amber-wash: #FBF1DC;
+    /* ── Product mark: Watchdog ─────────────────────────────
+       Amber is NOT a second accent. It identifies one product
+       and appears nowhere else. `--mark` is the text-safe value
+       (5.31:1 on white); `--mark-fill` is the brighter tone,
+       permitted only as a background behind ink glyphs. */
+    --mark: #8f6309;
+    --mark-fill: #e0a21b;
+    --mark-wash: #fbf3e2;
+    --mark-line: #ecd9a8;
 
-    --crimson: #B4304A;
-    --crimson-wash: #F8E7EA;
+    /* ── State ─────────────────────────────────────────────── */
+    --danger: #a62a42;
+    --danger-wash: #faebee;
 
-    /* Lines */
-    --line: #D2DBD5;
-    --line-strong: #B4C2B9;
+    /* ── Lines ─────────────────────────────────────────────── */
+    --line: #dce3dd;
+    --line-strong: #c2cdc5;
+
+    /* ── Type scale (8 steps, no exceptions) ────────────────
+       Replaces 27 ad-hoc arbitrary sizes. `data` at 12px is the
+       absolute floor on the page, and it is reserved for record
+       IDs and timestamps. Body copy never goes below `body-sm`. */
+    /* display-lg is capped at 3rem rather than 3.75rem: the h1 sits in a
+       7-of-12 column (~630px at max-w-6xl), and above 48px its authored line
+       breaks wrap again, turning a two-line headline into four. Plan the size
+       against the measure, not against the viewport. */
+    --text-display-lg: clamp(2rem, 3.8vw, 3rem);
+    --text-display: clamp(1.75rem, 2.8vw, 2.375rem);
+    --text-title: 1.375rem;
+    --text-lead: 1.125rem;
+    --text-body: 1rem;
+    --text-body-sm: 0.875rem;
+    --text-label: 0.8125rem;
+    --text-data: 0.75rem;
+
+    /* ── Rhythm ────────────────────────────────────────────── */
+    --section-y: clamp(4.5rem, 9vw, 7.5rem);
+    --nav-h: 4rem;
+
+    /* ── Radius (locked: card / control / pill) ─────────────
+       Documented rule: cards and panels 16px, inputs and small
+       controls 10px, buttons and badges fully rounded. Mixing
+       beyond these three is a bug. */
+    --r-card: 1rem;
+    --r-control: 0.625rem;
+    --r-pill: 999px;
+
+    /* ── Elevation (tinted to ink, never pure black) ───────── */
+    --shadow-sm: 0 1px 2px rgba(17, 28, 24, 0.04), 0 1px 1px rgba(17, 28, 24, 0.03);
+    --shadow-md: 0 2px 4px rgba(17, 28, 24, 0.04), 0 6px 16px -4px rgba(17, 28, 24, 0.06);
+    --shadow-lg: 0 4px 8px rgba(17, 28, 24, 0.04), 0 16px 32px -8px rgba(17, 28, 24, 0.09);
+
+    /* ── Motion (one rhythm, shared by CSS and Motion) ──────
+       Exit is ~65% of enter so dismissal feels responsive. */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-fast: 160ms;
+    --dur: 240ms;
+    --dur-enter: 420ms;
+    --dur-exit: 280ms;
   }
 }
 
 @theme inline {
   --color-paper: var(--paper);
-  --color-paper-sunk: var(--paper-sunk);
+  --color-sunk: var(--sunk);
+  --color-surface: var(--surface);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-ink-mute: var(--ink-mute);
-  --color-verdigris: var(--verdigris);
-  --color-amber: var(--amber);
-  --color-crimson: var(--crimson);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-lift: var(--accent-lift);
+  --color-accent-wash: var(--accent-wash);
+  --color-accent-line: var(--accent-line);
+  --color-mark: var(--mark);
+  --color-mark-fill: var(--mark-fill);
+  --color-mark-wash: var(--mark-wash);
+  --color-mark-line: var(--mark-line);
+  --color-danger: var(--danger);
+  --color-danger-wash: var(--danger-wash);
   --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
 
-  --font-display: var(--font-fraunces);
+  --text-display-lg: var(--text-display-lg);
+  --text-display: var(--text-display);
+  --text-title: var(--text-title);
+  --text-lead: var(--text-lead);
+  --text-body: var(--text-body);
+  --text-body-sm: var(--text-body-sm);
+  --text-label: var(--text-label);
+  --text-data: var(--text-data);
+
+  --radius-card: var(--r-card);
+  --radius-control: var(--r-control);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --font-display: var(--font-geist);
   --font-sans: var(--font-public-sans);
   --font-mono: var(--font-plex-mono);
 }
 
+/* ============================================================
+   BASE
+   ============================================================ */
+
 body {
   background-color: var(--paper);
   color: var(--ink);
-  font-family: var(--font-public-sans), system-ui, -apple-system, 'Segoe UI', sans-serif;
-  /* `clip`, not `hidden`. `overflow-x: hidden` on body turns body into a
-     scroll container, which silently breaks every `position: sticky`
-     descendant — including the pinned product sequences. `clip` contains the
-     blurred field layers without creating a scrollport. */
+  font-family: var(--font-public-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: var(--text-body);
+  line-height: 1.65;
+  /* `clip`, not `hidden`. `overflow-x: hidden` on body turns body
+     into a scroll container, which silently breaks every
+     `position: sticky` descendant. */
   overflow-x: clip;
-  font-feature-settings: 'ss01', 'cv05';
+  -webkit-font-smoothing: antialiased;
 }
 
 /* ── Typography roles ────────────────────────────────────────
-   Fraunces  : engraved / diploma / official document authority
-   Public Sans: designed for US federal government services
-   IBM Plex Mono: lab instrumentation, IDs, timestamps
+   Geist        : geometric, engineered, calm. Display only.
+   Public Sans  : the US federal design system typeface. A
+                  deliberate choice for a studio whose flagship
+                  product reads FDA data.
+   IBM Plex Mono: record IDs, 510(k) numbers, timestamps. Not
+                  for decorative micro-labels.
    ─────────────────────────────────────────────────────────── */
 .font-display {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-variation-settings: 'SOFT' 0, 'WONK' 1;
-  letter-spacing: -0.022em;
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+/* Largest display sizes need tighter tracking to stay optically
+   even; small display sizes look thin and gappy at -0.03em. */
+.font-display-lg {
+  font-family: var(--font-geist), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.032em;
+  line-height: 1.04;
 }
 
 .font-data {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-feature-settings: 'zero' 1;
+  font-feature-settings: "zero" 1;
+  font-variant-numeric: tabular-nums;
 }
 
-.label-caps {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.66rem;
+/* Section label. Tracking is 0.1em rather than the 0.18em of a
+   typical "eyebrow" so it reads as a label, not as decoration. */
+.label {
+  font-size: var(--text-label);
   font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-mute);
 }
 
-/* ── Focus visibility (keyboard) ─────────────────────────── */
+.prose-measure {
+  max-width: 65ch;
+}
+
+/* ── Focus visibility ────────────────────────────────────── */
 :focus-visible {
-  outline: 2px solid var(--verdigris);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
 }
+/* Focus rings must remain visible against the dark panels. */
+.on-dark :focus-visible {
+  outline-color: var(--accent-lift);
+}
 
 /* ── Surfaces ────────────────────────────────────────────── */
-.clay-card {
+.panel {
   background: var(--surface);
   border: 1px solid var(--line);
-  box-shadow: 0 4px 20px -2px rgba(16, 28, 24, 0.05), 0 2px 6px -1px rgba(16, 28, 24, 0.03);
+  border-radius: var(--r-card);
 }
 
-.clay-card-hover {
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+/* Hover lift. Transform and shadow only, so it stays on the
+   compositor thread and cannot reflow the grid around it. */
+.panel-interactive {
+  transition:
+    transform var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
 }
-.clay-card-hover:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px -4px rgba(16, 28, 24, 0.09), 0 4px 12px -2px rgba(16, 28, 24, 0.04);
-  border-color: var(--line-strong);
+@media (hover: hover) and (pointer: fine) {
+  .panel-interactive:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--line-strong);
+  }
 }
 
-.text-highlight-magenta { color: var(--verdigris); }
-.text-highlight-orange { color: var(--amber); }
-
-/* Ruled ledger paper — used behind attendance/registry surfaces */
+/* Ruled ledger paper, behind registry surfaces only. */
 .ledger-rule {
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0,
     transparent 27px,
-    rgba(16, 28, 24, 0.055) 27px,
-    rgba(16, 28, 24, 0.055) 28px
+    rgba(17, 28, 24, 0.05) 27px,
+    rgba(17, 28, 24, 0.05) 28px
   );
 }
 
+/* Link underline that grows from the left on hover. */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease);
+}
+.link-underline:hover::after,
+.link-underline:focus-visible::after {
+  transform: scaleX(1);
+}
+
 /* ── Scrollbar ───────────────────────────────────────────── */
-::-webkit-scrollbar { width: 9px; }
-::-webkit-scrollbar-track { background: var(--paper-deep); }
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--sunk);
+}
 ::-webkit-scrollbar-thumb {
   background: var(--line-strong);
   border-radius: 5px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--verdigris); }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-mute);
+}
 
 /* ============================================================
    MOTION
-   Every keyframe below serves one of three ideas:
-   verification (sweep), vigilance (pulse/tick), settling (float).
+
+   The marketing pages run ZERO ambient infinite loops. The
+   previous build had eight (two blob drifts, two scan sweeps, a
+   watch pulse, a marquee, a slow spin, and a badge shimmer),
+   which is what made the page feel busy rather than calm.
+
+   The two keyframes that remain are used only INSIDE the product
+   demos, where a moving scan line is the thing being
+   demonstrated rather than decoration.
    ============================================================ */
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+@keyframes scan-y {
+  0%,
+  100% {
+    top: 8%;
+  }
+  50% {
+    top: 88%;
+  }
 }
-.animate-float { animation: float 5s ease-in-out infinite; }
-
-/* The signature motif: a verification sweep travelling across an instrument.
-   Animating `left` alongside the transform guarantees a full traversal at any
-   container width, which a fixed translateX percentage cannot. */
-@keyframes sweep-x {
-  0% { left: 0%; transform: translateX(-100%); }
-  100% { left: 100%; transform: translateX(0%); }
-}
-.animate-sweep-x { animation: sweep-x 3.4s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
-
-@keyframes sweep-y {
-  0%, 100% { top: 8%; }
-  50% { top: 88%; }
-}
-.animate-sweep-y { animation: sweep-y 2.6s ease-in-out infinite; }
-
-/* Slow drift for atmospheric field layers */
-@keyframes blob-move-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(60px, -40px) scale(1.15); }
-  66% { transform: translate(-40px, 30px) scale(0.9); }
-}
-@keyframes blob-move-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(-70px, 40px) scale(1.1); }
-  66% { transform: translate(50px, -30px) scale(0.92); }
-}
-.animate-blob-1 { animation: blob-move-1 18s ease-in-out infinite; }
-.animate-blob-2 { animation: blob-move-2 22s ease-in-out infinite; }
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.animate-marquee { animation: marquee 30s linear infinite; }
-
-@keyframes spin-slow { to { transform: rotate(360deg); } }
-.animate-spin-slow { animation: spin-slow 9s linear infinite; }
-
-/* Vigilance: a soft breathing ring on "watching" indicators */
-@keyframes watch-pulse {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.08; transform: scale(1.9); }
-}
-.animate-watch-pulse { animation: watch-pulse 2.8s ease-in-out infinite; }
-
-@keyframes shimmer-sweep {
-  0% { background-position: -150% 0; }
-  100% { background-position: 250% 0; }
-}
-.shimmer-badge { position: relative; overflow: hidden; }
-.shimmer-badge::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.55) 50%, transparent 70%);
-  background-size: 200% 100%;
-  animation: shimmer-sweep 3.4s ease-in-out infinite;
+.animate-scan-y {
+  animation: scan-y 2.8s ease-in-out infinite;
 }
 
-/* Caret for self-typing copy */
-@keyframes caret-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-.animate-caret { animation: caret-blink 1s step-end infinite; }
-
-.bg-noise {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.animate-caret {
+  animation: caret-blink 1s step-end infinite;
 }
 
-/* ── Reduced motion: keep meaning, drop movement ─────────── */
+/* ── Reduced motion: keep meaning, drop movement ───────────
+   Motion components additionally branch on useReducedMotion(),
+   so JS-driven animation is skipped rather than merely
+   fast-forwarded. This block is the CSS backstop. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
-  .bg-noise { display: none; }
 }

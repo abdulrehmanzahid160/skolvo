@@ -23,7 +23,7 @@ const STEPS = [
     icon: ScanFace,
     title: 'The face is matched on the device',
     detail:
-      'A student walks past the tablet. Recognition and blink-liveness both run on that device — no photo is uploaded, and a printed photo or a phone screen will not pass.',
+      'A student walks past the tablet. Recognition and blink-liveness both run on that device. No photo is uploaded, and a printed photo or a phone screen will not pass.',
     stat: '182ms',
     statLabel: 'match + liveness',
   },
@@ -50,7 +50,7 @@ const STEPS = [
     icon: Receipt,
     title: 'The fee ledger reconciles itself',
     detail:
-      'Outstanding balance recalculates against the payment, and a graphic receipt is generated and sent — no spreadsheet, no manual receipt book.',
+      'Outstanding balance recalculates against the payment, and a graphic receipt is generated and sent. No spreadsheet, no manual receipt book.',
     stat: 'Auto',
     statLabel: 'receipt issued',
   },
@@ -104,16 +104,16 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
                   aria-current={isActive ? 'step' : undefined}
                   className={`w-full rounded-2xl border p-4 text-left transition-colors ${
                     isActive
-                      ? 'border-[#0F7A5F]/45 bg-white shadow-lg'
-                      : 'border-[#D2DBD5] bg-white/45 hover:bg-white/80'
+                      ? 'border-[#0F6B54]/45 bg-white shadow-lg'
+                      : 'border-[#DCE3DD] bg-white/45 hover:bg-white/80'
                   }`}
                 >
                   <div className="flex items-start gap-3">
                     <span
                       className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors ${
                         isActive
-                          ? 'border-transparent bg-[#0F7A5F] text-white'
-                          : 'border-[#D2DBD5] bg-white text-[#67796F]'
+                          ? 'border-transparent bg-[#0F6B54] text-white'
+                          : 'border-[#DCE3DD] bg-white text-[#5A6A62]'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -121,14 +121,14 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
 
                     <div className="min-w-0 flex-1">
                       <div className="flex items-baseline justify-between gap-3">
-                        <h4
-                          className={`font-display text-[15px] font-semibold leading-snug ${
-                            isActive ? 'text-[#101C18]' : 'text-[#3D4F47]'
+                        <h3
+                          className={`font-display text-body font-semibold leading-snug ${
+                            isActive ? 'text-[#111C18]' : 'text-[#46564E]'
                           }`}
                         >
                           {s.title}
-                        </h4>
-                        <span className="label-caps shrink-0 text-[#0F7A5F]">{s.stat}</span>
+                        </h3>
+                        <span className="label shrink-0 text-[#0F6B54]">{s.stat}</span>
                       </div>
 
                       <AnimatePresence initial={false}>
@@ -138,7 +138,7 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
                             animate={reduce ? undefined : { height: 'auto', opacity: 1 }}
                             exit={reduce ? undefined : { height: 0, opacity: 0 }}
                             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                            className="overflow-hidden text-[13px] leading-relaxed text-[#3D4F47]"
+                            className="overflow-hidden text-body-sm leading-relaxed text-[#46564E]"
                           >
                             <span className="block pt-2">{s.detail}</span>
                           </motion.p>
@@ -149,10 +149,10 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
 
                   {/* Station timing bar — doubles as the loop's progress */}
                   {isActive && !paused && !reduce && !isControlled && (
-                    <div className="mt-3 h-[3px] overflow-hidden rounded-full bg-[#E2E9E4]">
+                    <div className="mt-3 h-[3px] overflow-hidden rounded-full bg-[#E9EEE9]">
                       <motion.div
                         key={step}
-                        className="h-full bg-gradient-to-r from-[#0F7A5F] to-[#E0A21B]"
+                        className="h-full bg-gradient-to-r from-[#0F6B54] to-[#E0A21B]"
                         initial={{ width: '0%' }}
                         animate={{ width: '100%' }}
                         transition={{ duration: 3.6, ease: 'linear' }}
@@ -168,7 +168,7 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
         {paused && !isControlled && (
           <button
             onClick={() => setPaused(false)}
-            className="label-caps mt-4 text-[#0F7A5F] underline underline-offset-4"
+            className="label mt-4 text-[#0F6B54] underline underline-offset-4"
           >
             Resume the loop
           </button>
@@ -177,25 +177,25 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
 
       {/* ── Instrument column: the thing actually working ───────── */}
       <div className="lg:col-span-7">
-        <div className="relative overflow-hidden rounded-3xl border border-[#D2DBD5] bg-white shadow-2xl">
+        <div className="relative overflow-hidden rounded-3xl border border-[#DCE3DD] bg-white shadow-2xl">
           {/* Instrument header */}
-          <div className="flex items-center justify-between border-b border-[#D2DBD5] bg-[#E2E9E4]/70 px-5 py-3">
+          <div className="flex items-center justify-between border-b border-[#DCE3DD] bg-[#E9EEE9]/70 px-5 py-3">
             <div className="flex items-center gap-2">
               <span className="relative flex h-2.5 w-2.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[#0F7A5F] animate-watch-pulse" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#0F7A5F]" />
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[#0F6B54] " />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#0F6B54]" />
               </span>
-              <span className="label-caps text-[#3D4F47]">Gate Terminal · Live</span>
+              <span className="label text-[#46564E]">Gate Terminal · Live</span>
             </div>
-            <span className="font-data text-[10px] font-semibold text-[#67796F]">
+            <span className="font-data text-data font-semibold text-[#5A6A62]">
               on-device · offline capable
             </span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2">
             {/* Face mesh + the scan-line motif */}
-            <div className="relative border-b border-[#D2DBD5] p-5 sm:border-b-0 sm:border-r">
-              <div className="relative mx-auto aspect-square w-full max-w-[210px] overflow-hidden rounded-2xl bg-[#101C18]">
+            <div className="relative border-b border-[#DCE3DD] p-5 sm:border-b-0 sm:border-r">
+              <div className="relative mx-auto aspect-square w-full max-w-[210px] overflow-hidden rounded-2xl bg-[#111C18]">
                 {/* face mesh grid */}
                 <div
                   aria-hidden
@@ -209,38 +209,38 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
                 {/* head silhouette */}
                 <div
                   aria-hidden
-                  className="absolute left-1/2 top-1/2 h-[58%] w-[44%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border-2 border-[#0F7A5F]/70"
+                  className="absolute left-1/2 top-1/2 h-[58%] w-[44%] -translate-x-1/2 -translate-y-1/2 rounded-[50%] border-2 border-[#0F6B54]/70"
                 />
                 <div
                   aria-hidden
-                  className="absolute left-1/2 top-[62%] h-[26%] w-[68%] -translate-x-1/2 rounded-t-[50%] border-2 border-b-0 border-[#0F7A5F]/45"
+                  className="absolute left-1/2 top-[62%] h-[26%] w-[68%] -translate-x-1/2 rounded-t-[50%] border-2 border-b-0 border-[#0F6B54]/45"
                 />
                 {/* THE MOTIF — verification sweep */}
                 {!reduce && (
                   <span
                     aria-hidden
-                    className="absolute inset-x-0 h-[2px] animate-sweep-y bg-[#E9C46A]"
-                    style={{ boxShadow: '0 0 14px 3px rgba(233,196,106,0.75)' }}
+                    className="absolute inset-x-0 h-[2px] animate-scan-y bg-[#5FD0AE]"
+                    style={{ boxShadow: '0 0 14px 3px rgba(95,208,174,0.7)' }}
                   />
                 )}
                 {/* corner brackets */}
                 {['left-2 top-2 border-l-2 border-t-2', 'right-2 top-2 border-r-2 border-t-2', 'left-2 bottom-2 border-l-2 border-b-2', 'right-2 bottom-2 border-r-2 border-b-2'].map(
                   (c) => (
-                    <span key={c} className={`absolute h-4 w-4 border-[#E9C46A] ${c}`} aria-hidden />
+                    <span key={c} className={`absolute h-4 w-4 border-[#5FD0AE] ${c}`} aria-hidden />
                   )
                 )}
 
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-[#101C18]/85 px-2.5 py-1.5 backdrop-blur-sm">
-                  <span className="font-data text-[9px] font-semibold tracking-wider text-[#E9C46A]">
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-[#111C18]/85 px-2.5 py-1.5 backdrop-blur-sm">
+                  <span className="font-data text-data font-semibold tracking-wider text-[#5FD0AE]">
                     LIVENESS ✓ BLINK
                   </span>
-                  <span className="font-data text-[9px] font-semibold text-white/70">182ms</span>
+                  <span className="font-data text-data font-semibold text-white/70">182ms</span>
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-2 rounded-xl border border-[#B5D8CB] bg-[#E4F1EC] px-3 py-2">
-                <Lock className="h-3.5 w-3.5 shrink-0 text-[#0A5C47]" />
-                <span className="text-[10.5px] font-semibold leading-tight text-[#0A5C47]">
+              <div className="mt-4 flex items-center gap-2 rounded-xl border border-[#BCD8CC] bg-[#E6F0EB] px-3 py-2">
+                <Lock className="h-3.5 w-3.5 shrink-0 text-[#0C5744]" />
+                <span className="text-data font-semibold leading-tight text-[#0C5744]">
                   Face never leaves this device. Only a math vector is stored.
                 </span>
               </div>
@@ -248,9 +248,9 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
 
             {/* Register + downstream effects */}
             <div className="p-5">
-              <span className="label-caps text-[#67796F]">Attendance Register</span>
+              <span className="label text-[#5A6A62]">Attendance Register</span>
 
-              <div className="ledger-rule mt-2.5 rounded-xl border border-[#D2DBD5] bg-white p-3">
+              <div className="ledger-rule mt-2.5 rounded-xl border border-[#DCE3DD] bg-white p-3">
                 <AnimatePresence mode="popLayout">
                   <motion.div
                     key={student.roll}
@@ -261,14 +261,14 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
                     className="flex items-center justify-between gap-2"
                   >
                     <div className="min-w-0">
-                      <p className="truncate font-display text-sm font-semibold text-[#101C18]">
+                      <p className="truncate font-display text-sm font-semibold text-[#111C18]">
                         {student.name}
                       </p>
-                      <p className="font-data text-[10px] text-[#67796F]">
+                      <p className="font-data text-data text-[#5A6A62]">
                         {student.roll} · {student.cls}
                       </p>
                     </div>
-                    <span className="flex shrink-0 items-center gap-1 rounded-md bg-[#E4F1EC] px-2 py-0.5 text-[10px] font-bold text-[#0A5C47]">
+                    <span className="flex shrink-0 items-center gap-1 rounded-md bg-[#E6F0EB] px-2 py-0.5 text-data font-bold text-[#0C5744]">
                       <Check className="h-3 w-3" /> PRESENT
                     </span>
                   </motion.div>
@@ -279,39 +279,39 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
               <div className="mt-4 space-y-2.5">
                 <div
                   className={`rounded-xl border p-3 transition-colors ${
-                    step >= 2 ? 'border-[#0F7A5F]/40 bg-[#E4F1EC]' : 'border-[#D2DBD5] bg-[#E2E9E4]/50'
+                    step >= 2 ? 'border-[#0F6B54]/40 bg-[#E6F0EB]' : 'border-[#DCE3DD] bg-[#E9EEE9]/50'
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <MessageSquare
-                      className={`h-3.5 w-3.5 ${step >= 2 ? 'text-[#0A5C47]' : 'text-[#67796F]'}`}
+                      className={`h-3.5 w-3.5 ${step >= 2 ? 'text-[#0C5744]' : 'text-[#5A6A62]'}`}
                     />
-                    <span className="label-caps text-[#3D4F47]">WhatsApp to parent</span>
+                    <span className="label text-[#46564E]">WhatsApp to parent</span>
                   </div>
                   {step >= 2 && (
                     <motion.p
                       initial={reduce ? undefined : { opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="mt-1.5 text-[11px] leading-relaxed text-[#101C18]"
+                      className="mt-1.5 text-data leading-relaxed text-[#111C18]"
                     >
-                      &ldquo;{student.name.split(' ')[0]} arrived at 8:04 AM — {student.cls}.&rdquo;
+                      &ldquo;{student.name.split(' ')[0]} arrived at 8:04 AM, {student.cls}.&rdquo;
                     </motion.p>
                   )}
                 </div>
 
                 <div
                   className={`rounded-xl border p-3 transition-colors ${
-                    step >= 3 ? 'border-[#E0A21B]/50 bg-[#FBF1DC]' : 'border-[#D2DBD5] bg-[#E2E9E4]/50'
+                    step >= 3 ? 'border-[#E0A21B]/50 bg-[#FBF3E2]' : 'border-[#DCE3DD] bg-[#E9EEE9]/50'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <Receipt
-                        className={`h-3.5 w-3.5 ${step >= 3 ? 'text-[#BE8412]' : 'text-[#67796F]'}`}
+                        className={`h-3.5 w-3.5 ${step >= 3 ? 'text-[#8F6309]' : 'text-[#5A6A62]'}`}
                       />
-                      <span className="label-caps text-[#3D4F47]">Fee balance</span>
+                      <span className="label text-[#46564E]">Fee balance</span>
                     </div>
-                    <span className="font-data text-[11px] font-bold text-[#101C18]">
+                    <span className="font-data text-data font-bold text-[#111C18]">
                       {step >= 3 ? '₨ 0 due' : student.fee}
                     </span>
                   </div>
@@ -329,9 +329,9 @@ export default function CampusNovaLoop({ controlledStep }: { controlledStep?: nu
           </div>
 
           {/* Caption strip */}
-          <div className="border-t border-[#D2DBD5] bg-[#E2E9E4]/60 px-5 py-2.5">
-            <p className="font-data text-[10px] text-[#67796F]">
-              <span className="text-[#0F7A5F]">▸</span> {active.statLabel} — {active.stat}
+          <div className="border-t border-[#DCE3DD] bg-[#E9EEE9]/60 px-5 py-2.5">
+            <p className="font-data text-data text-[#5A6A62]">
+              <span className="text-[#0F6B54]">▸</span> {active.statLabel}: {active.stat}
             </p>
           </div>
         </div>

@@ -4,7 +4,7 @@ import LegalLayout, { Section } from '../legal/LegalLayout';
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
-    'How Skolvo handles personal data across CampusNova and FDA Regulatory Watchdog — including why facial recognition runs on-device and no face photographs are stored.',
+    'How Skolvo handles personal data across CampusNova and FDA Regulatory Watchdog, including why facial recognition runs on-device and no face photographs are stored.',
 };
 
 export default function PrivacyPage() {
@@ -36,7 +36,7 @@ export default function PrivacyPage() {
         </p>
       </Section>
 
-      <Section heading="3. Biometric data in CampusNova — the important part">
+      <Section heading="3. Biometric data in CampusNova: the important part">
         <p>
           CampusNova uses facial recognition for attendance. Because this involves children, we
           designed it to hold as little as legally and technically possible:
@@ -48,7 +48,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>No face photograph is uploaded or stored.</strong> There is no image archive on
-            our servers — nothing to breach, subpoena, or accidentally expose.
+            our servers, so there is nothing to breach, subpoena, or accidentally expose.
           </li>
           <li>
             What is stored is a <strong>mathematical face vector</strong>: an array of numbers used
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
 
       <Section heading="4. Data in FDA Regulatory Watchdog">
         <p>
-          Watchdog reads <strong>public</strong> FDA data — the 510(k) clearance database, MAUDE
+          Watchdog reads <strong>public</strong> FDA data: the 510(k) clearance database, MAUDE
           adverse-event reports, and weekly Enforcement Reports. It does not touch your clients&apos;
           confidential submissions, and you should not upload them to it.
         </p>
@@ -81,7 +81,7 @@ export default function PrivacyPage() {
 
       <Section heading="5. Who else can see your data">
         <p>
-          We use third-party infrastructure to run the service — hosting, a managed database, and an
+          We use third-party infrastructure to run the service: hosting, a managed database, and an
           email/WhatsApp delivery provider for the notifications CampusNova sends on your behalf.
           These providers process data strictly to deliver the service.
         </p>

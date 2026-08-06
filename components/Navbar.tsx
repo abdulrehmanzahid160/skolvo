@@ -1,149 +1,187 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sparkles } from 'lucide-react';
-import WaitlistModal from './WaitlistModal';
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
+import { ScrollProgress, EASE, DUR_EXIT } from '@/components/motion/Primitives';
+import { Button } from '@/components/ui/Button';
+
+const NAV_LINKS = [
+  { name: 'Watchdog', href: '/watchdog' },
+  { name: 'CampusNova', href: '/#campusnova' },
+  { name: 'Pricing', href: '/pricing' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { openWaitlist } = useWaitlist();
 
+  const panelRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  // useScroll instead of a scroll event listener: Motion batches reads on its
+  // own frame loop, so this never contributes a layout read per scroll frame.
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, 'change', (v) => {
+    const next = v > 8;
+    setScrolled((prev) => (prev === next ? prev : next));
+  });
+
+  // Close on route change, so tapping a link in the drawer does not leave it open.
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  // Escape to dismiss, and return focus to the control that opened the drawer.
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        toggleRef.current?.focus();
       }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
-  const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Watchdog', href: '/watchdog' },
-    { name: 'CampusNova', href: '/#campusnova' },
-    { name: 'Pricing', href: '/pricing' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-  ];
+  // Keep Tab inside the open drawer. Without this, tabbing walks invisibly
+  // through the page behind the overlay.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Tab' || !panelRef.current) return;
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#EDF1EE]/90 backdrop-blur-xl border-b border-black/5 py-3.5 shadow-sm'
-            : 'bg-transparent py-5'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-xl overflow-hidden shadow-md border border-neutral-200 group-hover:scale-105 transition-transform bg-white">
-              <Image
-                src="/logo.png"
-                alt="Skolvo Logo"
-                fill
-                className="object-contain p-0.5"
-                priority
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-semibold text-xl tracking-tight text-[#101C18] flex items-center gap-1.5">
-                Skolvo
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0F7A5F]" />
-              </span>
-            </div>
-          </Link>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 h-16 transition-colors duration-[--dur] ${
+        scrolled ? 'border-b border-line bg-paper/85 backdrop-blur-xl' : 'border-b border-transparent'
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <Link
+          href="/"
+          className="group flex min-h-11 items-center gap-2.5"
+          aria-label="Skolvo home"
+        >
+          <span className="relative h-8 w-8 overflow-hidden rounded-control border border-line bg-white">
+            <Image src="/logo.png" alt="" fill sizes="32px" className="object-contain p-0.5" priority />
+          </span>
+          <span className="font-display text-title text-ink">Skolvo</span>
+        </Link>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/80 border border-neutral-200/80 rounded-full px-4 py-1.5 backdrop-blur-md shadow-xs">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
-                    isActive
-                      ? 'bg-[#101C18] text-white shadow-sm'
-                      : 'text-neutral-700 hover:text-black hover:bg-neutral-100'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
+        {/* Desktop nav. Five items on one line, well inside the 1024px breakpoint. */}
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+          {NAV_LINKS.map((link) => {
+            // Hash links (/#campusnova) are sections of the homepage, not
+            // routes, so they never take the active underline.
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                aria-current={isActive ? 'page' : undefined}
+                className={`relative rounded-full px-3.5 py-2 text-body-sm font-medium transition-colors duration-[--dur] ${
+                  isActive ? 'text-ink' : 'text-ink-soft hover:text-ink'
+                }`}
+              >
+                {link.name}
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-active"
+                    className="absolute inset-x-3.5 -bottom-0.5 h-[2px] rounded-full bg-accent"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
 
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-3">
-            <button
-              onClick={() => setIsWaitlistOpen(true)}
-              className="relative group px-5 py-2.5 rounded-full bg-[#101C18] hover:bg-black text-white text-xs font-semibold shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 overflow-hidden flex items-center gap-1.5"
-            >
-              <Sparkles className="w-3.5 h-3.5 text-[#0F7A5F]" />
-              <span>Join Waitlist</span>
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-neutral-800 hover:text-black bg-white border border-neutral-200 rounded-xl shadow-xs"
-            aria-label="Toggle Navigation"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+        <div className="hidden md:block">
+          <Button onClick={() => openWaitlist()} className="px-5">
+            Request access
+          </Button>
         </div>
 
-        {/* Mobile Menu Drawer */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white border-b border-neutral-200 overflow-hidden shadow-lg"
-            >
-              <div className="px-4 pt-3 pb-6 space-y-2">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block px-4 py-2.5 rounded-xl text-sm font-semibold text-neutral-800 hover:bg-neutral-100 hover:text-black"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                <div className="pt-2">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      setIsWaitlistOpen(true);
-                    }}
-                    className="w-full py-3 rounded-xl bg-[#101C18] hover:bg-black text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md"
-                  >
-                    <Sparkles className="w-4 h-4 text-[#0F7A5F]" />
-                    Join CampusNova Waitlist
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </header>
+        <button
+          ref={toggleRef}
+          onClick={() => setMenuOpen((o) => !o)}
+          className="flex h-11 w-11 items-center justify-center rounded-control border border-line bg-surface text-ink md:hidden"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+        >
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
+      </div>
 
-      <WaitlistModal isOpen={isWaitlistOpen} onClose={() => setIsWaitlistOpen(false)} />
-    </>
+      {/* The signature element: page progress as a 2px rule under the nav. */}
+      <ScrollProgress />
+
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            id="mobile-menu"
+            ref={panelRef}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8, transition: { duration: DUR_EXIT, ease: EASE } }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="absolute inset-x-0 top-16 border-b border-line bg-paper shadow-[var(--shadow-lg)] md:hidden"
+          >
+            <nav className="mx-auto max-w-6xl px-4 py-4" aria-label="Mobile">
+              <ul className="flex flex-col">
+                {NAV_LINKS.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className="flex min-h-12 items-center rounded-control px-3 text-body font-medium text-ink-soft transition-colors hover:bg-sunk hover:text-ink"
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-3 border-t border-line pt-3">
+                <Button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    openWaitlist();
+                  }}
+                  className="w-full"
+                >
+                  Request access
+                </Button>
+              </div>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   );
 }

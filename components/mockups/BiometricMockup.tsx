@@ -1,91 +1,85 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ShieldCheck, ScanFace, CheckCircle2, Lock, Cpu } from 'lucide-react';
+import React from 'react';
+import { useReducedMotion } from 'framer-motion';
+import { CheckCircle2, Cpu, Lock, ScanFace } from 'lucide-react';
 
+/**
+ * Attendance module preview.
+ *
+ * TODO(assets): replace with a real screenshot of the attendance screen at
+ * 1600x1000. This is a hand-built stand-in, not a photograph of the product.
+ *
+ * Previously this panel ran three infinite animations at once (a rotating
+ * liveness ring, a pulsing "verified" tag, and a travelling scan bar) plus a
+ * pulsing status dot. Only the scan line survives: it is the one piece of
+ * motion that demonstrates what the product does rather than decorating the
+ * panel, and it now stops under prefers-reduced-motion.
+ *
+ * Amber was also removed from here. It identifies Watchdog, and this is
+ * CampusNova.
+ */
 export default function BiometricMockup() {
-  const [isScanning, setIsScanning] = useState(true);
+  const reduce = useReducedMotion();
 
   return (
-    <div className="relative w-full rounded-2xl bg-white border border-neutral-200 p-5 shadow-lg overflow-hidden font-sans">
-      {/* Top Header Bar */}
-      <div className="flex items-center justify-between pb-3 border-b border-neutral-200 text-xs">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#128A6B] animate-pulse" />
-          <span className="font-bold text-[#101C18]">Touchless Facial Attendance Engine</span>
-        </div>
-        <div className="flex items-center gap-1.5 px-2 py-0.5 bg-[#E4F1EC] border border-[#B5D8CB] text-[#0A5C47] rounded-md text-[10px] font-semibold">
-          <Lock className="w-3 h-3" />
-          On-Device Processing Only
-        </div>
+    <div className="w-full overflow-hidden rounded-card border border-line bg-surface">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-3.5">
+        <p className="text-body-sm font-semibold text-ink">Touchless facial attendance</p>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-line bg-accent-wash px-2.5 py-1 text-data font-semibold text-accent">
+          <Lock aria-hidden className="h-3 w-3" />
+          On-device only
+        </span>
       </div>
 
-      {/* Camera Viewport Mockup */}
-      <div className="relative mt-4 h-64 sm:h-72 rounded-xl bg-[#EDF1EE] border border-neutral-200 flex flex-col items-center justify-center overflow-hidden shadow-inner">
-        {/* Abstract Face Avatar Contour */}
-        <div className="relative flex flex-col items-center justify-center">
-          <div className="relative w-32 h-32 rounded-full border-2 border-dashed border-[#0F7A5F] flex items-center justify-center p-2 bg-white shadow-sm">
-            {/* Liveness Radar Ring */}
-            {isScanning && (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                className="absolute inset-0 rounded-full border-t-2 border-l-2 border-[#E0A21B]"
-              />
-            )}
-            
-            <div className="w-full h-full rounded-full bg-[#0F7A5F]/10 flex items-center justify-center">
-              <ScanFace className="w-16 h-16 text-[#0F7A5F]" />
-            </div>
+      {/* Camera viewport */}
+      <div className="relative flex h-64 flex-col items-center justify-center overflow-hidden bg-paper sm:h-72">
+        <div className="relative flex flex-col items-center">
+          <div className="relative flex h-32 w-32 items-center justify-center rounded-full border-2 border-dashed border-accent/60 bg-surface p-2">
+            <span className="flex h-full w-full items-center justify-center rounded-full bg-accent-wash">
+              <ScanFace aria-hidden className="h-14 w-14 text-accent" />
+            </span>
 
-            {/* Verification Tag */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ repeat: Infinity, repeatType: 'reverse', duration: 2 }}
-              className="absolute -bottom-2 px-2.5 py-0.5 bg-[#0F7A5F] text-white text-[10px] font-bold rounded-full flex items-center gap-1 shadow-md"
-            >
-              <CheckCircle2 className="w-3 h-3" />
-              Liveness Verified
-            </motion.div>
+            <span className="absolute -bottom-2 inline-flex items-center gap-1 rounded-full bg-accent px-2.5 py-0.5 text-data font-semibold text-white">
+              <CheckCircle2 aria-hidden className="h-3 w-3" />
+              Liveness verified
+            </span>
           </div>
 
-          <div className="mt-4 text-center">
-            <span className="text-sm font-extrabold text-[#101C18]">Student: Zain Ahmed</span>
-            <p className="text-[11px] text-neutral-500 font-medium">Class 10-A • Verified in 120ms</p>
+          <div className="mt-5 text-center">
+            <p className="text-body-sm font-semibold text-ink">Zain Ahmed</p>
+            <p className="font-data mt-0.5 text-data text-ink-mute">Class 10-A · matched in 120ms</p>
           </div>
         </div>
 
-        {/* Scan Bar */}
-        <motion.div
-          animate={{ y: [-100, 100, -100] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#0F7A5F] to-transparent shadow-xs"
-        />
+        {/* The one retained animation. CSS-driven so it costs no React work. */}
+        {!reduce && (
+          <span
+            aria-hidden
+            className="animate-scan-y absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent"
+          />
+        )}
 
-        {/* Privacy overlay watermark */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 text-[10px] text-neutral-600 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-lg border border-neutral-200 shadow-xs font-medium">
-          <Cpu className="w-3 h-3 text-[#E0A21B]" />
-          <span>Zero cloud photos saved • 100% Vectorized Embeddings</span>
-        </div>
+        <p className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/95 px-2.5 py-1 text-data text-ink-soft backdrop-blur-sm">
+          <Cpu aria-hidden className="h-3 w-3 text-accent" />
+          No photos stored, only vectors
+        </p>
       </div>
 
-      {/* Bottom Metrics Bar */}
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
-        <div className="p-2 bg-[#E2E9E4] rounded-lg border border-neutral-200/80">
-          <span className="block text-[10px] text-neutral-500 font-medium">Speed</span>
-          <strong className="text-[#101C18] font-mono text-sm font-bold">&lt; 0.2 sec</strong>
-        </div>
-        <div className="p-2 bg-[#E2E9E4] rounded-lg border border-neutral-200/80">
-          <span className="block text-[10px] text-neutral-500 font-medium">Spoof Protection</span>
-          <strong className="text-[#0A5C47] font-mono text-sm font-bold">Blink Detection</strong>
-        </div>
-        <div className="p-2 bg-[#E2E9E4] rounded-lg border border-neutral-200/80">
-          <span className="block text-[10px] text-neutral-500 font-medium">Cloud Storage</span>
-          <strong className="text-[#E0A21B] font-mono text-sm font-bold">0 Bytes</strong>
-        </div>
-      </div>
+      {/* Metrics */}
+      <dl className="grid grid-cols-3 divide-x divide-line border-t border-line">
+        {[
+          { k: 'Speed', v: 'Under 0.2s' },
+          { k: 'Spoof protection', v: 'Blink detection' },
+          { k: 'Cloud storage', v: '0 bytes' },
+        ].map((m) => (
+          <div key={m.k} className="px-3 py-3.5 text-center">
+            <dt className="text-data text-ink-mute">{m.k}</dt>
+            <dd className="font-data mt-1 text-body-sm font-semibold text-ink">{m.v}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }

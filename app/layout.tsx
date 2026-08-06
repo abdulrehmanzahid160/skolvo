@@ -1,29 +1,31 @@
 import type { Metadata } from 'next';
-import { Fraunces, Public_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { Geist, Public_Sans, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import MagneticCursor from '@/components/motion/MagneticCursor';
+import WaitlistProvider from '@/components/waitlist/WaitlistProvider';
 
-// Display: engraved, diploma-adjacent authority. Used with restraint.
-const fraunces = Fraunces({
+// Display: geometric and engineered rather than engraved. Headlines are the
+// calmest part of the page, so the display face carries structure through
+// tracking and weight instead of ornament.
+const geist = Geist({
   subsets: ['latin'],
-  variable: '--font-fraunces',
+  variable: '--font-geist',
   display: 'swap',
 });
 
-// Body: Public Sans is the typeface of the US federal design system —
-// a deliberate choice for a studio whose product reads FDA data.
+// Body: Public Sans is the typeface of the US federal design system, which is
+// a deliberate choice for a studio whose flagship product reads FDA data.
 const publicSans = Public_Sans({
   subsets: ['latin'],
   variable: '--font-public-sans',
   display: 'swap',
 });
 
-// Utility: instrumentation, record IDs, timestamps, 510(k) numbers.
+// Utility: record IDs, timestamps, 510(k) numbers. Not for decorative labels.
 const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
   variable: '--font-plex-mono',
   display: 'swap',
 });
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
   // get "Page Name | Skolvo". The `default` is used for the homepage and any
   // page that doesn't export its own metadata.
   title: {
-    default: 'Skolvo — Software for Places Where Being Wrong Is Expensive',
+    default: 'Skolvo: Software for Places Where Being Wrong Is Expensive',
     template: '%s | Skolvo',
   },
   description:
@@ -68,7 +70,7 @@ export const metadata: Metadata = {
         url: '/logo.png',
         width: 1024,
         height: 1024,
-        alt: 'Skolvo — Next-Gen SaaS Studio',
+        alt: 'Skolvo',
       },
     ],
     locale: 'en_US',
@@ -95,13 +97,24 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${publicSans.variable} ${plexMono.variable} scroll-smooth`}
+      className={`${geist.variable} ${publicSans.variable} ${plexMono.variable} scroll-smooth`}
     >
-      <body className="min-h-screen bg-[#EDF1EE] text-[#101C18] flex flex-col antialiased selection:bg-[#0F7A5F] selection:text-white">
-        <MagneticCursor />
-        <Navbar />
-        <main className="flex-grow pt-20">{children}</main>
-        <Footer />
+      <body className="flex min-h-dvh flex-col bg-paper text-ink selection:bg-accent selection:text-white">
+        <WaitlistProvider>
+          {/* Skip link: the nav holds six links before main content. */}
+          <a
+            href="#main"
+            className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-[200] focus-visible:rounded-full focus-visible:bg-ink focus-visible:px-4 focus-visible:py-2 focus-visible:text-body-sm focus-visible:font-semibold focus-visible:text-white"
+          >
+            Skip to main content
+          </a>
+          <Navbar />
+          {/* pt matches --nav-h so fixed-nav content is never occluded. */}
+          <main id="main" className="flex-grow pt-16">
+            {children}
+          </main>
+          <Footer />
+        </WaitlistProvider>
       </body>
     </html>
   );

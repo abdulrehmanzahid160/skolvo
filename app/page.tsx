@@ -6,677 +6,546 @@ import { motion } from 'framer-motion';
 import {
   ArrowRight,
   ArrowUpRight,
-  ScanFace,
-  MessageSquare,
-  DollarSign,
   Bot,
-  Lock,
-  Cpu,
-  Radar,
-  Siren,
-  FileCheck2,
-  Scale,
   Database,
-  Clock,
-  UserCheck,
-  ChevronRight,
+  DollarSign,
+  Lock,
+  MessageSquare,
+  Radar,
+  ScanFace,
+  Scale,
+  Siren,
 } from 'lucide-react';
-import WaitlistModal from '@/components/WaitlistModal';
+import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 import BiometricMockup from '@/components/mockups/BiometricMockup';
 import MassCommsMockup from '@/components/mockups/MassCommsMockup';
 import FeeTrackingMockup from '@/components/mockups/FeeTrackingMockup';
 import AiBotMockup from '@/components/mockups/AiBotMockup';
-import VerificationBar from '@/components/hero/VerificationBar';
-import VerificationSpine from '@/components/spine/VerificationSpine';
+import HeroDigest from '@/components/hero/HeroDigest';
 import WatchdogRadar from '@/components/hero/WatchdogRadar';
-import PatrolBot from '@/components/mascot/PatrolBot';
 import CampusNovaLoop from '@/components/showcase/CampusNovaLoop';
-import WatchdogLoop, { WATCHDOG_STEP_COUNT } from '@/components/showcase/WatchdogLoop';
+import WatchdogLoop from '@/components/showcase/WatchdogLoop';
+import { Button, ButtonLink } from '@/components/ui/Button';
 import {
-  Reveal,
-  WordReveal,
   Counter,
-  TiltCard,
-  Parallax,
-  StationLabel,
-  AtmosphericField,
-  GridLines,
+  HeroItem,
+  HeroSequence,
+  LineReveal,
+  Reveal,
+  RevealGroup,
+  RevealItem,
+  SectionHeading,
 } from '@/components/motion/Primitives';
-import PinnedSequence from '@/components/motion/PinnedSequence';
 
-const SPINE_STATIONS = [
-  { id: 'top', label: 'Studio' },
-  { id: 'stakes', label: 'Stakes' },
-  { id: 'watchdog', label: 'Watchdog' },
-  { id: 'campusnova', label: 'CampusNova' },
-  { id: 'studio', label: 'Portfolio' },
-  { id: 'access', label: 'Access' },
+/* ============================================================
+   HOMEPAGE
+
+   Six sections, each a distinct layout family so the page never
+   feels like the same block repeated:
+
+     1  hero            asymmetric split (7/5)
+     2  products        two-panel comparison
+     3  watchdog        prose + live instrument, side by side
+     4  campusnova      full-width story, then tabbed explorer
+     5  studio          stacked rows (a real list, so a list)
+     6  access          inverted panel, two doors
+
+   What is deliberately absent: the fixed left spine rail, the two
+   patrolling mascots, the magnetic cursor, the blurred blob
+   fields, the ledger grid overlay, the film grain, and the
+   scroll-pinned demo scrubber. Each was individually defensible;
+   running all seven at once is what made the page loud.
+   ============================================================ */
+
+const MODULES = [
+  { key: 'biometrics' as const, label: 'Attendance', icon: ScanFace },
+  { key: 'comms' as const, label: 'Parent messaging', icon: MessageSquare },
+  { key: 'fees' as const, label: 'Fees', icon: DollarSign },
+  { key: 'ai' as const, label: 'AI assistant', icon: Bot },
+];
+
+const PORTFOLIO = [
+  {
+    name: 'FDA Regulatory Watchdog',
+    audience: 'Independent regulatory consultants and small device makers',
+    status: 'Early access',
+    href: '#watchdog',
+    live: true,
+  },
+  {
+    name: 'CampusNova',
+    audience: 'Academies, schools, and coaching centres',
+    status: 'Early access',
+    href: '#campusnova',
+    live: true,
+  },
+  {
+    name: 'Enterprise Workflow Suite',
+    audience: 'Scaling operations teams',
+    status: 'In development',
+    live: false,
+  },
+  {
+    name: 'AI Learning Analytics',
+    audience: 'Educational leadership',
+    status: 'Research',
+    live: false,
+  },
 ];
 
 export default function HomePage() {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-  const [waitlistProduct, setWaitlistProduct] = useState('FDA Regulatory Watchdog');
+  const { openWaitlist } = useWaitlist();
   const [activeModule, setActiveModule] = useState<'biometrics' | 'comms' | 'fees' | 'ai'>(
     'biometrics'
   );
 
-  const openWaitlist = (product: string) => {
-    setWaitlistProduct(product);
-    setIsWaitlistOpen(true);
-  };
-
-  const modules = [
-    { key: 'biometrics' as const, label: 'Attendance', icon: ScanFace },
-    { key: 'comms' as const, label: 'Parent messaging', icon: MessageSquare },
-    { key: 'fees' as const, label: 'Fees & receipts', icon: DollarSign },
-    { key: 'ai' as const, label: 'AI assistant', icon: Bot },
-  ];
-
   return (
-    <div className="relative overflow-x-clip bg-[#EDF1EE] text-[#101C18]">
-      <VerificationSpine stations={SPINE_STATIONS} />
+    <>
+      {/* ========================================================
+          1 — HERO
+          ======================================================== */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pb-[var(--section-y)] pt-16 sm:px-6 lg:px-8 lg:pt-24">
+          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
+            <HeroSequence className="lg:col-span-7">
+              <HeroItem>
+                <p className="label">Skolvo Studio · two products in early access</p>
+              </HeroItem>
 
-      {/* ============================================================
-          STATION 01 — THE STUDIO
-          ============================================================ */}
-      <section id="top" className="relative flex min-h-[94vh] items-center overflow-hidden pb-20 pt-12">
-        <AtmosphericField a="#0F7A5F" b="#E0A21B" />
-        <GridLines />
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
-            <div className="lg:col-span-7">
-              <motion.div
-                initial={{ opacity: 0, y: -14 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-[#0F7A5F]/25 bg-white/70 px-3.5 py-1.5 backdrop-blur-md"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[#0F7A5F] animate-watch-pulse" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#0F7A5F]" />
-                </span>
-                <span className="label-caps text-[#0A5C47]">Skolvo Studio</span>
-                <span className="text-[#B4C2B9]">·</span>
-                <span className="font-data text-[10.5px] font-semibold text-[#3D4F47]">
-                  two products live
-                </span>
-              </motion.div>
-
-              <h1 className="font-display text-[2.7rem] font-semibold leading-[1.02] tracking-tight text-[#101C18] sm:text-6xl lg:text-[4.3rem]">
-                <WordReveal text="Software for places where" />{' '}
-                <span className="relative inline-block">
-                  <WordReveal text="being wrong" className="relative z-10 text-[#0F7A5F]" delay={0.18} />
-                  <motion.span
-                    aria-hidden
-                    className="absolute -bottom-0.5 left-0 h-[0.36em] w-full origin-left rounded-sm bg-[#E9C46A]/45"
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: 1 }}
-                    transition={{ duration: 0.9, delay: 0.85, ease: [0.16, 1, 0.3, 1] }}
-                  />
-                </span>{' '}
-                <WordReveal text="is expensive." delay={0.34} />
+              {/* "wrong" carries the emphasis through colour alone. An earlier
+                  pass also drew an animated accent rule under it, but at the
+                  weight that stayed calm it read as a rendering artifact, and at
+                  a weight that read as deliberate it competed with the scroll
+                  progress rule for the page's one flourish. */}
+              <h1 className="font-display-lg mt-5 text-display-lg text-ink">
+                <LineReveal
+                  delay={0.12}
+                  lines={[
+                    'Software for places where',
+                    <>
+                      being <span className="text-accent">wrong</span> is expensive.
+                    </>,
+                  ]}
+                />
               </h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-6 max-w-xl text-[17px] leading-relaxed text-[#3D4F47]"
-              >
-                We build a small number of focused tools for industries that cannot absorb a
-                mistake — medical-device safety filings at the FDA, and children&apos;s biometric
-                data at the school gate. Each product does one job completely, and is priced for
-                the person who actually does that job.
-              </motion.p>
+              <HeroItem>
+                <p className="prose-measure mt-6 text-lead text-ink-soft">
+                  Two focused products for industries that cannot absorb a mistake: FDA safety
+                  filings, and children&apos;s biometric data.
+                </p>
+              </HeroItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.68, ease: [0.16, 1, 0.3, 1] }}
-                className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center"
-              >
-                <a
-                  href="#watchdog"
-                  data-magnetic
-                  data-cursor-label="Flagship"
-                  className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-xl transition-transform hover:-translate-y-0.5"
-                >
-                  <span className="absolute inset-0 -translate-x-full bg-[#0F7A5F] transition-transform duration-500 ease-out group-hover:translate-x-0" />
-                  <Radar className="relative z-10 h-4 w-4" />
-                  <span className="relative z-10">See Regulatory Watchdog work</span>
-                </a>
+              <HeroItem>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <ButtonLink href="#watchdog">
+                    <Radar aria-hidden className="h-4 w-4" />
+                    See Regulatory Watchdog
+                  </ButtonLink>
+                  <ButtonLink href="#campusnova" variant="secondary">
+                    <ScanFace aria-hidden className="h-4 w-4 text-accent" />
+                    See CampusNova
+                  </ButtonLink>
+                </div>
+              </HeroItem>
+            </HeroSequence>
 
-                <a
-                  href="#campusnova"
-                  data-magnetic
-                  data-cursor-label="Product two"
-                  className="group flex items-center justify-center gap-2 rounded-full border border-[#B4C2B9] bg-white/80 px-7 py-3.5 text-sm font-semibold text-[#101C18] backdrop-blur-md transition-all hover:-translate-y-0.5 hover:border-[#0F7A5F]/50"
-                >
-                  <ScanFace className="h-4 w-4 text-[#0F7A5F]" />
-                  See CampusNova
-                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                </a>
-              </motion.div>
-            </div>
-
-            {/* The studio instrument */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5 flex flex-col items-center gap-6 lg:items-end"
-            >
-              <WatchdogRadar className="w-full max-w-[300px]" />
-              <VerificationBar />
-            </motion.div>
+            <HeroSequence className="lg:col-span-5">
+              <HeroItem y={20}>
+                <HeroDigest />
+              </HeroItem>
+            </HeroSequence>
           </div>
         </div>
       </section>
 
-      {/* ============================================================
-          STATION 02 — THE STAKES (dark)
-          ============================================================ */}
-      <section id="stakes" className="relative overflow-hidden bg-[#101C18] py-24 text-white">
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-24 -top-32 h-[26rem] w-[26rem] rounded-full bg-[#0F7A5F]/25 blur-[110px] animate-blob-2" />
-          <div className="absolute -bottom-40 -left-20 h-[24rem] w-[24rem] rounded-full bg-[#E0A21B]/15 blur-[110px] animate-blob-1" />
-          <div className="bg-noise" />
-        </div>
+      {/* ========================================================
+          2 — THE TWO PRODUCTS
+          Layout family: two-panel comparison. Raised near the top
+          because choosing between the products is the page's job.
+          ======================================================== */}
+      <section className="border-b border-line bg-sunk">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading
+            title="Most software fails quietly. Ours is not allowed to."
+            body="A school that loses a child's face photo has a scandal. A consultant who misses a recall notice has a liability. Both failures stay invisible until the moment they are catastrophic."
+          />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <Reveal className="max-w-3xl">
-            <StationLabel index="02">Why these two products</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-[1.12] sm:text-[2.9rem]">
-              Most software fails quietly. Ours isn&apos;t allowed to.
-            </h2>
-            <p className="mt-5 max-w-2xl text-[15.5px] leading-relaxed text-white/70">
-              A school that loses a child&apos;s face photo has a scandal. A consultant who misses a
-              recall notice has a liability. Both of those failures are invisible until the moment
-              they are catastrophic — which is exactly why they deserve purpose-built tools instead
-              of a spreadsheet and a reminder.
-            </p>
-          </Reveal>
-
-          <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
+          <RevealGroup className="mt-12 grid gap-5 md:grid-cols-2">
             {[
               {
                 icon: Siren,
-                tint: '#E0A21B',
-                who: 'At the FDA',
+                where: 'At the FDA',
                 claim: 'The recall you did not read about is still your problem.',
-                body: 'So Regulatory Watchdog reads the public filings for you every week and writes what happened in plain English, with a link to every original record.',
+                body: 'Regulatory Watchdog reads the public filings every week and writes what happened in plain English, with a link to every original record.',
               },
               {
                 icon: Lock,
-                tint: '#0F7A5F',
-                who: 'At the school gate',
+                where: 'At the school gate',
                 claim: 'A face is the most personal thing you can ask a child for.',
-                body: 'So CampusNova never uploads one. Recognition and liveness happen on the device; the cloud only ever sees a mathematical vector that cannot be turned back into a photograph.',
+                body: 'CampusNova never uploads one. Recognition and liveness run on the device. The cloud only ever sees a vector that cannot be turned back into a photograph.',
               },
-            ].map((card, i) => {
+            ].map((card) => {
               const Icon = card.icon;
               return (
-                <Reveal key={card.who} delay={i * 0.12}>
-                  <div className="h-full rounded-3xl border border-white/12 bg-white/[0.055] p-7 backdrop-blur-sm transition-colors hover:border-white/25">
-                    <span
-                      className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl"
-                      style={{ backgroundColor: `${card.tint}26`, color: card.tint }}
-                    >
-                      <Icon className="h-5 w-5" />
+                <RevealItem key={card.where} className="h-full">
+                  <article className="panel panel-interactive flex h-full flex-col p-7">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-control border border-accent-line bg-accent-wash text-accent">
+                      <Icon aria-hidden className="h-5 w-5" />
                     </span>
-                    <span className="label-caps text-white/45">{card.who}</span>
-                    <h3 className="font-display mt-2 text-xl font-semibold leading-snug text-white">
-                      {card.claim}
-                    </h3>
-                    <p className="mt-3 text-[13.5px] leading-relaxed text-white/65">{card.body}</p>
-                  </div>
-                </Reveal>
+                    <p className="label mt-5">{card.where}</p>
+                    <h3 className="font-display mt-2 text-title text-ink">{card.claim}</h3>
+                    <p className="mt-3 text-body-sm text-ink-soft">{card.body}</p>
+                  </article>
+                </RevealItem>
               );
             })}
-          </div>
+          </RevealGroup>
         </div>
       </section>
 
-      {/* ============================================================
-          STATION 03 — FDA REGULATORY WATCHDOG
-          ============================================================ */}
-      <section
-        id="watchdog"
-        className="relative overflow-x-clip py-24"
-      >
-        {/* Unit-01 patrols the flagship section. */}
-        <PatrolBot
-          variant="watchdog"
-          positionClass="absolute bottom-8 left-0 z-20"
-          range={['3vw', '50vw']}
-          duration={33}
-        />
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -right-32 top-1/3 h-[28rem] w-[28rem] rounded-full bg-[#E0A21B]/12 blur-[130px] animate-blob-2" />
-        </div>
+      {/* ========================================================
+          3 — FDA REGULATORY WATCHDOG
+          Layout family: prose beside a live instrument.
+          ======================================================== */}
+      <section id="watchdog" className="scroll-mt-20 border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-7">
+              <Reveal>
+                <p className="label">Flagship · for regulatory consultants</p>
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <h2 className="font-display text-display text-ink">FDA Regulatory Watchdog</h2>
+                  <span className="rounded-full border border-mark-line bg-mark-wash px-2.5 py-1 text-data font-semibold text-mark">
+                    Early access
+                  </span>
+                </div>
+                <p className="prose-measure mt-4 text-body text-ink-soft">
+                  Right now you do this by hand. Every week you open FDA.gov, filter 510(k)
+                  clearances, scan adverse-event reports, check the enforcement list, and write your
+                  client a summary. It takes hours, it is easy to miss a line, and you cannot bill
+                  for most of it.
+                </p>
+              </Reveal>
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <Reveal className="max-w-3xl">
-            <StationLabel index="03">Flagship · for regulatory consultants</StationLabel>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <h2 className="font-display text-4xl font-semibold tracking-tight text-[#101C18] sm:text-5xl">
-                FDA Regulatory Watchdog
-              </h2>
-              <span className="label-caps rounded-full border border-[#E0A21B]/40 bg-[#FBF1DC] px-2.5 py-1 text-[#BE8412]">
+              <RevealGroup className="mt-8 grid gap-5 sm:grid-cols-3">
+                {[
+                  {
+                    icon: Database,
+                    title: 'Every line is traceable',
+                    body: 'Only public FDA sources: the 510(k) database, MAUDE reports, and the weekly Enforcement Reports.',
+                  },
+                  {
+                    icon: Radar,
+                    title: 'Your category, not the whole FDA',
+                    body: 'You define the category and the competitors that matter. The digest stays short by ignoring the rest.',
+                  },
+                  {
+                    icon: Scale,
+                    title: 'It reports. It does not advise.',
+                    body: 'Watchdog tells you what was filed and when. The judgement stays yours, which is the part clients pay for.',
+                  },
+                ].map((c) => {
+                  const Icon = c.icon;
+                  return (
+                    <RevealItem key={c.title}>
+                      <div className="border-t border-line pt-4">
+                        <Icon aria-hidden className="h-5 w-5 text-mark" />
+                        <h3 className="mt-3 text-body-sm font-semibold text-ink">{c.title}</h3>
+                        <p className="mt-1.5 text-body-sm text-ink-mute">{c.body}</p>
+                      </div>
+                    </RevealItem>
+                  );
+                })}
+              </RevealGroup>
+
+              <Reveal className="mt-9">
+                <Button onClick={() => openWaitlist('FDA Regulatory Watchdog')}>
+                  Get Watchdog early access
+                  <ArrowUpRight aria-hidden className="h-4 w-4" />
+                </Button>
+              </Reveal>
+            </div>
+
+            {/* The radar lives here rather than in the hero: a sweep across a
+                monitored field is what this product does, so the motion is
+                demonstrating something instead of decorating. */}
+            <Reveal delay={0.1} className="lg:col-span-5">
+              <div className="panel flex flex-col items-center gap-6 p-6">
+                <WatchdogRadar className="w-full max-w-[280px]" />
+                <p className="text-center text-body-sm text-ink-mute">
+                  Public FDA records, matched against your category as they are published.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* The demo, unpinned. It runs on its own timer and any step can be
+              clicked to hold it, which the scroll-scrubbed version could not do
+              without hijacking the page's scroll. */}
+          <Reveal className="mt-14">
+            <WatchdogLoop />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ========================================================
+          4 — CAMPUSNOVA
+          Layout family: full-width story, then a tabbed explorer.
+          ======================================================== */}
+      <section id="campusnova" className="scroll-mt-20 border-b border-line bg-sunk">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <Reveal>
+            <div className="flex flex-wrap items-center gap-3">
+              <h2 className="font-display text-display text-ink">CampusNova</h2>
+              <span className="rounded-full border border-accent-line bg-accent-wash px-2.5 py-1 text-data font-semibold text-accent">
                 Early access
               </span>
             </div>
-
-            <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-[#3D4F47]">
-              Right now you do this by hand. Every week you open FDA.gov, filter 510(k) clearances,
-              scan adverse-event reports, check the enforcement list, and write your client a
-              summary. It takes hours, it is easy to miss a line, and you cannot bill for most of it.
+            <p className="prose-measure mt-4 text-body text-ink-soft">
+              One morning at your academy, from the gate to the ledger. Nobody takes a register,
+              nobody phones a parent, and nobody writes a receipt by hand.
             </p>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              {[
-                { icon: Clock, text: 'Hours of manual checking, every week' },
-                { icon: FileCheck2, text: 'Three separate FDA databases' },
-                { icon: Siren, text: 'One missed recall is the whole problem' },
-              ].map((p) => {
-                const Icon = p.icon;
-                return (
-                  <span
-                    key={p.text}
-                    className="inline-flex items-center gap-2 rounded-full border border-[#D2DBD5] bg-white px-3.5 py-1.5 text-[12px] font-semibold text-[#3D4F47]"
-                  >
-                    <Icon className="h-3.5 w-3.5 text-[#B4304A]" />
-                    {p.text}
-                  </span>
-                );
-              })}
-            </div>
           </Reveal>
-
-          {/* Flagship demo gets the pinned, scroll-scrubbed treatment. */}
-          <PinnedSequence steps={WATCHDOG_STEP_COUNT} className="mt-12">
-            {(step) => <WatchdogLoop controlledStep={step} />}
-          </PinnedSequence>
-
-          {/* Watchdog boundaries — different trust triggers than CampusNova */}
-          <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {[
-              {
-                icon: Database,
-                title: 'Every line is traceable',
-                body: 'We only read public FDA sources — the 510(k) database, MAUDE adverse-event reports, and weekly Enforcement Reports. Each item links straight to the original record so you can verify it yourself.',
-              },
-              {
-                icon: Radar,
-                title: 'Tuned to your category, not the whole FDA',
-                body: 'You define the product category and the competitors that matter. The digest stays short because it ignores everything outside that scope.',
-              },
-              {
-                icon: Scale,
-                title: 'It reports facts. It does not practise law.',
-                body: 'Watchdog tells you what was filed and when. It does not interpret regulation, assess your compliance, or give legal advice — that judgement stays yours, which is the part clients pay you for.',
-              },
-            ].map((c, i) => {
-              const Icon = c.icon;
-              return (
-                <Reveal key={c.title} delay={i * 0.1}>
-                  <div className="h-full rounded-3xl border border-[#D2DBD5] bg-white p-6 shadow-sm">
-                    <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#E9C46A] bg-[#FBF1DC] text-[#BE8412]">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <h4 className="font-display text-base font-semibold text-[#101C18]">{c.title}</h4>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-[#3D4F47]">{c.body}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
 
           <Reveal delay={0.1} className="mt-10">
-            <button
-              onClick={() => openWaitlist('FDA Regulatory Watchdog')}
-              className="group inline-flex items-center gap-2 rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5"
-            >
-              Get Watchdog early access
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ============================================================
-          STATION 04 — CAMPUSNOVA
-          ============================================================ */}
-      <section
-        id="campusnova"
-        className="relative overflow-hidden border-y border-[#D2DBD5] bg-[#E2E9E4]/70 py-24"
-      >
-        {/* Unit-02 patrols only inside CampusNova's own territory. */}
-        <PatrolBot
-          variant="campus"
-          positionClass="absolute bottom-8 left-0 z-20"
-          range={['3vw', '50vw']}
-          duration={30}
-        />
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <div className="absolute -left-40 top-1/4 h-[30rem] w-[30rem] rounded-full bg-[#0F7A5F]/10 blur-[130px] animate-blob-1" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <Reveal className="max-w-3xl">
-            <StationLabel index="04">Product two · for academies &amp; schools</StationLabel>
-            <div className="mt-5 flex flex-wrap items-center gap-3">
-              <h2 className="font-display text-4xl font-semibold tracking-tight text-[#101C18] sm:text-5xl">
-                CampusNova
-              </h2>
-              <span className="label-caps rounded-full border border-[#0F7A5F]/30 bg-[#E4F1EC] px-2.5 py-1 text-[#0A5C47]">
-                Early access
-              </span>
-            </div>
-            <p className="mt-4 max-w-2xl text-[16px] leading-relaxed text-[#3D4F47]">
-              One morning at your academy, from the gate to the ledger. Nobody takes a register,
-              nobody phones a parent, and nobody writes a receipt by hand. Watch it run — or click
-              any step to hold it there.
-            </p>
-          </Reveal>
-
-          <Reveal delay={0.12} className="mt-12">
             <CampusNovaLoop />
           </Reveal>
 
-          {/* Module explorer — the detail after the story */}
-          <Reveal delay={0.1} className="mt-16">
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-              <h3 className="font-display text-xl font-semibold text-[#101C18]">
-                The rest of the platform
-              </h3>
-              <div className="flex flex-wrap gap-1 rounded-2xl border border-[#D2DBD5] bg-white p-1.5">
-                {modules.map((m) => {
-                  const Icon = m.icon;
-                  const isActive = activeModule === m.key;
-                  return (
-                    <button
-                      key={m.key}
-                      onClick={() => setActiveModule(m.key)}
-                      className={`relative flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-xs font-semibold transition-colors ${
-                        isActive ? 'text-white' : 'text-[#3D4F47] hover:text-[#101C18]'
-                      }`}
-                    >
-                      {isActive && (
-                        <motion.span
-                          layoutId="module-pill"
-                          className="absolute inset-0 rounded-xl bg-[#0F7A5F]"
-                          transition={{ type: 'spring', stiffness: 380, damping: 32 }}
-                        />
-                      )}
-                      <Icon className="relative z-10 h-3.5 w-3.5" />
-                      <span className="relative z-10">{m.label}</span>
-                    </button>
-                  );
-                })}
+          {/* Module explorer */}
+          <div className="mt-16">
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <h3 className="font-display text-title text-ink">The rest of the platform</h3>
+                <div
+                  role="tablist"
+                  aria-label="Platform modules"
+                  className="flex flex-wrap gap-1 rounded-full border border-line bg-surface p-1.5"
+                >
+                  {MODULES.map((m) => {
+                    const Icon = m.icon;
+                    const isActive = activeModule === m.key;
+                    return (
+                      <button
+                        key={m.key}
+                        role="tab"
+                        id={`tab-${m.key}`}
+                        aria-selected={isActive}
+                        aria-controls="module-panel"
+                        onClick={() => setActiveModule(m.key)}
+                        className={`relative flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full px-3.5 text-body-sm font-semibold transition-colors ${
+                          isActive ? 'text-white' : 'text-ink-soft hover:text-ink'
+                        }`}
+                      >
+                        {isActive && (
+                          <motion.span
+                            layoutId="module-pill"
+                            className="absolute inset-0 rounded-full bg-accent"
+                            transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                          />
+                        )}
+                        <Icon aria-hidden className="relative z-10 h-3.5 w-3.5" />
+                        <span className="relative z-10">{m.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            </Reveal>
 
-            <div className="rounded-3xl border border-[#D2DBD5] bg-white p-3 shadow-xl sm:p-5">
-              {activeModule === 'biometrics' ? (
-                <BiometricMockup />
-              ) : activeModule === 'comms' ? (
-                <MassCommsMockup />
-              ) : activeModule === 'fees' ? (
-                <FeeTrackingMockup />
-              ) : (
-                <AiBotMockup />
-              )}
-            </div>
-          </Reveal>
+            <Reveal delay={0.08} className="mt-5">
+              <div
+                id="module-panel"
+                role="tabpanel"
+                aria-labelledby={`tab-${activeModule}`}
+                className="panel p-3 sm:p-5"
+              >
+                {activeModule === 'biometrics' ? (
+                  <BiometricMockup />
+                ) : activeModule === 'comms' ? (
+                  <MassCommsMockup />
+                ) : activeModule === 'fees' ? (
+                  <FeeTrackingMockup />
+                ) : (
+                  <AiBotMockup />
+                )}
+              </div>
+            </Reveal>
+          </div>
 
-          {/* CampusNova trust */}
-          <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3 [perspective:1400px]">
+          {/* Three claims, but as bordered columns rather than three identical
+              floating cards. */}
+          <RevealGroup className="mt-14 grid gap-8 border-t border-line pt-10 sm:grid-cols-3">
             {[
               {
-                icon: Cpu,
-                stat: <Counter to={0} suffix=" photos" />,
+                stat: <>No photos</>,
                 title: 'Nothing to leak',
                 body: 'Faces are processed on the device and stored as vectors. There is no photo archive to breach, subpoena, or lose.',
               },
               {
-                icon: ScanFace,
                 stat: <Counter to={182} suffix="ms" />,
                 title: 'Fast enough for a doorway',
                 body: 'Match plus blink-liveness completes before a student finishes walking past. A photo or a phone screen will not pass.',
               },
               {
-                icon: UserCheck,
                 stat: <>Invite only</>,
                 title: 'No open front door',
-                body: 'There is no public signup. The academy owner issues every role — Admin, Teacher, Staff — by token, and can revoke it.',
+                body: 'There is no public signup. The academy owner issues every role by token, and can revoke it.',
               },
-            ].map((c, i) => {
-              const Icon = c.icon;
-              return (
-                <Reveal key={c.title} delay={i * 0.1}>
-                  <TiltCard className="group h-full rounded-3xl border border-[#D2DBD5] bg-white p-6 shadow-lg transition-colors hover:border-[#0F7A5F]/40">
-                    <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-[#B5D8CB] bg-[#E4F1EC] text-[#0A5C47] transition-transform duration-300 group-hover:scale-110">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <p className="font-display text-2xl font-semibold text-[#101C18]">{c.stat}</p>
-                    <h4 className="mt-1 text-sm font-bold text-[#101C18]">{c.title}</h4>
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-[#3D4F47]">{c.body}</p>
-                  </TiltCard>
-                </Reveal>
-              );
-            })}
-          </div>
+            ].map((c) => (
+              <RevealItem key={c.title}>
+                <p className="font-display text-title text-accent">{c.stat}</p>
+                <h3 className="mt-2 text-body-sm font-semibold text-ink">{c.title}</h3>
+                <p className="mt-1.5 text-body-sm text-ink-soft">{c.body}</p>
+              </RevealItem>
+            ))}
+          </RevealGroup>
 
-          <Reveal delay={0.1} className="mt-10">
-            <button
-              onClick={() => openWaitlist('CampusNova')}
-              className="group inline-flex items-center gap-2 rounded-full bg-[#101C18] px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-transform hover:-translate-y-0.5"
-            >
+          <Reveal className="mt-10">
+            <Button onClick={() => openWaitlist('CampusNova')}>
               Get CampusNova early access
-              <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+              <ArrowUpRight aria-hidden className="h-4 w-4" />
+            </Button>
           </Reveal>
         </div>
       </section>
 
-      {/* ============================================================
-          STATION 05 — THE STUDIO PORTFOLIO
-          ============================================================ */}
-      <section id="studio" className="relative overflow-hidden py-24">
-        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <Reveal className="max-w-3xl">
-            <StationLabel index="05">The studio</StationLabel>
-            <h2 className="font-display mt-5 text-3xl font-semibold leading-[1.14] text-[#101C18] sm:text-[2.6rem]">
-              Two products shipping. Two more with the work already started.
-            </h2>
-            <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-[#3D4F47]">
-              Skolvo is a studio, not a single app with a company page attached. Each product gets
-              its own audience, its own pricing, and its own release schedule — and inherits the same
-              engineering standard.
-            </p>
-          </Reveal>
+      {/* ========================================================
+          5 — THE STUDIO
+          Layout family: stacked rows. This content genuinely is a
+          list of four things with a status each, so a list is the
+          honest layout.
+          ======================================================== */}
+      <section className="border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+          <SectionHeading
+            label="The studio"
+            title="Two products shipping. Two more already started."
+            body="Skolvo is a studio, not a single app with a company page attached. Each product gets its own audience, pricing, and release schedule, and inherits the same engineering standard."
+          />
 
-          <Parallax distance={28} className="mt-12">
-            <div className="overflow-hidden rounded-3xl border border-[#D2DBD5] bg-white shadow-xl">
-              {[
-                {
-                  code: 'P01',
-                  name: 'FDA Regulatory Watchdog',
-                  audience: 'Independent regulatory consultants, small device makers',
-                  status: 'Early access · flagship',
-                  live: true,
-                  href: '#watchdog',
-                  tint: '#E0A21B',
-                },
-                {
-                  code: 'P02',
-                  name: 'CampusNova',
-                  audience: 'Academies, schools, coaching centres',
-                  status: 'Early access',
-                  live: true,
-                  href: '#campusnova',
-                  tint: '#0F7A5F',
-                },
-                {
-                  code: 'P03',
-                  name: 'Enterprise Workflow Suite',
-                  audience: 'Scaling operations teams',
-                  status: 'In development',
-                  live: false,
-                  tint: '#67796F',
-                },
-                {
-                  code: 'P04',
-                  name: 'AI Learning Analytics',
-                  audience: 'Educational leadership',
-                  status: 'Research',
-                  live: false,
-                  tint: '#67796F',
-                },
-              ].map((p, i) => (
-                <Reveal key={p.code} delay={i * 0.07}>
-                  <div
-                    className={`group flex flex-col gap-3 border-b border-[#D2DBD5] px-6 py-5 transition-colors last:border-b-0 sm:flex-row sm:items-center sm:gap-6 ${
-                      p.live ? 'hover:bg-[#E4F1EC]/50' : 'opacity-70'
-                    }`}
-                  >
-                    <span className="font-data w-10 shrink-0 text-[11px] font-bold text-[#67796F]">
-                      {p.code}
-                    </span>
-
-                    <span
-                      className="h-2.5 w-2.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: p.tint }}
-                    />
-
+          <RevealGroup className="mt-12">
+            <ul className="border-t border-line">
+              {PORTFOLIO.map((p) => (
+                <RevealItem key={p.name}>
+                  <li className="flex flex-col gap-3 border-b border-line py-5 sm:flex-row sm:items-center sm:gap-6">
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-lg font-semibold text-[#101C18]">{p.name}</h3>
-                      <p className="text-[12.5px] text-[#67796F]">{p.audience}</p>
+                      <h3 className="font-display text-body font-semibold text-ink">{p.name}</h3>
+                      <p className="mt-0.5 text-body-sm text-ink-mute">{p.audience}</p>
                     </div>
 
                     <span
-                      className="label-caps shrink-0 rounded-full border px-2.5 py-1"
-                      style={{
-                        color: p.tint,
-                        borderColor: `${p.tint}55`,
-                        backgroundColor: `${p.tint}12`,
-                      }}
+                      className={`w-fit shrink-0 rounded-full border px-2.5 py-1 text-data font-semibold ${
+                        p.live
+                          ? 'border-accent-line bg-accent-wash text-accent'
+                          : 'border-line bg-sunk text-ink-mute'
+                      }`}
                     >
                       {p.status}
                     </span>
 
-                    {p.live ? (
+                    {p.live && p.href ? (
                       <a
                         href={p.href}
-                        className="label-caps flex shrink-0 items-center gap-1 text-[#0F7A5F]"
+                        className="link-underline flex min-h-11 w-fit shrink-0 items-center gap-1 text-body-sm font-semibold text-accent"
                       >
-                        View <ChevronRight className="h-3 w-3" />
+                        View
+                        <ArrowRight aria-hidden className="h-3.5 w-3.5" />
                       </a>
                     ) : (
                       <button
                         onClick={() => openWaitlist(p.name)}
-                        className="label-caps flex shrink-0 items-center gap-1 text-[#67796F] hover:text-[#101C18]"
+                        className="link-underline flex min-h-11 w-fit shrink-0 cursor-pointer items-center gap-1 text-body-sm font-semibold text-ink-soft hover:text-ink"
                       >
-                        Notify me <ChevronRight className="h-3 w-3" />
+                        Notify me
+                        <ArrowRight aria-hidden className="h-3.5 w-3.5" />
                       </button>
                     )}
-                  </div>
-                </Reveal>
+                  </li>
+                </RevealItem>
               ))}
-            </div>
-          </Parallax>
+            </ul>
+          </RevealGroup>
         </div>
       </section>
 
-      {/* ============================================================
-          STATION 06 — ACCESS
-          ============================================================ */}
-      <section id="access" className="relative py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 lg:pl-24">
-          <Reveal>
-            <div className="relative overflow-hidden rounded-3xl border border-[#D2DBD5] bg-[#101C18] p-8 sm:p-14">
-              <div aria-hidden className="pointer-events-none absolute inset-0">
-                <div className="absolute -right-20 -top-24 h-80 w-80 rounded-full bg-[#0F7A5F]/25 blur-[100px] animate-blob-1" />
-                <div className="absolute -bottom-28 -left-16 h-72 w-72 rounded-full bg-[#E0A21B]/15 blur-[100px] animate-blob-2" />
-                <div className="bg-noise" />
-              </div>
+      {/* ========================================================
+          6 — ACCESS
+          Layout family: inverted panel. The page's one theme
+          inversion, used once, as a deliberate close.
+          ======================================================== */}
+      <section className="mx-auto max-w-6xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
+        <Reveal>
+          <div className="on-dark rounded-card bg-ink p-8 sm:p-14">
+            <h2 className="font-display max-w-[24ch] text-display text-white">
+              Pick the one that solves your Monday.
+            </h2>
+            <p className="prose-measure mt-4 text-body text-[color:var(--ink-invert-soft)]">
+              Both products are in early access. Tell us which one you need and we will get you in.
+              No sales call, no demo to schedule, no commitment.
+            </p>
 
-              <div className="relative z-10">
-                <StationLabel index="06">Early access</StationLabel>
-                <h2 className="font-display mt-5 max-w-2xl text-3xl font-semibold leading-[1.12] text-white sm:text-[2.7rem]">
-                  Pick the one that solves your Monday.
-                </h2>
-                <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-white/65">
-                  Both products are in early access. Tell us which one you need and we will get you
-                  in — no sales call, no demo to schedule, no commitment.
-                </p>
-
-                <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <button
-                    onClick={() => openWaitlist('FDA Regulatory Watchdog')}
-                    className="group rounded-2xl border border-white/15 bg-white/[0.06] p-5 text-left backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#E0A21B]/60 hover:bg-white/[0.1]"
+            <div className="mt-9 grid gap-4 sm:grid-cols-2">
+              {[
+                {
+                  icon: Radar,
+                  name: 'FDA Regulatory Watchdog',
+                  body: 'I track FDA activity for clients and I want that week back.',
+                },
+                {
+                  icon: ScanFace,
+                  name: 'CampusNova',
+                  body: 'I run an academy and I want attendance, messaging, and fees handled.',
+                },
+              ].map((c) => {
+                const Icon = c.icon;
+                return (
+                  <motion.button
+                    key={c.name}
+                    onClick={() => openWaitlist(c.name)}
+                    whileHover={{ y: -2 }}
+                    whileTap={{ y: 0, scale: 0.99 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    className="group cursor-pointer rounded-card border border-white/15 bg-white/[0.06] p-6 text-left transition-colors hover:border-accent-lift/50 hover:bg-white/[0.1]"
                   >
-                    <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#E0A21B] text-[#101C18]">
-                      <Radar className="h-5 w-5" />
+                    <span className="flex h-10 w-10 items-center justify-center rounded-control bg-white/10 text-accent-lift">
+                      <Icon aria-hidden className="h-5 w-5" />
                     </span>
-                    <h3 className="font-display text-lg font-semibold text-white">
-                      FDA Regulatory Watchdog
+                    <h3 className="font-display mt-4 text-body font-semibold text-white">
+                      {c.name}
                     </h3>
-                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">
-                      I track FDA activity for clients and I want that week back.
+                    <p className="mt-1.5 text-body-sm text-[color:var(--ink-invert-soft)]">
+                      {c.body}
                     </p>
-                    <span className="label-caps mt-3 inline-flex items-center gap-1 text-[#E9C46A]">
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-body-sm font-semibold text-accent-lift">
                       Request access
-                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight
+                        aria-hidden
+                        className="h-3.5 w-3.5 transition-transform duration-[--dur] group-hover:translate-x-1"
+                      />
                     </span>
-                  </button>
-
-                  <button
-                    onClick={() => openWaitlist('CampusNova')}
-                    className="group rounded-2xl border border-white/15 bg-white/[0.06] p-5 text-left backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-[#0F7A5F]/60 hover:bg-white/[0.1]"
-                  >
-                    <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F7A5F] text-white">
-                      <ScanFace className="h-5 w-5" />
-                    </span>
-                    <h3 className="font-display text-lg font-semibold text-white">CampusNova</h3>
-                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/60">
-                      I run an academy or school and I want attendance, parent messaging, and fees
-                      handled.
-                    </p>
-                    <span className="label-caps mt-3 inline-flex items-center gap-1 text-[#E9C46A]">
-                      Request access
-                      <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </button>
-                </div>
-
-                <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
-                  <Link
-                    href="/pricing"
-                    className="text-[13px] font-semibold text-white/70 underline underline-offset-4 hover:text-white"
-                  >
-                    See early pricing
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="text-[13px] font-semibold text-white/70 underline underline-offset-4 hover:text-white"
-                  >
-                    Ask us something specific
-                  </Link>
-                </div>
-              </div>
+                  </motion.button>
+                );
+              })}
             </div>
-          </Reveal>
-        </div>
-      </section>
 
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-        defaultProduct={waitlistProduct}
-      />
-    </div>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+              <Link
+                href="/pricing"
+                className="link-underline min-h-11 content-center text-body-sm font-semibold text-white"
+              >
+                See early pricing
+              </Link>
+              <Link
+                href="/contact"
+                className="link-underline min-h-11 content-center text-body-sm font-semibold text-[color:var(--ink-invert-soft)] hover:text-white"
+              >
+                Ask us something specific
+              </Link>
+            </div>
+          </div>
+        </Reveal>
+      </section>
+    </>
   );
 }

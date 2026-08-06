@@ -1,78 +1,250 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  motion,
-  useInView,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useScroll,
-  useReducedMotion,
-} from 'framer-motion';
+import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 
-const EASE = [0.16, 1, 0.3, 1] as const;
+/* ============================================================
+   MOTION PRIMITIVES
 
-/** Scroll-linked reveal. Under reduced motion, content is simply present. */
+   One rhythm for the whole site. Every animation on the page is
+   built from the four tokens below, so nothing feels like it was
+   tuned in isolation.
+
+   EASE is a soft-landing curve: fast departure, long settle. It
+   matches the CSS `--ease` token in globals.css, so a Motion
+   animation and a CSS transition on the same element agree.
+
+   Every primitive branches on useReducedMotion() and returns
+   plain, already-visible markup when motion is not wanted. That
+   is deliberately stronger than fast-forwarding the animation:
+   content is never briefly hidden from anyone.
+   ============================================================ */
+
+export const EASE = [0.22, 1, 0.36, 1] as const;
+export const DUR_ENTER = 0.42;
+export const DUR_EXIT = 0.28;
+export const STAGGER = 0.04;
+
+/** Spring used for every button and card press. Tuned to settle without overshoot. */
+export const PRESS_SPRING = { type: 'spring' as const, stiffness: 400, damping: 30 };
+
+/* ------------------------------------------------------------
+   Reveal — the workhorse
+   ------------------------------------------------------------
+   A short fade with a 16px rise. The offset is intentionally
+   small: past roughly 24px a reveal stops reading as "settling
+   into place" and starts reading as "sliding in from off-screen",
+   which is the thing that makes scroll animation feel gratuitous.
+
+   `once: true` so content never re-animates when the reader
+   scrolls back up, which is disorienting on a long page.
+   ------------------------------------------------------------ */
 export function Reveal({
   children,
   delay = 0,
-  y = 28,
+  y = 16,
   className,
+  as: Tag = 'div',
 }: {
   children: React.ReactNode;
   delay?: number;
   y?: number;
   className?: string;
+  as?: 'div' | 'section' | 'li' | 'span';
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-80px' });
   const reduce = useReducedMotion();
+  const MotionTag = motion[Tag];
 
-  if (reduce) {
-    return <div className={className}>{children}</div>;
-  }
+  if (reduce) return <Tag className={className}>{children}</Tag>;
+
+  return (
+    <MotionTag
+      className={className}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: DUR_ENTER, delay, ease: EASE }}
+    >
+      {children}
+    </MotionTag>
+  );
+}
+
+/* ------------------------------------------------------------
+   RevealGroup / RevealItem — staggered children
+   ------------------------------------------------------------
+   Use for card grids and lists. The parent owns the viewport
+   trigger so every child in a row starts from the same scroll
+   position, rather than each card firing at its own threshold
+   and producing a ragged cascade.
+
+   Parent and children must live in the same client tree for
+   variant propagation to work.
+   ------------------------------------------------------------ */
+const groupVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: STAGGER } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: DUR_ENTER, ease: EASE } },
+};
+
+export function RevealGroup({
+  children,
+  className,
+  amount = 0.2,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  amount?: number;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
 
   return (
     <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y }}
-      animate={inView ? { opacity: 1, y: 0 } : undefined}
-      transition={{ duration: 0.75, delay, ease: EASE }}
       className={className}
+      variants={groupVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount }}
     >
       {children}
     </motion.div>
   );
 }
 
-/** Headline words rise from a clipped baseline, like type being set. */
-export function WordReveal({
-  text,
+export function RevealItem({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+  return (
+    <motion.div className={className} variants={itemVariants}>
+      {children}
+    </motion.div>
+  );
+}
+
+/* ------------------------------------------------------------
+   HeroSequence — the one orchestrated moment
+   ------------------------------------------------------------
+   A single choreographed entrance on page load. One deliberate
+   sequence lands harder than the same amount of motion sprayed
+   across a dozen elements, so this is the only place on the site
+   that animates without being asked to by a scroll position.
+   ------------------------------------------------------------ */
+export function HeroSequence({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: { transition: { staggerChildren: 0.07, delayChildren: 0.06 } },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function HeroItem({
+  children,
+  className,
+  y = 14,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  y?: number;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      className={className}
+      variants={{
+        hidden: { opacity: 0, y },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/* ------------------------------------------------------------
+   LineReveal — headline lines rise from a clipped baseline
+   ------------------------------------------------------------
+   Per LINE, not per word. Word-by-word staggering on a headline
+   reads as a novelty effect and delays the reader's access to the
+   sentence; clipping whole lines behaves like type being set,
+   which is quieter and finishes sooner.
+
+   Lines are authored explicitly by the caller rather than
+   measured at runtime, so there is no layout-thrash and no
+   mid-word break on a resize.
+   ------------------------------------------------------------ */
+export function LineReveal({
+  lines,
   className,
   delay = 0,
 }: {
-  text: string;
+  lines: React.ReactNode[];
   className?: string;
   delay?: number;
 }) {
   const reduce = useReducedMotion();
-  const words = text.split(' ');
 
-  if (reduce) return <span className={className}>{text}</span>;
+  // Each line is a block element, so the break is visual. The trailing space is
+  // for the text layer: without it a screen reader and any text extractor read
+  // "...places wherebeing wrong is expensive" as one run-together word.
+  const spacer = <span className="sr-only"> </span>;
+
+  if (reduce) {
+    return (
+      <span className={className}>
+        {lines.map((line, i) => (
+          <span key={i} className="block">
+            {line}
+            {i < lines.length - 1 ? spacer : null}
+          </span>
+        ))}
+      </span>
+    );
+  }
 
   return (
     <span className={className}>
-      {words.map((word, i) => (
-        <span key={`${word}-${i}`} className="inline-block overflow-hidden align-bottom">
+      {lines.map((line, i) => (
+        // `pb-[0.12em]` reserves descender room. A clipping wrapper with no
+        // reserve shears the tails off g, y, p and j.
+        <span key={i} className="block overflow-hidden pb-[0.12em]">
           <motion.span
-            className="inline-block"
-            initial={{ y: '105%', opacity: 0 }}
-            animate={{ y: '0%', opacity: 1 }}
-            transition={{ duration: 0.85, delay: delay + i * 0.055, ease: EASE }}
+            className="block"
+            initial={{ y: '110%' }}
+            animate={{ y: '0%' }}
+            transition={{ duration: 0.7, delay: delay + i * 0.08, ease: EASE }}
           >
-            {word}
-            {i < words.length - 1 ? ' ' : ''}
+            {line}
+            {i < lines.length - 1 ? spacer : null}
           </motion.span>
         </span>
       ))}
@@ -80,12 +252,46 @@ export function WordReveal({
   );
 }
 
+/* ------------------------------------------------------------
+   ScrollProgress — the signature element
+   ------------------------------------------------------------
+   A 2px rule that fills as the reader moves down the page. This
+   replaces the previous fixed left-hand "verification spine"
+   rail, which carried exactly this one piece of information
+   using a full column of screen width plus six tick marks.
+
+   Springing scrollYProgress rather than using it raw keeps the
+   fill from twitching on trackpad scroll.
+   ------------------------------------------------------------ */
+export function ScrollProgress() {
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
+
+  if (reduce) return null;
+
+  return (
+    <motion.div
+      aria-hidden
+      className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-accent"
+      style={{ scaleX: progress }}
+    />
+  );
+}
+
+/* ------------------------------------------------------------
+   Counter — a number that counts up once, in view
+   ------------------------------------------------------------
+   Kept for the one figure where the count itself is the point
+   (match latency). Deliberately not used for "0 photos": a
+   counter that animates to zero communicates nothing.
+   ------------------------------------------------------------ */
 export function Counter({
   to,
   suffix = '',
   prefix = '',
   decimals = 0,
-  duration = 1.8,
+  duration = 1.4,
 }: {
   to: number;
   suffix?: string;
@@ -96,7 +302,7 @@ export function Counter({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
   const reduce = useReducedMotion();
-  const [display, setDisplay] = useState('0');
+  const [display, setDisplay] = useState(() => (0).toFixed(decimals));
 
   useEffect(() => {
     if (reduce) {
@@ -105,19 +311,21 @@ export function Counter({
     }
     if (!inView) return;
 
-    let frame = 0;
-    const totalFrames = Math.round(duration * 60);
+    let raf = 0;
+    let start: number | null = null;
 
-    const tick = () => {
-      frame += 1;
-      const p = Math.min(frame / totalFrames, 1);
+    // Time-based rather than frame-counted, so the duration holds on a
+    // 120Hz display instead of finishing twice as fast.
+    const tick = (now: number) => {
+      if (start === null) start = now;
+      const p = Math.min((now - start) / (duration * 1000), 1);
       const eased = 1 - Math.pow(1 - p, 3);
       setDisplay((to * eased).toFixed(decimals));
-      if (p < 1) requestAnimationFrame(tick);
+      if (p < 1) raf = requestAnimationFrame(tick);
     };
 
-    const id = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(id);
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
   }, [inView, to, decimals, duration, reduce]);
 
   return (
@@ -129,166 +337,46 @@ export function Counter({
   );
 }
 
-/** Physically-plausible tilt — springs, not linear transforms. */
-export function TiltCard({
-  children,
-  className,
-  strength = 6,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  strength?: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [`${strength}deg`, `-${strength}deg`]), {
-    stiffness: 220,
-    damping: 22,
-  });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [`-${strength}deg`, `${strength}deg`]), {
-    stiffness: 220,
-    damping: 22,
-  });
-
-  const handleMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    x.set((e.clientX - rect.left) / rect.width - 0.5);
-    y.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  if (reduce) return <div className={className}>{children}</div>;
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={() => {
-        x.set(0);
-        y.set(0);
-      }}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-export function Marquee({ children, reverse = false }: { children: React.ReactNode; reverse?: boolean }) {
-  return (
-    <div className="relative flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-      <div
-        className="flex shrink-0 items-center gap-6 pr-6 animate-marquee"
-        style={reverse ? { animationDirection: 'reverse' } : undefined}
-      >
-        {children}
-        {children}
-      </div>
-    </div>
-  );
-}
-
-/** Parallax: content drifts against the scroll, giving sections depth. */
-export function Parallax({
-  children,
-  distance = 60,
-  className,
-}: {
-  children: React.ReactNode;
-  distance?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const yRaw = useTransform(scrollYProgress, [0, 1], [distance, -distance]);
-  const y = useSpring(yRaw, { stiffness: 80, damping: 26, mass: 0.4 });
-
-  return (
-    <div ref={ref} className={className}>
-      <motion.div style={reduce ? undefined : { y }}>{children}</motion.div>
-    </div>
-  );
-}
-
-/**
- * The recurring motif as a reusable part: a verification sweep crossing a
- * surface. Direction and tint change per product; the gesture stays identical.
- */
-export function ScanSweep({
-  axis = 'y',
-  tint = '#0F7A5F',
+/* ------------------------------------------------------------
+   SectionHeading — consistent section entry
+   ------------------------------------------------------------
+   No numbering. Numbered markers only earn their place when the
+   content is genuinely a sequence, and a list of products is not
+   one. The label states the topic in plain language instead.
+   ------------------------------------------------------------ */
+export function SectionHeading({
+  label,
+  title,
+  body,
   className = '',
+  tone = 'light',
 }: {
-  axis?: 'x' | 'y';
-  tint?: string;
+  label?: string;
+  title: React.ReactNode;
+  body?: React.ReactNode;
   className?: string;
+  tone?: 'light' | 'dark';
 }) {
-  const reduce = useReducedMotion();
-  if (reduce) return null;
-
-  if (axis === 'x') {
-    return (
-      <span
-        aria-hidden
-        className={`pointer-events-none absolute inset-y-0 w-16 animate-sweep-x ${className}`}
-        style={{ background: `linear-gradient(90deg, transparent, ${tint}38, transparent)` }}
-      />
-    );
-  }
-
+  const isDark = tone === 'dark';
   return (
-    <span
-      aria-hidden
-      className={`pointer-events-none absolute inset-x-0 h-[2px] animate-sweep-y ${className}`}
-      style={{ background: tint, boxShadow: `0 0 12px 2px ${tint}90` }}
-    />
-  );
-}
-
-/** Small instrument-style section label. */
-export function StationLabel({ index, children }: { index: string; children: React.ReactNode }) {
-  return (
-    <div className="flex items-center gap-3">
-      <span className="label-caps rounded border border-[#B4C2B9] bg-white px-1.5 py-0.5 text-[#0F7A5F]">
-        {index}
-      </span>
-      <span className="label-caps text-[#67796F]">{children}</span>
-    </div>
-  );
-}
-
-export function AtmosphericField({ a = '#0F7A5F', b = '#E0A21B' }: { a?: string; b?: string }) {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div
-        className="absolute -top-40 -left-32 h-[34rem] w-[34rem] rounded-full blur-[120px] animate-blob-1"
-        style={{ backgroundColor: `${a}2E` }}
-      />
-      <div
-        className="absolute -bottom-48 -right-24 h-[32rem] w-[32rem] rounded-full blur-[120px] animate-blob-2"
-        style={{ backgroundColor: `${b}26` }}
-      />
-      <div className="bg-noise" />
-    </div>
-  );
-}
-
-/** Ruled grid — reads as ledger/registry paper rather than "tech grid". */
-export function GridLines() {
-  return (
-    <div
-      aria-hidden
-      className="pointer-events-none absolute inset-0 opacity-60 [mask-image:radial-gradient(ellipse_at_center,black_25%,transparent_75%)]"
-      style={{
-        backgroundImage:
-          'linear-gradient(to right, rgba(16,28,24,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(16,28,24,0.05) 1px, transparent 1px)',
-        backgroundSize: '56px 56px',
-      }}
-    />
+    <Reveal className={className}>
+      {label ? (
+        <p className={`label ${isDark ? 'text-[color:var(--ink-invert-soft)]' : ''}`}>{label}</p>
+      ) : null}
+      <h2
+        className={`font-display mt-3 text-display ${isDark ? 'text-white' : 'text-ink'}`}
+      >
+        {title}
+      </h2>
+      {body ? (
+        <p
+          className={`prose-measure mt-4 text-body ${
+            isDark ? 'text-[color:var(--ink-invert-soft)]' : 'text-ink-soft'
+          }`}
+        >
+          {body}
+        </p>
+      ) : null}
+    </Reveal>
   );
 }

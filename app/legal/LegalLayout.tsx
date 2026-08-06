@@ -3,8 +3,12 @@ import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
 /**
- * Shared shell for the legal pages so Privacy / Terms / Security read as one
+ * Shared shell for the legal pages so Privacy, Terms, and Security read as one
  * document set rather than three separately-styled pages.
+ *
+ * Measure is capped at max-w-3xl and the body runs at --text-body rather than
+ * the old 14.5px, because these are the pages most likely to be read start to
+ * finish and legibility beats density here.
  */
 export default function LegalLayout({
   eyebrow,
@@ -20,41 +24,39 @@ export default function LegalLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative bg-[#EDF1EE] py-14 text-[#101C18] sm:py-20">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="label-caps inline-flex items-center gap-1.5 text-[#67796F] transition-colors hover:text-[#0F7A5F]"
+    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+      <Link
+        href="/"
+        className="link-underline inline-flex min-h-11 items-center gap-1.5 text-body-sm font-semibold text-ink-mute transition-colors hover:text-accent"
+      >
+        <ArrowLeft aria-hidden className="h-3.5 w-3.5" />
+        Back to Skolvo
+      </Link>
+
+      <header className="mt-6 border-b border-line pb-9">
+        <p className="label">{eyebrow}</p>
+        <h1 className="font-display-lg mt-3 text-display text-ink">{title}</h1>
+        <p className="font-data mt-3 text-data text-ink-mute">Last updated {updated}</p>
+        <p className="mt-5 text-lead text-ink-soft">{summary}</p>
+      </header>
+
+      <div className="mt-12 space-y-10">{children}</div>
+
+      <footer className="mt-16 rounded-card border border-line bg-surface p-6">
+        <h2 className="font-display text-body font-semibold text-ink">
+          Questions about this page?
+        </h2>
+        <p className="mt-2 text-body-sm text-ink-soft">
+          A real person answers this address. If something here is unclear, or you want a commitment
+          in writing before you trust us with data, write and ask.
+        </p>
+        <a
+          href="mailto:support@skolvo.online"
+          className="link-underline mt-3 inline-flex min-h-11 items-center text-body-sm font-semibold text-accent"
         >
-          <ArrowLeft className="h-3 w-3" />
-          Back to Skolvo
-        </Link>
-
-        <header className="mt-6 border-b border-[#D2DBD5] pb-8">
-          <span className="label-caps text-[#0F7A5F]">{eyebrow}</span>
-          <h1 className="font-display mt-3 text-3xl font-semibold tracking-tight sm:text-[2.6rem]">
-            {title}
-          </h1>
-          <p className="font-data mt-3 text-[11px] text-[#67796F]">Last updated {updated}</p>
-          <p className="mt-5 text-[15.5px] leading-relaxed text-[#3D4F47]">{summary}</p>
-        </header>
-
-        <div className="legal-body mt-10 space-y-9">{children}</div>
-
-        <footer className="mt-14 rounded-2xl border border-[#D2DBD5] bg-white p-6">
-          <h2 className="font-display text-base font-semibold">Questions about this page?</h2>
-          <p className="mt-2 text-[13.5px] leading-relaxed text-[#3D4F47]">
-            A real person answers this address. If something here is unclear, or you want a
-            commitment in writing before you trust us with data, write to us and ask.
-          </p>
-          <a
-            href="mailto:support@skolvo.online"
-            className="mt-3 inline-block text-[13.5px] font-semibold text-[#0F7A5F] underline underline-offset-4"
-          >
-            support@skolvo.online
-          </a>
-        </footer>
-      </div>
+          support@skolvo.online
+        </a>
+      </footer>
     </div>
   );
 }
@@ -62,8 +64,8 @@ export default function LegalLayout({
 export function Section({ heading, children }: { heading: string; children: React.ReactNode }) {
   return (
     <section>
-      <h2 className="font-display text-xl font-semibold text-[#101C18]">{heading}</h2>
-      <div className="mt-3 space-y-3 text-[14.5px] leading-relaxed text-[#3D4F47]">{children}</div>
+      <h2 className="font-display text-title text-ink">{heading}</h2>
+      <div className="mt-3 space-y-3 text-body text-ink-soft">{children}</div>
     </section>
   );
 }

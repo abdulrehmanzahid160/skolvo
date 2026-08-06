@@ -1,60 +1,74 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { Bot, User, Sparkles, Check, Send, CheckCheck, ShieldCheck } from 'lucide-react';
+import { Bot, CheckCheck, User } from 'lucide-react';
 
+/**
+ * AI assistant module preview.
+ *
+ * TODO(assets): replace with a real screenshot of the assistant thread at
+ * 1600x1000. Hand-built stand-in.
+ *
+ * Amber was the accent throughout this panel, which is Watchdog's mark. Since
+ * this is CampusNova the accent is the only tint used, and the bubble radii now
+ * follow the card/control scale instead of inventing a fourth radius.
+ */
 export default function AiBotMockup() {
   return (
-    <div className="relative w-full rounded-2xl bg-white border border-neutral-200 p-5 shadow-lg overflow-hidden font-sans">
-      {/* Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-neutral-200 text-xs">
+    <div className="w-full overflow-hidden rounded-card border border-line bg-surface">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-3.5">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-[#E0A21B]/10 border border-[#E0A21B]/30 flex items-center justify-center text-[#E0A21B]">
-            <Bot className="w-3.5 h-3.5" />
-          </div>
-          <span className="font-bold text-[#101C18]">24/7 Autonomous AI Academy Assistant</span>
+          <span className="flex h-6 w-6 items-center justify-center rounded-control border border-accent-line bg-accent-wash text-accent">
+            <Bot aria-hidden className="h-3.5 w-3.5" />
+          </span>
+          <p className="text-body-sm font-semibold text-ink">Academy assistant</p>
         </div>
-        <span className="px-2 py-0.5 bg-[#E0A21B]/10 border border-[#E0A21B]/30 text-[#E0A21B] rounded-md text-[10px] font-bold flex items-center gap-1">
-          <Sparkles className="w-3 h-3 text-[#E0A21B]" />
-          Premium Plus Bot
+        <span className="rounded-full border border-line bg-sunk px-2.5 py-1 text-data font-semibold text-ink-mute">
+          Premium Plus
         </span>
       </div>
 
-      {/* Chat Messages Simulator */}
-      <div className="mt-4 space-y-3 text-xs">
-        {/* User / Parent Bubble */}
+      <div className="space-y-3 p-5">
+        {/* Parent message */}
         <div className="flex justify-end">
-          <div className="max-w-[80%] p-3 bg-[#DFE7E1] border border-neutral-200 rounded-2xl rounded-tr-none text-neutral-800 text-[11px] leading-relaxed shadow-2xs font-medium">
-            <div className="flex items-center gap-1 text-[10px] text-neutral-500 font-semibold mb-1">
-              <User className="w-3 h-3 text-[#E0A21B]" /> Parent (Mrs. Ali) • 03:14 PM
-            </div>
-            Hi, I just transferred the tuition fee for Hamza. Can you update the records and send me the receipt?
+          <div className="max-w-[85%] rounded-card rounded-tr-sm border border-line bg-sunk p-3.5">
+            <p className="flex items-center gap-1.5 text-data font-semibold text-ink-mute">
+              <User aria-hidden className="h-3 w-3" />
+              Parent (Mrs. Ali) · 03:14 PM
+            </p>
+            <p className="mt-1.5 text-body-sm text-ink-soft">
+              Hi, I just transferred the tuition fee for Hamza. Can you update the records and send
+              me the receipt?
+            </p>
           </div>
         </div>
 
-        {/* AI Bot Response Bubble */}
+        {/* Assistant reply */}
         <div className="flex justify-start">
-          <div className="max-w-[85%] p-3 bg-white border border-neutral-200 rounded-2xl rounded-tl-none text-[#101C18] text-[11px] leading-relaxed space-y-2 shadow-md">
-            <div className="flex items-center justify-between text-[10px] text-[#E0A21B] font-bold border-b border-neutral-100 pb-1">
-              <span className="flex items-center gap-1">
-                <Bot className="w-3.5 h-3.5 text-[#E0A21B]" /> CampusNova AI Bot
-              </span>
-              <span className="text-[#0A5C47] font-mono text-[9px] px-1.5 py-0.5 bg-[#E4F1EC] border border-[#B5D8CB] rounded font-bold">
-                Auto-Action Executed
+          <div className="max-w-[90%] rounded-card rounded-tl-sm border border-line bg-surface p-3.5 shadow-[var(--shadow-sm)]">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line pb-2">
+              <p className="flex items-center gap-1.5 text-data font-semibold text-accent">
+                <Bot aria-hidden className="h-3.5 w-3.5" />
+                CampusNova assistant
+              </p>
+              <span className="font-data rounded-full border border-accent-line bg-accent-wash px-2 py-0.5 text-data font-semibold text-accent">
+                Action taken
               </span>
             </div>
 
-            <p className="text-neutral-700 font-medium">
-              Hello Mrs. Ali! Payment verified. I have autonomously logged Hamza&apos;s October fee as <strong className="text-[#0A5C47] font-extrabold">PAID</strong> in the academy ledger and emailed your official digital receipt.
+            <p className="mt-2.5 text-body-sm text-ink-soft">
+              Hello Mrs. Ali. Payment verified. I have logged Hamza&apos;s October fee as{' '}
+              <strong className="font-semibold text-accent">paid</strong> in the academy ledger and
+              emailed your digital receipt.
             </p>
 
-            <div className="p-2 bg-[#E2E9E4] rounded-lg border border-neutral-200/80 flex items-center justify-between text-[10px] font-medium">
-              <span className="text-neutral-700 flex items-center gap-1">
-                <CheckCheck className="w-3 h-3 text-[#0F7A5F]" /> Fee status updated & receipt sent
+            <p className="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-control border border-line bg-sunk px-2.5 py-2 text-data">
+              <span className="flex items-center gap-1.5 text-ink-soft">
+                <CheckCheck aria-hidden className="h-3 w-3 text-accent" />
+                Fee status updated and receipt sent
               </span>
-              <span className="text-[#E0A21B] font-mono font-bold">03:14:02 PM (2s response)</span>
-            </div>
+              <span className="font-data text-ink-mute">03:14:02 PM</span>
+            </p>
           </div>
         </div>
       </div>
