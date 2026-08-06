@@ -23,28 +23,28 @@ const EVENTS: {
     kind: 'clearance',
     day: 'MON',
     code: 'K243918',
-    headline: 'Competitor 510(k) cleared — infusion pump, Class II',
+    headline: 'Competitor 510(k) cleared: infusion pump, Class II',
     plain: 'A direct competitor got clearance for a pump in your category.',
   },
   {
     kind: 'complaint',
     day: 'TUE',
     code: 'MDR-8842301',
-    headline: 'Adverse event filed — occlusion alarm failure',
+    headline: 'Adverse event filed: occlusion alarm failure',
     plain: 'Someone filed a complaint about a device like your client\'s.',
   },
   {
     kind: 'clearance',
     day: 'WED',
     code: 'K244077',
-    headline: 'New entrant cleared — wearable glucose sensor',
+    headline: 'New entrant cleared: wearable glucose sensor',
     plain: 'A new player entered the category this week.',
   },
   {
     kind: 'recall',
     day: 'THU',
     code: 'Z-1187-2026',
-    headline: 'Class I recall — battery contact corrosion',
+    headline: 'Class I recall: battery contact corrosion',
     plain: 'A recall landed. This is the one you would want to hear about today.',
   },
 ];
@@ -52,20 +52,20 @@ const EVENTS: {
 const KIND_STYLE: Record<EventKind, { label: string; dot: string; chip: string; icon: typeof Radar }> = {
   clearance: {
     label: '510(k)',
-    dot: '#0F7A5F',
-    chip: 'bg-[#E4F1EC] text-[#0A5C47] border-[#B5D8CB]',
+    dot: '#0F6B54',
+    chip: 'bg-[#E6F0EB] text-[#0C5744] border-[#BCD8CC]',
     icon: FileCheck2,
   },
   complaint: {
     label: 'MDR',
     dot: '#E0A21B',
-    chip: 'bg-[#FBF1DC] text-[#BE8412] border-[#E9C46A]',
+    chip: 'bg-[#FBF3E2] text-[#8F6309] border-[#ECD9A8]',
     icon: AlertTriangle,
   },
   recall: {
     label: 'RECALL',
-    dot: '#B4304A',
-    chip: 'bg-[#F8E7EA] text-[#B4304A] border-[#E7B9C2]',
+    dot: '#A62A42',
+    chip: 'bg-[#FAEBEE] text-[#A62A42] border-[#E7B9C2]',
     icon: Siren,
   },
 };
@@ -108,20 +108,20 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
     <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
       {/* ── The scan: a week of public FDA records ─────────────── */}
       <div className="lg:col-span-7">
-        <div className="relative overflow-hidden rounded-3xl border border-[#D2DBD5] bg-white shadow-2xl">
-          <div className="flex items-center justify-between border-b border-[#D2DBD5] bg-[#E2E9E4]/70 px-5 py-3">
+        <div className="relative overflow-hidden rounded-3xl border border-[#DCE3DD] bg-white shadow-2xl">
+          <div className="flex items-center justify-between border-b border-[#DCE3DD] bg-[#E9EEE9]/70 px-5 py-3">
             <div className="flex items-center gap-2">
-              <Radar className="h-4 w-4 text-[#0F7A5F]" />
-              <span className="label-caps text-[#3D4F47]">Watching · openFDA feeds</span>
+              <Radar className="h-4 w-4 text-[#0F6B54]" />
+              <span className="label text-[#46564E]">Watching · openFDA feeds</span>
             </div>
-            <span className="font-data text-[10px] font-semibold text-[#67796F]">
+            <span className="font-data text-data font-semibold text-[#5A6A62]">
               category: infusion pumps
             </span>
           </div>
 
           <div className="relative p-5">
             {/* THE MOTIF — horizontal playhead sweeping the week */}
-            <div className="relative mb-4 h-9 overflow-hidden rounded-xl border border-[#D2DBD5] bg-[#101C18]">
+            <div className="relative mb-4 h-9 overflow-hidden rounded-xl border border-[#DCE3DD] bg-[#111C18]">
               <div
                 aria-hidden
                 className="absolute inset-0 opacity-40"
@@ -133,7 +133,7 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
               {!reduce && (
                 <span
                   aria-hidden
-                  className="absolute inset-y-0 w-10 animate-sweep-x"
+                  className="absolute inset-y-0 w-10 "
                   style={{
                     background:
                       'linear-gradient(90deg, transparent, rgba(233,196,106,0.55), transparent)',
@@ -141,10 +141,10 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
                 />
               )}
               <div className="relative flex h-full items-center justify-between px-3">
-                <span className="font-data text-[9px] font-semibold tracking-widest text-[#E9C46A]">
+                <span className="font-data text-data font-semibold tracking-widest text-[#ECD9A8]">
                   SCANNING 510(k) · MDR · RECALLS
                 </span>
-                <span className="font-data text-[9px] font-semibold text-white/70">
+                <span className="font-data text-data font-semibold text-white/70">
                   {found}/{EVENTS.length} matched
                 </span>
               </div>
@@ -166,39 +166,39 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
                     }}
                     transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
                     className={`flex items-start gap-3 rounded-xl border p-3 ${
-                      revealed ? 'border-[#D2DBD5] bg-white shadow-sm' : 'border-[#E2E9E4] bg-[#E2E9E4]/40'
+                      revealed ? 'border-[#DCE3DD] bg-white shadow-sm' : 'border-[#E9EEE9] bg-[#E9EEE9]/40'
                     }`}
                   >
-                    <span className="font-data mt-0.5 w-8 shrink-0 text-[10px] font-bold text-[#67796F]">
+                    <span className="font-data mt-0.5 w-8 shrink-0 text-data font-bold text-[#5A6A62]">
                       {ev.day}
                     </span>
 
                     <span
                       className="mt-1 h-2 w-2 shrink-0 rounded-full"
-                      style={{ backgroundColor: revealed ? style.dot : '#B4C2B9' }}
+                      style={{ backgroundColor: revealed ? style.dot : '#C2CDC5' }}
                     />
 
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
                         <span
-                          className={`label-caps rounded border px-1.5 py-0.5 ${
-                            revealed ? style.chip : 'border-[#D2DBD5] bg-white text-[#67796F]'
+                          className={`label rounded border px-1.5 py-0.5 ${
+                            revealed ? style.chip : 'border-[#DCE3DD] bg-white text-[#5A6A62]'
                           }`}
                         >
                           {style.label}
                         </span>
-                        <span className="font-data text-[10px] font-semibold text-[#67796F]">
+                        <span className="font-data text-data font-semibold text-[#5A6A62]">
                           {ev.code}
                         </span>
                       </div>
-                      <p className="mt-1 text-[12.5px] font-semibold leading-snug text-[#101C18]">
+                      <p className="mt-1 text-body-sm font-semibold leading-snug text-[#111C18]">
                         {ev.headline}
                       </p>
                     </div>
 
                     <Icon
                       className="mt-0.5 h-4 w-4 shrink-0"
-                      style={{ color: revealed ? style.dot : '#B4C2B9' }}
+                      style={{ color: revealed ? style.dot : '#C2CDC5' }}
                     />
                   </motion.div>
                 );
@@ -206,8 +206,8 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
             </div>
           </div>
 
-          <div className="border-t border-[#D2DBD5] bg-[#E2E9E4]/60 px-5 py-2.5">
-            <p className="font-data text-[10px] text-[#67796F]">
+          <div className="border-t border-[#DCE3DD] bg-[#E9EEE9]/60 px-5 py-2.5">
+            <p className="font-data text-data text-[#5A6A62]">
               Source: public FDA databases (510(k), MAUDE, Enforcement Reports). Every line links to
               the original record.
             </p>
@@ -217,13 +217,13 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
 
       {/* ── The payoff: the Monday email ───────────────────────── */}
       <div className="lg:col-span-5">
-        <div className="relative overflow-hidden rounded-3xl border border-[#D2DBD5] bg-white shadow-2xl">
-          <div className="flex items-center justify-between border-b border-[#D2DBD5] bg-[#101C18] px-5 py-3">
+        <div className="relative overflow-hidden rounded-3xl border border-[#DCE3DD] bg-white shadow-2xl">
+          <div className="flex items-center justify-between border-b border-[#DCE3DD] bg-[#111C18] px-5 py-3">
             <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-[#E9C46A]" />
-              <span className="label-caps text-white/80">Monday, 7:00 AM</span>
+              <Mail className="h-4 w-4 text-[#ECD9A8]" />
+              <span className="label text-white/80">Monday, 7:00 AM</span>
             </div>
-            <span className="font-data text-[10px] text-white/50">weekly watch</span>
+            <span className="font-data text-data text-white/50">weekly watch</span>
           </div>
 
           <div className="p-5">
@@ -237,7 +237,7 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
                   transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   className="space-y-3"
                 >
-                  <p className="font-display text-lg font-semibold leading-snug text-[#101C18]">
+                  <p className="font-display text-lg font-semibold leading-snug text-[#111C18]">
                     4 things happened in your category last week.
                   </p>
 
@@ -251,8 +251,8 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
                             style={{ backgroundColor: style.dot }}
                           />
                           <div>
-                            <p className="text-[12.5px] leading-relaxed text-[#3D4F47]">{ev.plain}</p>
-                            <span className="font-data mt-0.5 inline-flex items-center gap-1 text-[10px] text-[#0F7A5F]">
+                            <p className="text-body-sm leading-relaxed text-[#46564E]">{ev.plain}</p>
+                            <span className="font-data mt-0.5 inline-flex items-center gap-1 text-data text-[#0F6B54]">
                               {ev.code} <ExternalLink className="h-2.5 w-2.5" />
                             </span>
                           </div>
@@ -261,8 +261,8 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
                     })}
                   </ul>
 
-                  <div className="rounded-xl border border-[#B5D8CB] bg-[#E4F1EC] p-3">
-                    <p className="text-[11.5px] font-semibold leading-relaxed text-[#0A5C47]">
+                  <div className="rounded-xl border border-[#BCD8CC] bg-[#E6F0EB] p-3">
+                    <p className="text-data font-semibold leading-relaxed text-[#0C5744]">
                       Read in four minutes. Replaces the two hours you spent clicking through
                       FDA.gov by hand.
                     </p>
@@ -277,11 +277,11 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
                   className="flex min-h-[260px] flex-col items-center justify-center gap-3 text-center"
                 >
                   <span className="relative flex h-10 w-10 items-center justify-center">
-                    <span className="absolute inset-0 rounded-full bg-[#0F7A5F]/20 animate-watch-pulse" />
-                    <Radar className="relative h-5 w-5 text-[#0F7A5F]" />
+                    <span className="absolute inset-0 rounded-full bg-[#0F6B54]/20 " />
+                    <Radar className="relative h-5 w-5 text-[#0F6B54]" />
                   </span>
-                  <p className="label-caps text-[#67796F]">Compiling this week</p>
-                  <p className="max-w-[15rem] text-[12px] leading-relaxed text-[#3D4F47]">
+                  <p className="label text-[#5A6A62]">Compiling this week</p>
+                  <p className="max-w-[15rem] text-data leading-relaxed text-[#46564E]">
                     Nothing to do on your end. The digest writes itself while you work.
                   </p>
                 </motion.div>
@@ -292,22 +292,22 @@ export default function WatchdogLoop({ controlledStep }: { controlledStep?: numb
 
         {/* Honest price contrast */}
         <div className="mt-4 grid grid-cols-2 gap-3">
-          <div className="rounded-2xl border border-[#D2DBD5] bg-[#E2E9E4]/60 p-4">
-            <span className="label-caps text-[#67796F]">Enterprise tools</span>
-            <p className="font-display mt-1 text-xl font-semibold text-[#67796F] line-through decoration-[#B4304A]/60">
+          <div className="rounded-2xl border border-[#DCE3DD] bg-[#E9EEE9]/60 p-4">
+            <span className="label text-[#5A6A62]">Enterprise tools</span>
+            <p className="font-display mt-1 text-xl font-semibold text-[#5A6A62] line-through decoration-[#A62A42]/60">
               $15,000+
             </p>
-            <p className="mt-1 text-[10.5px] leading-tight text-[#67796F]">
+            <p className="mt-1 text-data leading-tight text-[#5A6A62]">
               per year, after a sales call and a demo you have to schedule
             </p>
           </div>
-          <div className="rounded-2xl border border-[#0F7A5F]/40 bg-[#E4F1EC] p-4">
-            <span className="label-caps text-[#0A5C47]">Regulatory Watchdog</span>
-            <p className="font-display mt-1 text-xl font-semibold text-[#0A5C47]">
+          <div className="rounded-2xl border border-[#0F6B54]/40 bg-[#E6F0EB] p-4">
+            <span className="label text-[#0C5744]">Regulatory Watchdog</span>
+            <p className="font-display mt-1 text-xl font-semibold text-[#0C5744]">
               Built to be affordable
             </p>
-            <p className="mt-1 text-[10.5px] leading-tight text-[#0A5C47]/80">
-              self-serve, priced for one consultant — not a procurement department
+            <p className="mt-1 text-data leading-tight text-[#0C5744]/80">
+              self-serve, priced for one consultant, not a procurement department
             </p>
           </div>
         </div>

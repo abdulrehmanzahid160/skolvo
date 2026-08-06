@@ -20,7 +20,7 @@ type Kind = 'clearance' | 'mdr' | 'recall';
 
 const PALETTE: Record<Kind, string> = {
   clearance: '#2FA98A',
-  mdr: '#E9C46A',
+  mdr: '#ECD9A8',
   recall: '#E4607A',
 };
 
@@ -287,12 +287,12 @@ export default function WatchdogRadar({ className = '' }: { className?: string }
     <div className={`relative ${className}`}>
       <div
         aria-hidden
-        className="absolute -inset-6 rounded-full bg-[#0F7A5F]/15 blur-3xl"
+        className="absolute -inset-6 rounded-full bg-[#0F6B54]/15 blur-3xl"
       />
 
       <div
         ref={wrapRef}
-        className="relative aspect-square w-full overflow-hidden rounded-full border border-[#0F7A5F]/30 shadow-2xl"
+        className="relative aspect-square w-full overflow-hidden rounded-full border border-[#0F6B54]/30 shadow-2xl"
       >
         <canvas
           ref={canvasRef}
@@ -304,17 +304,17 @@ export default function WatchdogRadar({ className = '' }: { className?: string }
         {/* Readouts layered over the scope */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute left-1/2 top-4 -translate-x-1/2">
-            <span className="font-data text-[9px] font-bold tracking-[0.22em] text-[#E9C46A]/90">
+            <span className="font-data text-data font-bold tracking-[0.22em] text-[#ECD9A8]/90">
               OPENFDA · LIVE
             </span>
           </div>
 
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#0F7A5F]/30 bg-[#0B1714]/80 px-3 py-1 backdrop-blur-sm">
-            <span className="font-data text-[9px] font-bold text-white/70">
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-3 rounded-full border border-[#0F6B54]/30 bg-[#0B1714]/80 px-3 py-1 backdrop-blur-sm">
+            <span className="font-data text-data font-bold text-white/70">
               {String(detected).padStart(2, '0')} DETECTED
             </span>
             <span className="h-2.5 w-px bg-white/20" />
-            <span className="font-data text-[9px] font-bold text-[#2FA98A]">SWEEPING</span>
+            <span className="font-data text-data font-bold text-[#2FA98A]">SWEEPING</span>
           </div>
         </div>
       </div>
