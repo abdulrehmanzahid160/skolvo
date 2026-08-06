@@ -4,7 +4,7 @@ import LegalLayout, { Section } from '../legal/LegalLayout';
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description:
-    'The terms covering use of Skolvo products — CampusNova and FDA Regulatory Watchdog — including the explicit limits of what Watchdog does and does not tell you.',
+    'The terms covering use of Skolvo products, CampusNova and FDA Regulatory Watchdog, including the explicit limits of what Watchdog does and does not tell you.',
 };
 
 export default function TermsPage() {
@@ -27,7 +27,7 @@ export default function TermsPage() {
         <p>
           Both products are in early access. That means features will change, occasionally break, and
           sometimes be removed. We will not pretend otherwise to make a sale. If uptime guarantees
-          are a hard requirement for you right now, wait for general availability — we will tell you
+          are a hard requirement for you right now, wait for general availability. We will tell you
           when that is.
         </p>
       </Section>
@@ -48,8 +48,8 @@ export default function TermsPage() {
         <p>You agree not to:</p>
         <ul className="ml-5 list-disc space-y-2">
           <li>
-            enrol a person&apos;s biometric data without the consent required where you operate —
-            for children, that means the parent or guardian;
+            enrol a person&apos;s biometric data without the consent required where you operate,
+            which for children means the parent or guardian;
           </li>
           <li>use the messaging features to send bulk marketing to parents;</li>
           <li>attempt to extract other tenants&apos; data, or probe the service for weaknesses without telling us first (see our security page for how to report findings);</li>
@@ -57,7 +57,7 @@ export default function TermsPage() {
         </ul>
       </Section>
 
-      <Section heading="5. What Regulatory Watchdog is — and is not">
+      <Section heading="5. What Regulatory Watchdog is, and is not">
         <p>
           Watchdog monitors public FDA databases and summarises what was filed in your category. It
           is an information tool.
@@ -67,13 +67,13 @@ export default function TermsPage() {
             It does not provide regulatory advice, legal advice, or a compliance assessment.
           </strong>{' '}
           It does not tell you whether your device is compliant, whether you must file something, or
-          how to respond to a finding. That judgement is professional work, and it remains yours —
-          it is the part your clients are paying you for.
+          how to respond to a finding. That judgement is professional work, it remains yours, and it
+          is the part your clients are paying you for.
         </p>
         <p>
           We summarise public records in good faith and link to every original document precisely so
           you can verify it. FDA data can be delayed, amended, or incomplete at the source. Do not
-          treat a Watchdog digest as the authoritative record — treat it as a reliable pointer to
+          treat a Watchdog digest as the authoritative record. Treat it as a reliable pointer to
           the authoritative record. Verify before you advise a client or make a filing decision.
         </p>
       </Section>
@@ -90,7 +90,7 @@ export default function TermsPage() {
         <p>
           To the extent permitted by law, our total liability for any claim relating to the service
           is limited to the fees you paid us in the twelve months before the claim. We are not liable
-          for indirect or consequential loss — including regulatory outcomes, lost business, or
+          for indirect or consequential loss, including regulatory outcomes, lost business, or
           decisions made in reliance on a summary you did not verify against the original record.
         </p>
         <p>

@@ -29,7 +29,7 @@ export default function SecurityPage() {
           servers. Camera frames are processed locally and discarded.
         </p>
         <p>
-          What leaves the device is a face embedding — a numeric vector — plus the attendance result.
+          What leaves the device is a face embedding (a numeric vector) plus the attendance result.
           There is no face image archive in our infrastructure. Liveness detection requires a passive
           blink, so a printed photograph or a phone screen held up to the camera does not pass.
         </p>
@@ -39,7 +39,7 @@ export default function SecurityPage() {
         <p>
           CampusNova has no public registration endpoint. Access originates from the academy owner,
           who issues single-use, expiring invite tokens scoped to a specific role. Roles are checked
-          server-side on every request — the UI hiding a button is treated as a convenience, never as
+          server-side on every request. The UI hiding a button is treated as a convenience, never as
           the security boundary.
         </p>
         <p>
@@ -57,17 +57,17 @@ export default function SecurityPage() {
 
       <Section heading="5. Audit trail">
         <p>
-          Attendance records are timestamped and attributed. Edits do not silently overwrite history
-          — a change is recorded with the account that made it, so an owner can see who altered a
-          register and when. This matters more than it sounds: an attendance system nobody can audit
-          is an attendance system nobody should trust.
+          Attendance records are timestamped and attributed. Edits do not silently overwrite
+          history. A change is recorded with the account that made it, so an owner can see who
+          altered a register and when. This matters more than it sounds: an attendance system nobody
+          can audit is an attendance system nobody should trust.
         </p>
       </Section>
 
       <Section heading="6. Regulatory Watchdog data sources">
         <p>
           Watchdog reads only public FDA sources and stores your watch configuration. It has no
-          access to confidential client submissions, and there is no upload path for them — which
+          access to confidential client submissions, and there is no upload path for them, which
           removes an entire category of risk rather than mitigating it.
         </p>
       </Section>
@@ -76,7 +76,7 @@ export default function SecurityPage() {
         <p>
           We are a small studio in early access. We do not currently hold SOC 2, ISO 27001, or
           HIPAA certification, and we will not imply otherwise on a marketing page. If your
-          procurement process requires a specific certification, tell us — we would rather scope that
+          procurement process requires a specific certification, tell us. We would rather scope that
           honestly than lose your trust later.
         </p>
       </Section>
