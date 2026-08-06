@@ -1,86 +1,99 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
-import { DollarSign, FileCheck, ArrowUpRight, CheckCircle2, Clock, Smartphone } from 'lucide-react';
+import { CheckCircle2, Clock, DollarSign, FileCheck } from 'lucide-react';
 
+/**
+ * Fees module preview.
+ *
+ * TODO(assets): replace with a real screenshot of the fee ledger at 1600x1000.
+ * Hand-built stand-in.
+ *
+ * The 88.4% collection figure is sample data, labelled as such in the panel
+ * header, so it does not read as a real customer metric.
+ */
 export default function FeeTrackingMockup() {
   return (
-    <div className="relative w-full rounded-2xl bg-white border border-neutral-200 p-5 shadow-lg overflow-hidden font-sans">
-      {/* Top Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-neutral-200 text-xs">
+    <div className="w-full overflow-hidden rounded-card border border-line bg-surface">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-3.5">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-lg bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 flex items-center justify-center text-[#0F7A5F]">
-            <DollarSign className="w-3.5 h-3.5" />
-          </div>
-          <span className="font-bold text-[#101C18]">Dynamic Fee Tracking & Canvas Receipts</span>
+          <span className="flex h-6 w-6 items-center justify-center rounded-control border border-accent-line bg-accent-wash text-accent">
+            <DollarSign aria-hidden className="h-3.5 w-3.5" />
+          </span>
+          <p className="text-body-sm font-semibold text-ink">Fees and receipts</p>
         </div>
-        <span className="px-2 py-0.5 bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 text-[#0F7A5F] rounded-md text-[10px] font-bold">
-          Auto-Receipt Generated
+        <span className="rounded-full border border-line bg-sunk px-2.5 py-1 text-data font-semibold text-ink-mute">
+          Sample data
         </span>
       </div>
 
-      {/* Main Content Grid */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-        {/* Receipt Mockup Card */}
-        <div className="sm:col-span-2 p-3.5 bg-[#E2E9E4] border border-neutral-200 rounded-xl space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <FileCheck className="w-4 h-4 text-[#0F7A5F]" />
-              <span className="font-extrabold text-[#101C18] text-xs">DIGITAL RECEIPT #CN-8842</span>
-            </div>
-            <span className="text-[10px] text-[#0A5C47] bg-[#E4F1EC] border border-[#B5D8CB] px-2 py-0.5 rounded-full font-bold">
-              VERIFIED PAID
+      <div className="grid gap-4 p-5 sm:grid-cols-3">
+        {/* Receipt */}
+        <div className="rounded-card border border-line bg-sunk p-4 sm:col-span-2">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="flex items-center gap-2 text-body-sm font-semibold text-ink">
+              <FileCheck aria-hidden className="h-4 w-4 text-accent" />
+              Receipt CN-8842
+            </p>
+            <span className="rounded-full border border-accent-line bg-accent-wash px-2.5 py-0.5 text-data font-semibold text-accent">
+              Paid
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-[11px] bg-white p-3 rounded-lg border border-neutral-200 shadow-2xs">
-            <div>
-              <span className="text-neutral-500 block text-[10px] font-medium">Student Name</span>
-              <span className="text-[#101C18] font-bold">Sarah Farooq</span>
-            </div>
-            <div>
-              <span className="text-neutral-500 block text-[10px] font-medium">Payment Method</span>
-              <span className="text-[#101C18] font-bold">Bank Transfer / Online</span>
-            </div>
-            <div>
-              <span className="text-neutral-500 block text-[10px] font-medium">Fee Month</span>
-              <span className="text-[#101C18] font-bold">October 2026</span>
-            </div>
-            <div>
-              <span className="text-neutral-500 block text-[10px] font-medium">Amount Received</span>
-              <span className="text-[#0A5C47] font-extrabold font-mono">$ 150.00</span>
-            </div>
-          </div>
+          <dl className="mt-3 grid grid-cols-2 gap-3 rounded-control border border-line bg-surface p-3.5">
+            {[
+              { k: 'Student', v: 'Sarah Farooq' },
+              { k: 'Method', v: 'Bank transfer' },
+              { k: 'Fee month', v: 'October 2026' },
+              { k: 'Amount', v: '$150.00', mono: true },
+            ].map((r) => (
+              <div key={r.k}>
+                <dt className="text-data text-ink-mute">{r.k}</dt>
+                <dd
+                  className={`mt-0.5 text-body-sm font-semibold text-ink ${
+                    r.mono ? 'font-data' : ''
+                  }`}
+                >
+                  {r.v}
+                </dd>
+              </div>
+            ))}
+          </dl>
 
-          <div className="flex items-center justify-between text-[10px] text-neutral-600 pt-1 font-medium">
-            <span className="flex items-center gap-1 text-neutral-700">
-              <CheckCircle2 className="w-3.5 h-3.5 text-[#0F7A5F]" /> Graphic Receipt Sent to WhatsApp
+          <p className="mt-3 flex flex-wrap items-center justify-between gap-2 text-data text-ink-mute">
+            <span className="flex items-center gap-1.5 text-ink-soft">
+              <CheckCircle2 aria-hidden className="h-3.5 w-3.5 text-accent" />
+              Receipt sent to WhatsApp
             </span>
-            <span className="text-[#0F7A5F] font-mono font-bold">Timestamp: 10:42 AM</span>
-          </div>
+            <span className="font-data">10:42 AM</span>
+          </p>
         </div>
 
-        {/* Status & Automated Reminder Action */}
-        <div className="p-3.5 bg-[#E2E9E4] border border-neutral-200 rounded-xl flex flex-col justify-between space-y-3">
+        {/* Overview */}
+        <div className="flex flex-col justify-between gap-4 rounded-card border border-line bg-sunk p-4">
           <div>
-            <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block mb-1">
-              Monthly Overview
-            </span>
-            <div className="text-xl font-extrabold font-display text-[#101C18]">
-              88.4% <span className="text-xs font-bold text-[#0F7A5F]">Collected</span>
-            </div>
-            <div className="w-full h-1.5 bg-neutral-200 rounded-full overflow-hidden mt-1.5">
-              <div className="h-full bg-gradient-to-r from-[#0F7A5F] to-[#128A6B] w-[88.4%]" />
+            <p className="text-data text-ink-mute">Collected this month</p>
+            <p className="font-display mt-1 text-title text-ink">
+              88.4<span className="text-body text-ink-mute">%</span>
+            </p>
+            {/* A thin unfilled rule rather than a heavy filled track: the number
+                is the data, the bar is only orientation. */}
+            <div
+              role="img"
+              aria-label="88.4 percent of fees collected this month"
+              className="mt-2 h-1 w-full overflow-hidden rounded-full bg-line"
+            >
+              <div className="h-full rounded-full bg-accent" style={{ width: '88.4%' }} />
             </div>
           </div>
 
-          <div className="p-2 bg-[#E0A21B]/10 border border-[#E0A21B]/30 rounded-lg text-[10px] text-neutral-700 space-y-1">
-            <div className="flex items-center gap-1 font-bold text-[#E0A21B]">
-              <Clock className="w-3 h-3" /> 14 Pending Reminders
-            </div>
-            <p className="text-neutral-600 text-[10px] font-medium">
-              Auto-WhatsApp fee reminders scheduled with individual student details.
+          <div className="rounded-control border border-line bg-surface p-2.5">
+            <p className="flex items-center gap-1.5 text-data font-semibold text-ink">
+              <Clock aria-hidden className="h-3 w-3 text-accent" />
+              14 reminders queued
+            </p>
+            <p className="mt-1 text-data text-ink-mute">
+              Each one carries that student&apos;s own balance.
             </p>
           </div>
         </div>
