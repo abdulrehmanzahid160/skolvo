@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Sparkles, CheckCircle2, ShieldCheck, ArrowRight, Loader2 } from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowRight, CheckCircle2, Loader2, X } from 'lucide-react';
+import { EASE, DUR_EXIT } from '@/components/motion/Primitives';
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -10,6 +11,14 @@ interface WaitlistModalProps {
   defaultProduct?: string;
 }
 
+/**
+ * Waitlist dialog. Mounted exactly once, at the layout root, by
+ * WaitlistProvider.
+ *
+ * The network contract is unchanged: POST /api/waitlist with
+ * { email, role, source }. Only presentation and accessibility differ from the
+ * previous version.
+ */
 export default function WaitlistModal({
   isOpen,
   onClose,
@@ -23,6 +32,11 @@ export default function WaitlistModal({
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
+  const panelRef = useRef<HTMLDivElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  // Remember what had focus before opening so it can be restored on close.
+  const restoreRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (isOpen) {
       setSubmitted(false);
@@ -32,182 +46,262 @@ export default function WaitlistModal({
     }
   }, [isOpen, isWatchdog]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setError('Please enter a valid email address.');
-      return;
+  // Focus the first field on open; restore the trigger's focus on close.
+  useEffect(() => {
+    if (isOpen) {
+      restoreRef.current = document.activeElement as HTMLElement | null;
+      // One frame's delay so the element exists and the entry animation has begun.
+      const id = requestAnimationFrame(() => emailRef.current?.focus());
+      return () => cancelAnimationFrame(id);
     }
+    restoreRef.current?.focus?.();
+  }, [isOpen]);
 
-    setLoading(true);
-    setError('');
+  // Lock background scroll. Without this the page behind the dialog scrolls
+  // under the overlay on both wheel and touch.
+  useEffect(() => {
+    if (!isOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isOpen]);
 
-    try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, role, source: defaultProduct }),
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setSubmitted(true);
-      } else {
-        setError(data.message || 'Something went wrong. Please try again.');
+  // Escape to dismiss, and Tab confined to the dialog.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
       }
-    } catch (err) {
-      setError('Network error. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (e.key !== 'Tab' || !panelRef.current) return;
+      const focusable = panelRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled])'
+      );
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!email || !email.includes('@')) {
+        setError('Enter an email address that includes an @ sign.');
+        emailRef.current?.focus();
+        return;
+      }
+
+      setLoading(true);
+      setError('');
+
+      try {
+        const res = await fetch('/api/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, role, source: defaultProduct }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          setSubmitted(true);
+        } else {
+          setError(data.message || 'That did not go through. Try again in a moment.');
+        }
+      } catch {
+        setError('No connection. Check your network and try again.');
+      } finally {
+        setLoading(false);
+      }
+    },
+    [email, role, defaultProduct]
+  );
+
+  const fieldClass =
+    'w-full min-h-11 rounded-control border border-line-strong bg-paper px-4 py-3 text-body-sm text-ink placeholder:text-ink-mute transition-colors focus:border-accent focus:outline-none';
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          {/* Backdrop */}
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4 sm:p-6">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 0, transition: { duration: DUR_EXIT, ease: EASE } }}
+            transition={{ duration: 0.24, ease: EASE }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 bg-ink/55 backdrop-blur-sm"
           />
 
-          {/* Modal Box */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="waitlist-title"
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-lg bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 shadow-2xl overflow-hidden z-10 text-[#101C18]"
+            exit={{
+              opacity: 0,
+              scale: 0.96,
+              y: 12,
+              transition: { duration: DUR_EXIT, ease: EASE },
+            }}
+            transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+            className="relative z-10 w-full max-w-lg rounded-card border border-line bg-surface p-6 shadow-[var(--shadow-lg)] sm:p-8"
           >
-            {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-5 right-5 p-2 text-neutral-500 hover:text-black bg-neutral-100 hover:bg-neutral-200 rounded-full transition-colors"
-              aria-label="Close modal"
+              className="absolute right-4 top-4 flex h-11 w-11 items-center justify-center rounded-full text-ink-mute transition-colors hover:bg-sunk hover:text-ink"
+              aria-label="Close dialog"
             >
-              <X className="w-5 h-5" />
+              <X className="h-5 w-5" />
             </button>
 
             {!submitted ? (
-              <div>
-                <div className="flex items-center gap-2 px-3 py-1 bg-[#0F7A5F]/10 border border-[#0F7A5F]/30 rounded-full w-fit mb-4">
-                  <Sparkles className="w-3.5 h-3.5 text-[#0F7A5F]" />
-                  <span className="text-xs font-bold text-[#0F7A5F] uppercase tracking-wider">
-                    Early Access Priority
-                  </span>
-                </div>
+              <>
+                <h2
+                  id="waitlist-title"
+                  className="font-display max-w-[22ch] text-title text-ink sm:text-[1.625rem]"
+                >
+                  Request early access to {defaultProduct}
+                </h2>
 
-                <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-[#101C18] mb-2">
-                  Get Early Access to <span className="text-[#0F7A5F]">{defaultProduct}</span>
-                </h3>
-
-                <p className="text-neutral-600 text-sm mb-6 leading-relaxed">
+                <p className="prose-measure mt-3 text-body-sm text-ink-soft">
                   {isWatchdog
-                    ? 'Get the weekly FDA digest for your category — competitor clearances, adverse events, and recalls in plain English, with a link to every original record.'
-                    : 'Be among the first academies to hand attendance, parent messaging, and fee reconciliation to software that runs on its own.'}
+                    ? 'You get the weekly FDA digest for your category: competitor clearances, adverse events, and recalls in plain English, with a link to every original record.'
+                    : 'Hand attendance, parent messaging, and fee reconciliation to software that runs on its own.'}
                 </p>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
-                      Work / Personal Email
+                <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="waitlist-email" className="text-label font-semibold text-ink">
+                      Email address
                     </label>
                     <input
+                      ref={emailRef}
+                      id="waitlist-email"
+                      name="email"
                       type="email"
+                      autoComplete="email"
                       required
+                      aria-describedby={error ? 'waitlist-error' : undefined}
+                      aria-invalid={error ? true : undefined}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={isWatchdog ? 'you@consulting.com' : 'owner@academy.com'}
-                      className="w-full px-4 py-3 bg-[#EDF1EE] border border-neutral-300 rounded-xl text-[#101C18] placeholder-neutral-400 focus:outline-none focus:border-[#101C18] focus:ring-1 focus:ring-[#101C18] transition-all text-sm font-medium"
+                      className={fieldClass}
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-neutral-700 mb-1.5">
-                      Your Primary Role
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="waitlist-role" className="text-label font-semibold text-ink">
+                      Your role
                     </label>
                     <select
+                      id="waitlist-role"
+                      name="role"
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      className="w-full px-4 py-3 bg-[#EDF1EE] border border-neutral-300 rounded-xl text-[#101C18] focus:outline-none focus:border-[#101C18] focus:ring-1 focus:ring-[#101C18] transition-all text-sm font-medium"
+                      className={fieldClass}
                     >
                       {isWatchdog ? (
                         <>
                           <option value="Independent Regulatory Consultant">
-                            Independent Regulatory Consultant
+                            Independent regulatory consultant
                           </option>
                           <option value="Small Medical Device Company">
-                            Small / Mid Medical Device Company
+                            Small or mid-size medical device company
                           </option>
                           <option value="Quality & Compliance Lead">
-                            Quality &amp; Compliance Lead
+                            Quality and compliance lead
                           </option>
-                          <option value="Regulatory Affairs Team">Regulatory Affairs Team</option>
+                          <option value="Regulatory Affairs Team">Regulatory affairs team</option>
                           <option value="Other Interested Individual">Something else</option>
                         </>
                       ) : (
                         <>
-                          <option value="School / Coaching Owner">Academy Owner / Administrator</option>
-                          <option value="School Principal / Director">School Principal / Director</option>
-                          <option value="Teacher / Educator">Teacher / Educator</option>
-                          <option value="IT & Operations Manager">IT &amp; Operations Manager</option>
-                          <option value="Independent Tutor">Independent Tutor / Small Business</option>
+                          <option value="School / Coaching Owner">
+                            Academy owner or administrator
+                          </option>
+                          <option value="School Principal / Director">
+                            School principal or director
+                          </option>
+                          <option value="Teacher / Educator">Teacher</option>
+                          <option value="IT & Operations Manager">
+                            IT and operations manager
+                          </option>
+                          <option value="Independent Tutor">Independent tutor</option>
                           <option value="Other Interested Individual">Something else</option>
                         </>
                       )}
                     </select>
                   </div>
 
+                  {/* role="alert" so the failure is announced, not just drawn. */}
                   {error && (
-                    <p className="text-xs text-red-600 bg-red-50 border border-red-200 p-2.5 rounded-lg font-medium">
+                    <p
+                      id="waitlist-error"
+                      role="alert"
+                      className="rounded-control border border-danger/25 bg-danger-wash px-3 py-2.5 text-body-sm text-danger"
+                    >
                       {error}
                     </p>
                   )}
 
-                  <button
+                  <motion.button
                     type="submit"
                     disabled={loading}
-                    className="w-full py-3.5 px-6 bg-[#101C18] hover:bg-black text-white font-bold rounded-xl shadow-md flex items-center justify-center gap-2 transition-all transform active:scale-95 text-sm"
+                    whileTap={loading ? undefined : { scale: 0.98 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    className="flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-ink px-6 text-body-sm font-semibold text-white shadow-[var(--shadow-md)] transition-colors hover:bg-[#0a130f] disabled:pointer-events-none disabled:opacity-60"
                   >
                     {loading ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        Securing your spot...
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Sending
                       </>
                     ) : (
                       <>
-                        Request Early Access Invites
-                        <ArrowRight className="w-4 h-4" />
+                        Request access
+                        <ArrowRight className="h-4 w-4" />
                       </>
                     )}
-                  </button>
+                  </motion.button>
                 </form>
 
-                <div className="mt-5 flex items-center justify-center gap-2 text-xs text-neutral-500 font-medium">
-                  <ShieldCheck className="w-4 h-4 text-[#E0A21B]" />
-                  <span>Zero spam. Direct priority invite when public beta opens.</span>
-                </div>
-              </div>
+                <p className="mt-4 text-center text-body-sm text-ink-mute">
+                  No spam. One email when your invite is ready.
+                </p>
+              </>
             ) : (
-              <div className="py-6 text-center">
-                <div className="w-16 h-16 bg-[#E4F1EC] border border-[#B5D8CB] rounded-full flex items-center justify-center mx-auto mb-4 text-[#0F7A5F]">
-                  <CheckCircle2 className="w-10 h-10" />
-                </div>
-                <h3 className="text-2xl font-bold font-display text-[#101C18] mb-2">
-                  You&apos;re On The List!
-                </h3>
-                <p className="text-neutral-600 text-sm leading-relaxed mb-6">
-                  Thank you for joining the <strong className="text-[#101C18]">{defaultProduct}</strong> early access waitlist. We will notify you directly at <strong className="text-[#0F7A5F]">{email}</strong>.
+              <div className="py-4 text-center">
+                <span className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-accent-line bg-accent-wash text-accent">
+                  <CheckCircle2 className="h-7 w-7" />
+                </span>
+                <h2 id="waitlist-title" className="font-display text-title text-ink">
+                  You are on the list
+                </h2>
+                <p className="prose-measure mx-auto mt-3 text-body-sm text-ink-soft">
+                  We will send your {defaultProduct} invite to{' '}
+                  <strong className="font-semibold text-ink">{email}</strong>.
                 </p>
                 <button
                   onClick={onClose}
-                  className="px-6 py-2.5 bg-neutral-100 hover:bg-neutral-200 text-[#101C18] font-bold rounded-xl text-sm transition-colors"
+                  className="mt-6 min-h-11 cursor-pointer rounded-full border border-line-strong bg-surface px-6 text-body-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent-hover"
                 >
-                  Close Window
+                  Close
                 </button>
               </div>
             )}
