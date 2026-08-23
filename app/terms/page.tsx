@@ -12,12 +12,12 @@ export default function TermsPage() {
     <LegalLayout
       eyebrow="Legal"
       title="Terms of Service"
-      updated="29 July 2026"
-      summary="Plain terms for using our products while they are in early access. The part worth reading twice is section 5: Regulatory Watchdog reports facts, it does not give regulatory or legal advice."
+      updated="24 August 2026"
+      summary="Terms for this website and any explicitly invited product validation. Neither product is generally available and public pricing has not been published."
     >
       <Section heading="1. Agreement">
         <p>
-          By creating an account or joining an early-access programme for a Skolvo product, you agree
+          By joining an invited validation programme for a Skolvo product, you agree
           to these terms. If you are accepting on behalf of an academy, company, or client, you
           confirm you are authorised to do so.
         </p>
@@ -25,18 +25,15 @@ export default function TermsPage() {
 
       <Section heading="2. Early access means unfinished">
         <p>
-          Both products are in early access. That means features will change, occasionally break, and
-          sometimes be removed. We will not pretend otherwise to make a sale. If uptime guarantees
-          are a hard requirement for you right now, wait for general availability. We will tell you
-          when that is.
+          SignalWatch is a validation build and CampusNova is a private prototype. Features may change,
+          break, or be removed. There is no current uptime commitment or general-availability date.
         </p>
       </Section>
 
       <Section heading="3. Your account and access control">
         <p>
-          CampusNova is invite-only by design: there is no public registration. The academy owner
-          issues and revokes every Admin, Teacher, and Staff role. You are responsible for who you
-          hand a role to, and for revoking it when someone leaves.
+          CampusNova access is currently limited to private development and any explicit validation
+          invitations. Role and invitation behaviour remains subject to change before availability.
         </p>
         <p>
           Do not share credentials or invite tokens outside your organisation. If you think an
@@ -59,8 +56,8 @@ export default function TermsPage() {
 
       <Section heading="5. What Regulatory Watchdog is, and is not">
         <p>
-          Watchdog monitors public FDA databases and summarises what was filed in your category. It
-          is an information tool.
+          SignalWatch is intended to monitor public FDA databases and prepare source-linked summaries.
+          Scheduled production monitoring is not currently running. It is an information tool.
         </p>
         <p>
           <strong>
@@ -71,18 +68,15 @@ export default function TermsPage() {
           is the part your clients are paying you for.
         </p>
         <p>
-          We summarise public records in good faith and link to every original document precisely so
-          you can verify it. FDA data can be delayed, amended, or incomplete at the source. Do not
-          treat a Watchdog digest as the authoritative record. Treat it as a reliable pointer to
-          the authoritative record. Verify before you advise a client or make a filing decision.
+          FDA data can be delayed, amended, or incomplete at the source. Any validation output must
+          be checked against the linked authoritative record before advice or a filing decision.
         </p>
       </Section>
 
       <Section heading="6. Fees">
         <p>
-          Early-access pricing is shown on our pricing page and may change before general
-          availability. If we change the price of a plan you are already on, we will tell you before
-          it takes effect, not after.
+          Public product pricing has not been published. Joining a waitlist does not lock a price,
+          purchase a plan, or guarantee an invitation date.
         </p>
       </Section>
 

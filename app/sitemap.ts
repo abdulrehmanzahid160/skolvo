@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { journalPosts } from '@/lib/journal';
 
 // Canonical marketing domain. www.skolvo.online is the canonical form —
 // bare skolvo.online redirects to www via middleware.
@@ -7,7 +8,7 @@ import { MetadataRoute } from 'next';
 const BASE_URL = 'https://www.skolvo.online';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const routes: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
       lastModified: new Date(),
@@ -26,6 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.9,
+    },
+    {
+      url: `${BASE_URL}/journal`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${BASE_URL}/about`,
@@ -57,5 +64,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.4,
     },
+  ];
+
+  return [
+    ...routes,
+    ...journalPosts.map((post) => ({
+      url: `${BASE_URL}/journal/${post.slug}`,
+      lastModified: new Date('2026-08-24'),
+      changeFrequency: 'yearly' as const,
+      priority: 0.65,
+    })),
   ];
 }

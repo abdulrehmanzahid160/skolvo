@@ -118,23 +118,18 @@ export default function ContactPage() {
     }`;
 
   return (
-    <>
-      <section className="border-b border-line">
-        <div className="mx-auto max-w-6xl px-4 pb-14 pt-16 sm:px-6 lg:px-8 lg:pt-24">
+    <div className="contact-page">
+      <section className="contact-hero">
+        <div className="studio-shell">
           <Reveal>
-            <p className="label">Contact</p>
-            <h1 className="font-display-lg mt-4 max-w-[22ch] text-display-lg text-ink">
-              Tell us what you are trying to fix.
-            </h1>
-            <p className="prose-measure mt-5 text-lead text-ink-soft">
-              Questions about either product, institutional requirements, or partnerships. A real
-              person reads every message.
-            </p>
+            <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / CONTACT</span><span>DIRECT TO THE STUDIO</span></div>
+            <h1>Bring us the<br /><i>difficult</i> part.</h1>
+            <p>Questions about the products, the architecture, or a workflow we should understand. Messages go to the studio inbox.</p>
           </Reveal>
         </div>
       </section>
 
-      <section className="bg-sunk">
+      <section className="contact-body">
         <div className="mx-auto max-w-5xl px-4 py-[var(--section-y)] sm:px-6 lg:px-8">
           <div className="grid items-start gap-8 lg:grid-cols-12">
             {/* Form */}
@@ -348,6 +343,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

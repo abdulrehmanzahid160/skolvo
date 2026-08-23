@@ -33,9 +33,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "You're on the early access waitlist! We'll notify you first when CampusNova launches.",
+      message: 'Your product interest was recorded.',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Waitlist API Error:', error);
     return NextResponse.json(
       { success: false, message: 'Server error processing your request. Please try again later.' },

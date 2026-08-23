@@ -35,11 +35,11 @@ export const metadata: Metadata = {
   // get "Page Name | Skolvo". The `default` is used for the homepage and any
   // page that doesn't export its own metadata.
   title: {
-    default: 'Skolvo: Software for Places Where Being Wrong Is Expensive',
+    default: 'Skolvo: Software with evidence built in',
     template: '%s | Skolvo',
   },
   description:
-    'Skolvo is a software studio building focused, privacy-first tools for high-stakes industries. Makers of CampusNova (on-device biometric attendance and fee automation for academies) and FDA Regulatory Watchdog (weekly plain-English FDA monitoring for regulatory consultants).',
+    'Skolvo is a product studio developing SignalWatch for public FDA regulatory intelligence and CampusNova for privacy-conscious academy operations.',
   keywords: [
     'Skolvo',
     'CampusNova',
@@ -53,12 +53,12 @@ export const metadata: Metadata = {
     'On-Device Facial Recognition',
   ],
   authors: [{ name: 'Skolvo Team' }],
-  metadataBase: new URL('https://app.skolvo.online'),
+  metadataBase: new URL('https://www.skolvo.online'),
   openGraph: {
-    title: 'Skolvo | A Studio for High-Stakes Software',
+    title: 'Skolvo | Software with evidence built in',
     description:
-      'Two products live: CampusNova for academies, and FDA Regulatory Watchdog for medical-device regulatory consultants.',
-    url: 'https://app.skolvo.online',
+      'Two products under active development: SignalWatch and CampusNova.',
+    url: 'https://www.skolvo.online',
     siteName: 'Skolvo',
     // NOTE: /logo.png is a square app icon (1024×1024), which works for
     // summary cards but is not ideal for link previews (1200×630 is the
@@ -78,9 +78,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Skolvo | A Studio for High-Stakes Software',
+    title: 'Skolvo | Software with evidence built in',
     description:
-      'Two products live: CampusNova for academies, and FDA Regulatory Watchdog for medical-device regulatory consultants.',
+      'Two products under active development: SignalWatch and CampusNova.',
     images: ['/logo.png'],
   },
   icons: {

@@ -3,7 +3,7 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import {
   Smartphone as MobileIcon,
   Download,
@@ -27,10 +27,8 @@ const DEEP_LINK_TIMEOUT_MS = 1800;
 // ---------------------------------------------------------------------------
 
 /** @todo STORE_URL_PLACEHOLDER – replace with real Google Play Store URL */
-const PLAY_STORE_URL = null; // e.g. 'https://play.google.com/store/apps/details?id=com.skolvo.campusnova'
 
 /** @todo STORE_URL_PLACEHOLDER – replace with real Apple App Store URL */
-const APP_STORE_URL = null; // e.g. 'https://apps.apple.com/app/campusnova/id0000000000'
 
 // ---------------------------------------------------------------------------
 

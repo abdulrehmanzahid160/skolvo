@@ -24,7 +24,7 @@ export default function LegalLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+    <div className="legal-page mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       <Link
         href="/"
         className="link-underline inline-flex min-h-11 items-center gap-1.5 text-body-sm font-semibold text-ink-mute transition-colors hover:text-accent"
@@ -47,8 +47,8 @@ export default function LegalLayout({
           Questions about this page?
         </h2>
         <p className="mt-2 text-body-sm text-ink-soft">
-          A real person answers this address. If something here is unclear, or you want a commitment
-          in writing before you trust us with data, write and ask.
+          If something here is unclear, or you need a commitment in writing before sharing data,
+          write and ask.
         </p>
         <a
           href="mailto:support@skolvo.online"

@@ -3,17 +3,17 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'About Us',
   description:
-    'The team behind CampusNova and FDA Regulatory Watchdog, and why we build privacy-first tools for institutions that cannot absorb a mistake.',
+    'The three-person team developing SignalWatch and CampusNova, and the product boundaries guiding the work.',
   openGraph: {
-    title: 'About Skolvo: The Team Behind CampusNova',
+    title: 'About the Skolvo Studio',
     description:
-      'Meet the engineers and ML practitioners building CampusNova. Our mission: intelligent, role-secure, privacy-first software for academies and schools.',
-    url: 'https://app.skolvo.online/about',
+      'Meet the three-person team developing SignalWatch and CampusNova.',
+    url: 'https://www.skolvo.online/about',
   },
   twitter: {
-    title: 'About Skolvo: The Team Behind CampusNova',
+    title: 'About the Skolvo Studio',
     description:
-      'Meet the engineers and ML practitioners building CampusNova. Our mission: intelligent, role-secure, privacy-first software for academies and schools.',
+      'Meet the three-person team developing SignalWatch and CampusNova.',
   },
 };
 

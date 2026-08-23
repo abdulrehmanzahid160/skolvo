@@ -43,9 +43,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you for reaching out to Skolvo! Our team will respond shortly.',
+      message: 'Your message was received.',
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Contact API Error:', error);
     return NextResponse.json(
       { success: false, message: 'Internal server error. Please try again.' },

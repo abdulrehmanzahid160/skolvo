@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { HTMLMotionProps, motion, useReducedMotion } from 'framer-motion';
+import { HTMLMotionProps, motion, useReducedMotion } from 'motion/react';
 import { PRESS_SPRING } from '@/components/motion/Primitives';
 
 /* ============================================================

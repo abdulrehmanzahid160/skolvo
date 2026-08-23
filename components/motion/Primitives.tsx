@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'framer-motion';
+import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'motion/react';
 
 /* ============================================================
    MOTION PRIMITIVES

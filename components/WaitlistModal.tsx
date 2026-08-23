@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, CheckCircle2, Loader2, X } from 'lucide-react';
 import { EASE, DUR_EXIT } from '@/components/motion/Primitives';
 
@@ -180,8 +180,8 @@ export default function WaitlistModal({
 
                 <p className="prose-measure mt-3 text-body-sm text-ink-soft">
                   {isWatchdog
-                    ? 'You get the weekly FDA digest for your category: competitor clearances, adverse events, and recalls in plain English, with a link to every original record.'
-                    : 'Hand attendance, parent messaging, and fee reconciliation to software that runs on its own.'}
+                    ? 'Register to help validate a source-linked FDA monitoring workflow. Production scheduling is not currently running.'
+                    : 'Register interest in the CampusNova prototype for attendance, parent messaging, and fee workflows.'}
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-6 space-y-4" noValidate>
@@ -282,7 +282,7 @@ export default function WaitlistModal({
                 </form>
 
                 <p className="mt-4 text-center text-body-sm text-ink-mute">
-                  No spam. One email when your invite is ready.
+                  No spam. We will only contact you about the product you selected.
                 </p>
               </>
             ) : (
@@ -294,7 +294,7 @@ export default function WaitlistModal({
                   You are on the list
                 </h2>
                 <p className="prose-measure mx-auto mt-3 text-body-sm text-ink-soft">
-                  We will send your {defaultProduct} invite to{' '}
+                  We recorded your interest for {defaultProduct} at{' '}
                   <strong className="font-semibold text-ink">{email}</strong>.
                 </p>
                 <button

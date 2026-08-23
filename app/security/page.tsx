@@ -12,8 +12,8 @@ export default function SecurityPage() {
     <LegalLayout
       eyebrow="Engineering"
       title="Security Architecture"
-      updated="29 July 2026"
-      summary="What we actually built, described specifically enough to be checked. We would rather tell you where the boundaries are than claim a level of certification we do not yet hold."
+      updated="24 August 2026"
+      summary="Current controls and intended product boundaries. CampusNova is a prototype and SignalWatch is a validation build; this is not an audit report or certification."
     >
       <Section heading="1. The design rule">
         <p>
@@ -25,57 +25,53 @@ export default function SecurityPage() {
 
       <Section heading="2. Biometrics: on-device processing">
         <p>
-          Face matching and blink-liveness detection run on the device at the gate, not on our
-          servers. Camera frames are processed locally and discarded.
+          CampusNova is being designed so face matching runs on the device at the gate rather than
+          on a cloud server. This is a prototype architecture and has not been independently audited.
         </p>
         <p>
-          What leaves the device is a face embedding (a numeric vector) plus the attendance result.
-          There is no face image archive in our infrastructure. Liveness detection requires a passive
-          blink, so a printed photograph or a phone screen held up to the camera does not pass.
+          The intended downstream record is an attendance event rather than a face photograph. We
+          are not publishing liveness, accuracy, or attack-resistance claims before controlled testing.
         </p>
       </Section>
 
       <Section heading="3. Access control">
         <p>
-          CampusNova has no public registration endpoint. Access originates from the academy owner,
-          who issues single-use, expiring invite tokens scoped to a specific role. Roles are checked
-          server-side on every request. The UI hiding a button is treated as a convenience, never as
-          the security boundary.
+          The prototype uses invitation flows and role-scoped access rather than public product
+          registration. Server-side role enforcement and tenant isolation are design requirements
+          that must be verified before general availability.
         </p>
         <p>
-          Each academy is a separate tenant. Queries are scoped by tenant at the data-access layer so
-          a bug in one screen cannot return another academy&apos;s records.
+          Academy separation is part of the planned data model. No claim of production isolation or
+          penetration-tested enforcement is made while the product remains a prototype.
         </p>
       </Section>
 
       <Section heading="4. Data in transit and at rest">
         <p>
-          All traffic is served over HTTPS/TLS. Credentials are hashed, never stored reversibly.
-          Database access is restricted to the application layer and is not publicly reachable.
+          The public website is served over HTTPS. Product credential storage, database exposure,
+          backup, and encryption controls must be documented against the eventual deployment before launch.
         </p>
       </Section>
 
       <Section heading="5. Audit trail">
         <p>
-          Attendance records are timestamped and attributed. Edits do not silently overwrite
-          history. A change is recorded with the account that made it, so an owner can see who
-          altered a register and when. This matters more than it sounds: an attendance system nobody
-          can audit is an attendance system nobody should trust.
+          An attributable change history is a CampusNova product requirement. It should not be read
+          as a claim that a production audit trail is deployed today.
         </p>
       </Section>
 
       <Section heading="6. Regulatory Watchdog data sources">
         <p>
-          Watchdog reads only public FDA sources and stores your watch configuration. It has no
-          access to confidential client submissions, and there is no upload path for them, which
-          removes an entire category of risk rather than mitigating it.
+          SignalWatch is designed around public FDA sources and client watch configuration. The
+          current workflow does not require confidential submissions; users should not provide them.
         </p>
       </Section>
 
       <Section heading="7. What we do not yet claim">
         <p>
           We are a small studio in early access. We do not currently hold SOC 2, ISO 27001, or
-          HIPAA certification, and we will not imply otherwise on a marketing page. If your
+          HIPAA certification, and we will not imply otherwise on a marketing page. The products
+          are not generally available. If your
           procurement process requires a specific certification, tell us. We would rather scope that
           honestly than lose your trust later.
         </p>
@@ -85,8 +81,7 @@ export default function SecurityPage() {
         <p>
           If you find a security issue, email <strong>support@skolvo.online</strong> with
           &ldquo;security&rdquo; in the subject. Please give us a reasonable window to fix it before
-          publishing. We will confirm receipt, keep you updated, and credit you if you want the
-          credit. We will not threaten researchers who report in good faith.
+          publishing. We ask researchers to report in good faith and avoid accessing other people&apos;s data.
         </p>
       </Section>
     </LegalLayout>

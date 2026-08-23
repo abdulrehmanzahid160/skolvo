@@ -5,11 +5,10 @@ mistake is expensive.
 
 Two products are in early access:
 
-- **FDA Regulatory Watchdog** — weekly plain-English monitoring of public FDA data (510(k)
-  clearances, MAUDE adverse-event reports, and Enforcement Reports) for independent regulatory
-  consultants.
-- **CampusNova** — on-device biometric attendance, parent messaging, and fee automation for
-  academies and coaching centres.
+- **SignalWatch** — a validation build for source-linked monitoring of public FDA device records
+  across separate consultant client workspaces. Scheduled production monitoring is not running.
+- **CampusNova** — a private prototype for academy attendance, parent messaging, and fee workflows,
+  designed around on-device biometric processing.
 
 ## Getting started
 
@@ -34,7 +33,7 @@ the database or the contact and waitlist endpoints.
 
 - **Next.js 15** (App Router) and **React 19**
 - **Tailwind CSS v4**, configured through CSS custom properties in `app/globals.css`
-- **Motion** (`framer-motion`) for all animation
+- **Motion** (`motion/react`) for animation and interactive system diagrams
 - **MongoDB** via Mongoose, for the waitlist and contact submissions
 - **Fonts:** Geist (display), Public Sans (body), IBM Plex Mono (record IDs and timestamps)
 
@@ -47,8 +46,7 @@ app/                 Routes, API handlers, and page metadata
 components/
   motion/            Reveal, HeroSequence, LineReveal, ScrollProgress, Counter
   ui/                Button primitives
-  mockups/           Per-module CampusNova previews
-  showcase/          The two product walkthrough demos
+  hero/              Animated, status-aware system map
   waitlist/          Single app-wide waitlist dialog provider
 lib/                 Database connection
 models/              Mongoose schemas

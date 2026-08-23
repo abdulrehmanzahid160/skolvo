@@ -1,19 +1,16 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Pricing',
-  description:
-    'CampusNova pricing tiers, from a free fee-tracking plan to Premium biometric attendance and Premium Plus AI automation. Join the early access waitlist to lock in launch pricing.',
+  title: 'Availability',
+  description: 'Current product stages and availability for SignalWatch and CampusNova. Public pricing has not been published.',
   openGraph: {
-    title: 'CampusNova Pricing: Free, Premium and Premium Plus Tiers',
-    description:
-      'Simple, transparent early-access pricing for CampusNova. Free fee tracking, Premium facial biometrics, or Premium Plus with a 24/7 autonomous AI assistant.',
-    url: 'https://app.skolvo.online/pricing',
+    title: 'Skolvo Product Availability',
+    description: 'Current stages for SignalWatch and CampusNova, without invented plans or launch pricing.',
+    url: 'https://www.skolvo.online/pricing',
   },
   twitter: {
-    title: 'CampusNova Pricing: Free, Premium and Premium Plus Tiers',
-    description:
-      'Simple, transparent early-access pricing for CampusNova. Free fee tracking, Premium facial biometrics, or Premium Plus with a 24/7 autonomous AI assistant.',
+    title: 'Skolvo Product Availability',
+    description: 'Current stages for SignalWatch and CampusNova, without invented plans or launch pricing.',
   },
 };
 

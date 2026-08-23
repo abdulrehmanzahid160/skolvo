@@ -12,15 +12,14 @@ export default function PrivacyPage() {
     <LegalLayout
       eyebrow="Legal"
       title="Privacy Policy"
-      updated="29 July 2026"
-      summary="This page explains what we collect, what we deliberately do not collect, and why. The short version: biometric processing happens on your device, we never store face photographs, and we do not sell data to anyone."
+      updated="24 August 2026"
+      summary="This page separates data collected by the public website from the intended architecture of products that are not generally available."
     >
       <Section heading="1. Who we are">
         <p>
-          Skolvo is a software studio operating the domain <strong>skolvo.online</strong>. We build
-          and operate two products: CampusNova (academy and school management) and FDA Regulatory
-          Watchdog (FDA monitoring for regulatory consultants). This policy covers both, plus this
-          marketing website.
+          Skolvo is a software studio operating the domain <strong>skolvo.online</strong>. We are
+          developing CampusNova and SignalWatch. This policy currently applies to the public website,
+          contact form, waitlist, and any limited product validation we explicitly invite you to join.
         </p>
       </Section>
 
@@ -38,31 +37,27 @@ export default function PrivacyPage() {
 
       <Section heading="3. Biometric data in CampusNova: the important part">
         <p>
-          CampusNova uses facial recognition for attendance. Because this involves children, we
-          designed it to hold as little as legally and technically possible:
+          CampusNova is a prototype exploring facial recognition for attendance. Its intended data
+          boundary is listed below; these are requirements, not claims about an audited deployment:
         </p>
         <ul className="ml-5 list-disc space-y-2">
           <li>
-            <strong>Recognition and liveness detection run on the device</strong> at the gate. The
-            camera frame is processed locally.
+            <strong>Matching should run on the device</strong> at the gate rather than in a cloud image service.
           </li>
           <li>
-            <strong>No face photograph is uploaded or stored.</strong> There is no image archive on
-            our servers, so there is nothing to breach, subpoena, or accidentally expose.
+            <strong>The production design should not require a cloud face-photo archive.</strong>
           </li>
           <li>
-            What is stored is a <strong>mathematical face vector</strong>: an array of numbers used
-            for matching. It cannot be reversed into a recognisable photograph.
+            Biometric templates, if used, must be treated as sensitive biometric data rather than
+            described as harmless because they are numeric.
           </li>
           <li>
-            The academy is the owner of its student records. If an academy deletes a student, the
-            associated vector is deleted with them.
+            Deletion and revocation behaviour must be tested and documented before public availability.
           </li>
         </ul>
         <p>
-          If your institution operates somewhere with a specific biometric-consent regime, you are
-          responsible for obtaining parental consent before enrolling a child. We will provide
-          whatever technical documentation your regulator asks for.
+          Any future deployment will require the institution to identify its consent obligations and
+          Skolvo to publish accurate technical documentation for the implemented system.
         </p>
       </Section>
 
@@ -73,17 +68,15 @@ export default function PrivacyPage() {
           confidential submissions, and you should not upload them to it.
         </p>
         <p>
-          From you, we store your account email and the product categories and competitors you asked
-          us to watch. That watch list is yours; we do not share it, and we do not use it to build a
-          market-intelligence product to sell to someone else.
+          During invited validation, we may store an account email and the watch configuration needed
+          to test the workflow. The product is not generally available today.
         </p>
       </Section>
 
       <Section heading="5. Who else can see your data">
         <p>
-          We use third-party infrastructure to run the service: hosting, a managed database, and an
-          email/WhatsApp delivery provider for the notifications CampusNova sends on your behalf.
-          These providers process data strictly to deliver the service.
+          This website uses hosting and a managed database for contact and waitlist submissions.
+          Future product subprocessors will be listed before the relevant service becomes available.
         </p>
         <p>
           <strong>We do not sell personal data, and we do not share it for advertising.</strong> If
@@ -94,10 +87,9 @@ export default function PrivacyPage() {
 
       <Section heading="6. How long we keep things">
         <p>
-          Waitlist and contact emails are kept until you ask us to remove them, or until the product
-          launches and you have decided either way. Product data lives as long as the account does.
-          When an account closes, we delete its data within 30 days, except where we are required to
-          retain financial records.
+          Waitlist and contact details are kept until they are no longer needed for the request or you
+          ask us to remove them. Product retention periods have not been published because the products
+          are not generally available.
         </p>
       </Section>
 
