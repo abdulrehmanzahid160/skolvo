@@ -13,7 +13,7 @@ const links = [
 export default function Footer() {
   const reduce = useReducedMotion();
   return (
-    <footer className="overflow-hidden border-t border-white/10 bg-[#09100d] text-white">
+    <footer className="skolvo-footer overflow-hidden border-t border-white/10 bg-[#09100d] text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="grid gap-14 lg:grid-cols-[1.2fr_.8fr]">
           <div>

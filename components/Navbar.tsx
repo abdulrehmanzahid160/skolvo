@@ -76,7 +76,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 h-16 border-b text-white transition-all duration-[--dur] ${
+      className={`skolvo-nav fixed inset-x-0 top-0 z-50 h-16 border-b text-white transition-all duration-[--dur] ${
         scrolled
           ? 'border-white/10 bg-[#09100d]/90 shadow-[0_8px_30px_rgba(0,0,0,.16)] backdrop-blur-xl'
           : 'border-white/10 bg-[#09100d]'
