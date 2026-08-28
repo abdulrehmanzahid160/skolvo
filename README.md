@@ -3,12 +3,14 @@
 Marketing site for Skolvo, a software studio building focused tools for industries where a
 mistake is expensive.
 
-Two products are in early access:
+Three products are under development:
 
 - **SignalWatch** — a validation build for source-linked monitoring of public FDA device records
   across separate consultant client workspaces. Scheduled production monitoring is not running.
 - **CampusNova** — a private prototype for academy attendance, parent messaging, and fee workflows,
   designed around on-device biometric processing.
+- **Skolvo Agent** — a coming-soon workspace intended to help users discover, evaluate, prepare,
+  and track job opportunities. It is not publicly available.
 
 ## Getting started
 

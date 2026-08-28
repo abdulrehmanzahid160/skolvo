@@ -7,6 +7,7 @@ import {
   LockKeyhole, Radar, ScanSearch, ShieldCheck,
 } from 'lucide-react';
 import StudioSignal from '@/components/hero/StudioSignal';
+import AgentAnnouncement from '@/components/agent/AgentAnnouncement';
 import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -22,6 +23,7 @@ export default function HomePage() {
 
   return (
     <>
+      <AgentAnnouncement />
       <section className="studio-hero">
         <div className="studio-hero__noise" aria-hidden />
         <div className="studio-shell studio-hero__inner">
@@ -37,7 +39,7 @@ export default function HomePage() {
               ))}
             </h1>
             <motion.div className="studio-hero__intro" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.52, ease }}>
-              <p>Skolvo is a small product studio working on two difficult systems: regulatory intelligence from public FDA records and privacy-conscious academy operations.</p>
+              <p>Skolvo is a small product studio working on three focused systems: regulatory intelligence, privacy-conscious academy operations, and a more deliberate job opportunity workflow.</p>
               <div className="studio-actions">
                 <a href="#products" className="studio-button studio-button--light">Explore the work <ArrowRight aria-hidden /></a>
                 <Link href="/journal" className="studio-text-link studio-text-link--light">Read the build journal <BookOpen aria-hidden /></Link>
@@ -57,7 +59,7 @@ export default function HomePage() {
         <div className="studio-shell studio-intro__grid">
           <RevealBlock className="studio-intro__index"><span>00</span><p>THE THESIS</p></RevealBlock>
           <RevealBlock className="studio-intro__statement" delay={0.08}><p>High-stakes software should show its work. Not after something goes wrong—while a person is deciding what to trust.</p></RevealBlock>
-          <RevealBlock className="studio-intro__note" delay={0.16}><CircleDot aria-hidden /><p>Both products are under active development. This site distinguishes implemented workflows, prototypes, and intended behaviour.</p></RevealBlock>
+          <RevealBlock className="studio-intro__note" delay={0.16}><CircleDot aria-hidden /><p>All three products are under development. This site distinguishes implemented workflows, prototypes, and intended behaviour.</p></RevealBlock>
         </div>
       </section>
 
@@ -117,9 +119,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="product-chapter product-chapter--agent">
+        <div className="studio-shell">
+          <ProductHeading number="03" label="JOB OPPORTUNITY WORKSPACE" status="COMING SOON" title={<>Skolvo Agent</>} description="An autonomous job discovery and application workspace being developed to help users find, evaluate, prepare, and track opportunities." />
+          <div className="product-story">
+            <RevealBlock className="product-story__copy">
+              <p className="product-lede">Skolvo Agent is being built to make the work between discovering a role and deciding what to do next more focused and visible.</p>
+              <ul className="product-facts">
+                <li><Check aria-hidden /> Discover and review potentially relevant opportunities.</li>
+                <li><Check aria-hidden /> Consider job fit and eligibility against a user-provided profile.</li>
+                <li><Check aria-hidden /> Prepare workflows, track progress, and surface actions needing attention.</li>
+              </ul>
+              <div className="product-disclosure"><strong>CURRENT LIMIT</strong><p>Skolvo Agent is not publicly available. The planned workflow is still being developed, and no launch date or automatic application submission claim is being made.</p></div>
+              <div className="studio-actions">
+                <Link href="/agent" className="studio-button">Explore Skolvo Agent <ArrowRight aria-hidden /></Link>
+              </div>
+            </RevealBlock>
+            <RevealBlock className="workflow-board" delay={0.1}>
+              <div className="workflow-board__top"><span>PLANNED WORKFLOW</span><span>CONCEPT / NOT LIVE</span></div>
+              <FlowDiagram color="green" steps={[["01","DISCOVER","Relevant roles"],["02","EVALUATE","Fit and eligibility"],["03","PREPARE","Application work"],["04","TRACK","Next actions"]]} />
+              <div className="workflow-board__result"><CircleDot aria-hidden /><div><span>STATUS</span><strong>In development</strong></div><span className="status-chip status-chip--green">COMING SOON</span></div>
+            </RevealBlock>
+          </div>
+        </div>
+      </section>
+
       <section className="principles-section">
         <div className="studio-shell">
-          <div className="section-masthead"><span>03 / OPERATING SYSTEM</span><h2>Three rules.<br />Every build.</h2></div>
+          <div className="section-masthead"><span>04 / OPERATING SYSTEM</span><h2>Three rules.<br />Every build.</h2></div>
           <div className="principle-stack">
             {[
               ['01', 'Make the boundary visible.', 'Show where source data ends, derived data begins, and a human decision is still required.', Database],
@@ -135,7 +162,7 @@ export default function HomePage() {
 
       <section className="journal-section">
         <div className="studio-shell">
-          <div className="section-masthead section-masthead--row"><div><span>04 / BUILD JOURNAL</span><h2>Notes from<br />inside the work.</h2></div><Link href="/journal" className="studio-button">All journal entries <ArrowRight aria-hidden /></Link></div>
+          <div className="section-masthead section-masthead--row"><div><span>05 / BUILD JOURNAL</span><h2>Notes from<br />inside the work.</h2></div><Link href="/journal" className="studio-button">All journal entries <ArrowRight aria-hidden /></Link></div>
           <div className="journal-grid">
             {journal.map((post, index) => <motion.article key={post.slug} className="journal-card" initial={reduce ? false : { opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.25 }} transition={{ duration: 0.6, delay: index * 0.08, ease }} whileHover={reduce ? undefined : { y: -8 }}><Link href={`/journal/${post.slug}`} aria-label={`Read ${post.title}`}><div><span>{post.index}</span><span>{post.tag}</span></div><h3>{post.title}</h3><p>{post.summary}</p><ArrowRight aria-hidden /></Link></motion.article>)}
           </div>
@@ -145,7 +172,7 @@ export default function HomePage() {
       <section className="studio-close">
         <div className="studio-shell studio-close__grid">
           <div><span>OPEN CHANNEL / 2026</span><h2>Bring us the difficult part.</h2></div>
-          <div><p>If you work in regulatory consulting or run an academy, tell us where the current process breaks. Product access follows validation—not the other way around.</p><div className="studio-actions"><Link href="/contact" className="studio-button studio-button--light">Start a conversation <ArrowRight aria-hidden /></Link><Link href="/about" className="studio-text-link studio-text-link--light">Meet the studio</Link></div></div>
+          <div><p>If you work close to one of these problems, tell us where the current process breaks. Product access follows validation—not the other way around.</p><div className="studio-actions"><Link href="/contact" className="studio-button studio-button--light">Start a conversation <ArrowRight aria-hidden /></Link><Link href="/about" className="studio-text-link studio-text-link--light">Meet the studio</Link></div></div>
         </div>
       </section>
     </>

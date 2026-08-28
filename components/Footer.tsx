@@ -5,7 +5,7 @@ import { ArrowUpRight, Linkedin, Mail } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 const links = [
-  { label: 'Products', items: [['SignalWatch', '/watchdog'], ['CampusNova', '/#products'], ['Availability', '/pricing']] },
+  { label: 'Products', items: [['SignalWatch', '/watchdog'], ['CampusNova', '/#products'], ['Skolvo Agent · Coming Soon', '/agent'], ['Availability', '/pricing']] },
   { label: 'Studio', items: [['About', '/about'], ['Journal', '/journal'], ['Contact', '/contact']] },
   { label: 'Policy', items: [['Privacy', '/privacy'], ['Terms', '/terms'], ['Security', '/security']] },
 ] as const;
@@ -21,7 +21,7 @@ export default function Footer() {
             <Link href="/" className="mt-5 block w-fit font-display text-[clamp(4.5rem,12vw,9rem)] font-semibold leading-[.8] tracking-[-.08em] text-white no-underline">
               Skolvo<span className="text-[#79e7bf]">.</span>
             </Link>
-            <p className="mt-8 max-w-md text-body text-white/55">Two products under active development. Clear boundaries, visible evidence, and no production claim before production exists.</p>
+            <p className="mt-8 max-w-md text-body text-white/55">Three products under development. Clear boundaries, visible evidence, and no production claim before production exists.</p>
           </div>
           <div className="grid grid-cols-3 gap-5">
             {links.map((group) => (
