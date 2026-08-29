@@ -1,4 +1,5 @@
 # Skolvo
+weblink:skolvo.online
 
 Marketing site for Skolvo, a software studio building focused tools for industries where a
 mistake is expensive.
