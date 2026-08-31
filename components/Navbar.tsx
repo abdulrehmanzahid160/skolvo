@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 import { ScrollProgress, EASE, DUR_EXIT } from '@/components/motion/Primitives';
@@ -27,6 +27,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
   const pathname = usePathname();
   const { openWaitlist } = useWaitlist();
 
@@ -134,25 +135,29 @@ export default function Navbar() {
               className={`relative flex items-center gap-1 rounded-full px-3.5 py-2 text-body-sm font-medium transition-colors duration-[--dur] ${PRODUCT_LINKS.some((product) => pathname === product.href) ? 'text-white' : 'text-white/55 hover:text-white'}`}
             >
               Products
-              <ChevronDown aria-hidden className={`h-3.5 w-3.5 transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
+              <motion.span aria-hidden animate={{ rotate: productsOpen ? 180 : 0 }} transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 28 }}><ChevronDown className="h-3.5 w-3.5" /></motion.span>
               {PRODUCT_LINKS.some((product) => pathname === product.href) && <span className="absolute inset-x-3.5 -bottom-0.5 h-[2px] rounded-full bg-[#79e7bf]" />}
             </button>
             <AnimatePresence>
               {productsOpen && (
                 <motion.div
                   id="desktop-products-menu"
-                  initial={{ opacity: 0, y: -8, scale: .98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -6, scale: .98 }}
-                  transition={{ duration: .2, ease: EASE }}
+                  initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -12, scale: .96, clipPath: 'inset(0 0 100% 0 round 16px)' }}
+                  animate={{ opacity: 1, y: 0, scale: 1, clipPath: 'inset(0 0 0% 0 round 16px)' }}
+                  exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8, scale: .98, clipPath: 'inset(0 0 20% 0 round 16px)' }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: .32, ease: EASE }}
                   className="absolute left-1/2 top-[calc(100%+1rem)] w-[29rem] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-[#101a16] p-2 shadow-[0_24px_60px_rgba(0,0,0,.35)]"
                 >
-                  <p className="px-3 pb-2 pt-2 font-data text-[9px] tracking-[.13em] text-white/35">SKOLVO PRODUCTS / SELECT A WORKSPACE</p>
-                  {PRODUCT_LINKS.map((product) => (
-                    <Link key={product.href} href={product.href} className="group grid grid-cols-[1fr_auto] items-center gap-4 rounded-control px-3 py-3 transition-colors hover:bg-white/[.06] focus-visible:bg-white/[.06] focus-visible:outline-none">
-                      <span><strong className="block text-body-sm text-white">{product.name}</strong><small className="mt-1 block text-xs leading-relaxed text-white/48">{product.description}</small></span>
-                      <ArrowRight aria-hidden className="h-4 w-4 text-[#79e7bf] transition-transform group-hover:translate-x-1" />
-                    </Link>
+                  <motion.span aria-hidden className="absolute inset-x-0 top-0 h-px origin-left bg-[#79e7bf]" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={reduceMotion ? { duration: 0 } : { duration: .55, delay: .08, ease: EASE }} />
+                  <motion.p initial={reduceMotion ? false : { opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : .3, delay: reduceMotion ? 0 : .1, ease: EASE }} className="px-3 pb-2 pt-2 font-data text-[9px] tracking-[.13em] text-white/35">SKOLVO PRODUCTS / SELECT A WORKSPACE</motion.p>
+                  {PRODUCT_LINKS.map((product, index) => (
+                    <motion.div key={product.href} initial={reduceMotion ? false : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .32, delay: reduceMotion ? 0 : .13 + index * .055, ease: EASE }} whileHover={reduceMotion ? undefined : { x: 4 }}>
+                      <Link href={product.href} className="group relative grid grid-cols-[1fr_auto] items-center gap-4 overflow-hidden rounded-control px-3 py-3 transition-colors hover:bg-white/[.06] focus-visible:bg-white/[.06] focus-visible:outline-none">
+                        <motion.span aria-hidden className="absolute inset-y-2 left-0 w-[2px] origin-top bg-[#79e7bf]" initial={{ scaleY: 0 }} whileHover={{ scaleY: 1 }} transition={{ duration: .2, ease: EASE }} />
+                        <span><strong className="block text-body-sm text-white">{product.name}</strong><small className="mt-1 block text-xs leading-relaxed text-white/48 transition-colors group-hover:text-white/66">{product.description}</small></span>
+                        <motion.span aria-hidden whileHover={reduceMotion ? undefined : { x: 4 }} transition={{ type: 'spring', stiffness: 500, damping: 28 }}><ArrowRight className="h-4 w-4 text-[#79e7bf]" /></motion.span>
+                      </Link>
+                    </motion.div>
                   ))}
                 </motion.div>
               )}
@@ -218,12 +223,12 @@ export default function Navbar() {
               <ul className="flex flex-col">
                 <li>
                   <button type="button" onClick={() => setMobileProductsOpen((open) => !open)} aria-expanded={mobileProductsOpen} aria-controls="mobile-products-list" className="flex min-h-12 w-full items-center justify-between rounded-control px-3 text-body font-medium text-white/65 transition-colors hover:bg-white/5 hover:text-white">
-                    Products <ChevronDown aria-hidden className={`h-4 w-4 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''}`} />
+                    Products <motion.span aria-hidden animate={{ rotate: mobileProductsOpen ? 180 : 0 }} transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 28 }}><ChevronDown className="h-4 w-4" /></motion.span>
                   </button>
                   <AnimatePresence initial={false}>
                     {mobileProductsOpen && (
-                      <motion.ul id="mobile-products-list" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: .24, ease: EASE }} className="overflow-hidden border-l border-white/12 pl-2">
-                        {PRODUCT_LINKS.map((product) => <li key={product.href}><Link href={product.href} onClick={() => setMenuOpen(false)} className="group grid min-h-16 grid-cols-[1fr_auto] items-center gap-3 rounded-control px-3 py-2 hover:bg-white/5"><span><strong className="block text-sm text-white">{product.name}</strong><small className="mt-0.5 block text-[11px] leading-snug text-white/42">{product.description}</small></span><ArrowRight aria-hidden className="h-4 w-4 text-[#79e7bf]" /></Link></li>)}
+                      <motion.ul id="mobile-products-list" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .3, ease: EASE }} className="overflow-hidden border-l border-white/12 pl-2">
+                        {PRODUCT_LINKS.map((product, index) => <motion.li key={product.href} initial={reduceMotion ? false : { opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: reduceMotion ? 0 : .28, delay: reduceMotion ? 0 : .08 + index * .05, ease: EASE }}><Link href={product.href} onClick={() => setMenuOpen(false)} className="group grid min-h-16 grid-cols-[1fr_auto] items-center gap-3 rounded-control px-3 py-2 hover:bg-white/5"><span><strong className="block text-sm text-white">{product.name}</strong><small className="mt-0.5 block text-[11px] leading-snug text-white/42">{product.description}</small></span><motion.span aria-hidden whileTap={reduceMotion ? undefined : { x: 4 }}><ArrowRight className="h-4 w-4 text-[#79e7bf]" /></motion.span></Link></motion.li>)}
                       </motion.ul>
                     )}
                   </AnimatePresence>
