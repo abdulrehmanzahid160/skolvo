@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowRight, Linkedin } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
+import { SITE_CONFIG } from '@/lib/site';
 
 const team = [
   { number: '01', name: 'Abdul Rehman', focus: 'Generative AI and product systems', initials: 'AR', linkedin: 'https://www.linkedin.com/in/abdul-rehman-5845373a4/' },
@@ -18,7 +19,7 @@ export default function AboutPage() {
         <div className="studio-shell">
           <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / THE STUDIO</span><span>SMALL TEAM · NARROW PRODUCTS</span></div>
           <motion.h1 initial={reduce ? false : { opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [0.22,1,0.36,1] }}>We build where<br />the <i>boundary</i> matters.</motion.h1>
-          <p>Skolvo is a software brand operated by an individual / sole proprietor in Pakistan, with a three-person product team developing three products and documenting their limits as carefully as their features.</p>
+          <p>{SITE_CONFIG.legalOperatorDisclosure} A three-person product team is developing three products and documenting their limits as carefully as their features.</p>
         </div>
       </header>
       <section className="about-thesis studio-shell">

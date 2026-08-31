@@ -41,7 +41,7 @@ identifiers and the server-only API key/webhook secret. Never expose a Paddle se
 `NEXT_PUBLIC_*` variable.
 
 The public legal pages identify Abdul Rehman as the individual / sole-proprietor operator. The
-`LEGAL_OWNER_NAME` variable remains available as the centralized deployment override.
+identity is deliberately fixed in `lib/site.ts` so a stale deployment variable cannot change it.
 
 ## Stack
 

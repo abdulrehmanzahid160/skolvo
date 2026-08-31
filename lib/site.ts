@@ -3,10 +3,9 @@ export const SITE_CONFIG = {
   domain: 'skolvo.online',
   canonicalUrl: 'https://www.skolvo.online',
   supportEmail: 'support@skolvo.online',
-  legalOwnerName: process.env.LEGAL_OWNER_NAME || 'Abdul Rehman',
+  legalOwnerName: 'Abdul Rehman',
   legalCountry: 'Pakistan',
   operatorType: 'individual / sole proprietor',
+  legalOperatorDisclosure:
+    'Skolvo is a software brand operated by Abdul Rehman, an individual / sole proprietor based in Pakistan.',
 } as const;
-
-export const LEGAL_OWNER_IS_CONFIGURED =
-  SITE_CONFIG.legalOwnerName.trim().length > 0;

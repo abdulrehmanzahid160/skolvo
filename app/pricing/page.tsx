@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight, Check, CircleDot } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { BILLING_CATALOG } from '@/lib/billing/catalog';
+import { SITE_CONFIG } from '@/lib/site';
 import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 
 export default function PricingPage() {
@@ -14,7 +15,7 @@ export default function PricingPage() {
       <header className="pricing-hero"><div className="studio-shell">
         <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / PRICING</span><span>USAGE-LIMITED FREE ACCESS</span></div>
         <motion.h1 initial={reduce ? false : { opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>Clear plans.<br /><i>Honest status.</i></motion.h1>
-        <p>Try the available evaluation workflows free, without a payment card. Paid subscriptions are published for planning and Paddle review; checkout will open only when the relevant service is ready.</p>
+        <p>Request usage-limited evaluation access without a payment card. Paid prices are visible before checkout, which will open only when the relevant service is ready.</p>
         <div className="pricing-hero__facts"><span><Check /> No time-limited trials</span><span><Check /> No card for free use</span><span><CircleDot /> Payments launching soon</span></div>
       </div></header>
       <main className="studio-shell pricing-catalog">
@@ -34,7 +35,7 @@ export default function PricingPage() {
             <p className="pricing-free-note"><strong>Free allowance:</strong> {product.freeAllowance}</p>
           </motion.section>
         ))}
-        <section className="pricing-review-note"><span>BILLING / REVIEW NOTE</span><h2>Software subscriptions under one seller identity.</h2><p>Skolvo is a software brand operated by an individual / sole proprietor in Pakistan. Paddle configuration is prepared but checkout is intentionally disabled until product activation, price IDs, and server-side webhook handling are complete.</p><div><Link href="/terms">Terms of Service</Link><Link href="/privacy">Privacy Policy</Link><Link href="/refund-policy">Refund Policy</Link><Link href="/contact">Contact support</Link></div></section>
+        <section className="pricing-review-note"><span>BILLING / CURRENT STATUS</span><h2>Software subscriptions under one seller identity.</h2><p>{SITE_CONFIG.legalOperatorDisclosure} Checkout is intentionally disabled until paid access and billing support are ready.</p><div><Link href="/terms">Terms of Service</Link><Link href="/privacy">Privacy Policy</Link><Link href="/refund-policy">Refund Policy</Link><Link href="/contact">Contact support</Link></div></section>
       </main>
     </div>
   );
