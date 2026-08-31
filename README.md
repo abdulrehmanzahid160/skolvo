@@ -32,6 +32,17 @@ The dev server runs at [http://localhost:3000](http://localhost:3000).
 Copy `.env.example` to `.env.local` and fill in the values before running anything that touches
 the database or the contact and waitlist endpoints.
 
+## Billing readiness
+
+Published pricing and usage allowances live in `lib/billing/catalog.ts`. Paddle checkout is
+deliberately disabled in `lib/billing/paddle.ts` until seller review, public price IDs, and
+server-side webhook verification are complete. `.env.example` documents the client-safe price
+identifiers and the server-only API key/webhook secret. Never expose a Paddle secret through a
+`NEXT_PUBLIC_*` variable.
+
+The public legal pages read the seller name from `LEGAL_OWNER_NAME`. Configure the operator's
+legal full name before Paddle review; the repository intentionally does not invent a company name.
+
 ## Stack
 
 - **Next.js 15** (App Router) and **React 19**

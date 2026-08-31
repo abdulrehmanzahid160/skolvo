@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     template: '%s | Skolvo',
   },
   description:
-    'Skolvo is a product studio developing SignalWatch, CampusNova, and the upcoming Skolvo Agent job opportunity workspace.',
+    'Skolvo is a software product studio offering Skolvo Agent, CampusNova, and SignalWatch with clear free allowances and subscription pricing.',
   keywords: [
     'Skolvo',
     'Skolvo Agent',
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Skolvo | Software with evidence built in',
     description:
-      'Three products under development: SignalWatch, CampusNova, and the upcoming Skolvo Agent.',
+      'Three focused software products: Skolvo Agent, CampusNova, and SignalWatch.',
     url: 'https://www.skolvo.online',
     siteName: 'Skolvo',
     // NOTE: /logo.png is a square app icon (1024×1024), which works for
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Skolvo | Software with evidence built in',
     description:
-      'Three products under development: SignalWatch, CampusNova, and the upcoming Skolvo Agent.',
+      'Three focused software products: Skolvo Agent, CampusNova, and SignalWatch.',
     images: ['/logo.png'],
   },
   icons: {

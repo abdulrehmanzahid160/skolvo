@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, BellDot, Check, ClipboardList, Search, UserRoundCheck } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { EASE, Reveal, RevealGroup, RevealItem } from '@/components/motion/Primitives';
+import ProductOffer from '@/components/commercial/ProductOffer';
 
 const plannedWorkflow = [
   { title: 'Discover relevant opportunities', body: 'Skolvo Agent is being built to bring potentially relevant roles into a more focused review flow.', icon: Search },
@@ -36,6 +37,7 @@ export default function AgentPageClient() {
           </motion.figure>
         </div>
       </section>
+      <div className="studio-shell"><ProductOffer label="Skolvo Agent" audience="Job seekers who want one place to assess opportunities and prepare application work." problem="Discovery, eligibility review, preparation, status, and user decisions are usually split across tools." receives={['Candidate profile and work-authorisation setup', 'Opportunity discovery with separate fit and eligibility review', 'Application preparation, validation, tracking, and an action queue']} freeAllowance="Core profile plus up to 3 prepared and tracked application workflows — no card required." price="$5/month Standard · $2/month for verified students" status="The workflow is implemented; production hosting, paid access, and live external submission are pending." /></div>
       <section className="agent-purpose">
         <div className="studio-shell agent-purpose__grid">
           <Reveal className="agent-purpose__index"><span>01</span><p>THE PURPOSE</p></Reveal>
@@ -57,8 +59,8 @@ export default function AgentPageClient() {
         <div className="studio-shell agent-boundary__grid">
           <Reveal><span>03 / CURRENT BOUNDARY</span><h2>Coming soon means not available yet.</h2></Reveal>
           <Reveal className="agent-boundary__copy" delay={0.1}>
-            <ul><li><Check aria-hidden /> The product is still being developed.</li><li><Check aria-hidden /> Application submission is not presented as a currently available capability.</li><li><Check aria-hidden /> No launch date, pricing, or performance claims are being announced.</li></ul>
-            <Link href="/#products" className="studio-button studio-button--light">Explore Skolvo products <ArrowRight aria-hidden /></Link>
+            <ul><li><Check aria-hidden /> The core workspace is implemented but public production hosting is pending.</li><li><Check aria-hidden /> Live external application submission is not presented as currently available.</li><li><Check aria-hidden /> Paid checkout remains disabled until production and billing are ready.</li></ul>
+            <Link href="/pricing#skolvo_agent" className="studio-button studio-button--light">View Agent pricing <ArrowRight aria-hidden /></Link>
           </Reveal>
         </div>
       </section>

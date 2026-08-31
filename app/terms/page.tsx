@@ -1,110 +1,23 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import LegalLayout, { Section } from '../legal/LegalLayout';
+import { SITE_CONFIG } from '@/lib/site';
 
-export const metadata: Metadata = {
-  title: 'Terms of Service',
-  description:
-    'The terms covering use of Skolvo products, CampusNova and FDA Regulatory Watchdog, including the explicit limits of what Watchdog does and does not tell you.',
-};
+export const metadata: Metadata = { title: 'Terms of Service', description: 'Terms governing Skolvo software products, free allowances, subscriptions, and responsible use.' };
 
 export default function TermsPage() {
-  return (
-    <LegalLayout
-      eyebrow="Legal"
-      title="Terms of Service"
-      updated="24 August 2026"
-      summary="Terms for this website and any explicitly invited product validation. Neither product is generally available and public pricing has not been published."
-    >
-      <Section heading="1. Agreement">
-        <p>
-          By joining an invited validation programme for a Skolvo product, you agree
-          to these terms. If you are accepting on behalf of an academy, company, or client, you
-          confirm you are authorised to do so.
-        </p>
-      </Section>
-
-      <Section heading="2. Early access means unfinished">
-        <p>
-          SignalWatch is a validation build and CampusNova is a private prototype. Features may change,
-          break, or be removed. There is no current uptime commitment or general-availability date.
-        </p>
-      </Section>
-
-      <Section heading="3. Your account and access control">
-        <p>
-          CampusNova access is currently limited to private development and any explicit validation
-          invitations. Role and invitation behaviour remains subject to change before availability.
-        </p>
-        <p>
-          Do not share credentials or invite tokens outside your organisation. If you think an
-          account has been compromised, email us and we will help you lock it down.
-        </p>
-      </Section>
-
-      <Section heading="4. Acceptable use">
-        <p>You agree not to:</p>
-        <ul className="ml-5 list-disc space-y-2">
-          <li>
-            enrol a person&apos;s biometric data without the consent required where you operate,
-            which for children means the parent or guardian;
-          </li>
-          <li>use the messaging features to send bulk marketing to parents;</li>
-          <li>attempt to extract other tenants&apos; data, or probe the service for weaknesses without telling us first (see our security page for how to report findings);</li>
-          <li>resell or rebrand the service as your own without a written agreement.</li>
-        </ul>
-      </Section>
-
-      <Section heading="5. What Regulatory Watchdog is, and is not">
-        <p>
-          SignalWatch is intended to monitor public FDA databases and prepare source-linked summaries.
-          Scheduled production monitoring is not currently running. It is an information tool.
-        </p>
-        <p>
-          <strong>
-            It does not provide regulatory advice, legal advice, or a compliance assessment.
-          </strong>{' '}
-          It does not tell you whether your device is compliant, whether you must file something, or
-          how to respond to a finding. That judgement is professional work, it remains yours, and it
-          is the part your clients are paying you for.
-        </p>
-        <p>
-          FDA data can be delayed, amended, or incomplete at the source. Any validation output must
-          be checked against the linked authoritative record before advice or a filing decision.
-        </p>
-      </Section>
-
-      <Section heading="6. Fees">
-        <p>
-          Public product pricing has not been published. Joining a waitlist does not lock a price,
-          purchase a plan, or guarantee an invitation date.
-        </p>
-      </Section>
-
-      <Section heading="7. Liability">
-        <p>
-          To the extent permitted by law, our total liability for any claim relating to the service
-          is limited to the fees you paid us in the twelve months before the claim. We are not liable
-          for indirect or consequential loss, including regulatory outcomes, lost business, or
-          decisions made in reliance on a summary you did not verify against the original record.
-        </p>
-        <p>
-          Nothing here limits liability we cannot lawfully limit, such as liability for our own fraud
-          or gross negligence.
-        </p>
-      </Section>
-
-      <Section heading="8. Ending the agreement">
-        <p>
-          You can stop using the service and ask us to delete your data at any time. We can suspend
-          an account that breaches section 4, and we will explain why when we do.
-        </p>
-      </Section>
-
-      <Section heading="9. Contact">
-        <p>
-          Questions about these terms: <strong>support@skolvo.online</strong>.
-        </p>
-      </Section>
-    </LegalLayout>
-  );
+  return <LegalLayout eyebrow="Legal" title="Terms of Service" updated="31 August 2026" summary="These terms govern the Skolvo website, usage-limited free access, product evaluations, and any paid software subscription that becomes available.">
+    <Section heading="1. Operator and agreement"><p>Skolvo is a software brand operated by <strong>{SITE_CONFIG.legalOwnerName}</strong>, an individual / sole proprietor based in {SITE_CONFIG.legalCountry}. By using a service, creating an account, or purchasing a subscription, you agree to these terms. If acting for an organisation, you confirm that you have authority to bind it.</p></Section>
+    <Section heading="2. Services and current status"><p>Skolvo develops three software products: Skolvo Agent for job-opportunity workflows, CampusNova for academy administration, and SignalWatch for regulatory information monitoring. Product pages identify whether a workflow is implemented, in private prototype, being validated on historical data, or available for paid use. Features described as planned, prototype, beta, or coming soon are not commitments to a release date.</p></Section>
+    <Section heading="3. Accounts and user responsibilities"><p>You must provide accurate account information, protect credentials, and promptly report suspected unauthorised access. You are responsible for activity under your account and for having the rights and permissions needed to upload or configure any content.</p></Section>
+    <Section heading="4. Acceptable use"><p>You may not misuse the services, violate law or third-party rights, probe or disrupt systems without authorisation, access another user&apos;s data, upload malicious code, evade usage limits, send abusive or unsolicited communications, or resell the service without written permission. Biometric or student information must not be processed without the consent and lawful basis required where you operate.</p></Section>
+    <Section heading="5. Free plans and subscriptions"><p>Free access is usage-limited, not a time-limited trial, and does not require a payment card. Current allowances and paid prices appear on the <Link href="/pricing" className="link-underline">Pricing page</Link>. We may adjust future limits or prices with clear notice; an active paid subscription will be handled according to the purchase terms shown at checkout.</p></Section>
+    <Section heading="6. Billing, cancellation, and refunds"><p>When paid checkout is activated, subscriptions will renew at the displayed interval until cancelled. You may cancel future renewal through the billing mechanism made available to you. Cancellation normally takes effect at the end of the paid period. Refund requests are governed by our <Link href="/refund-policy" className="link-underline">Refund Policy</Link>, the applicable Merchant of Record buyer terms, and mandatory consumer law.</p></Section>
+    <Section heading="7. Product-specific boundaries"><p><strong>Skolvo Agent</strong> assists with discovery, fit and eligibility review, preparation, and tracking. It does not guarantee an application, interview, offer, employment, or the accuracy of third-party job information. Users remain responsible for reviewing and approving actions.</p><p><strong>CampusNova</strong> supports academy administration workflows but does not guarantee academic, attendance, financial, or institutional outcomes. Institutions remain responsible for their records, permissions, policies, and legal obligations.</p><p><strong>SignalWatch</strong> is information and monitoring software using public regulatory sources. It is not legal, medical, compliance, or regulatory advice. Public records may be delayed, amended, or incomplete; users remain responsible for professional review and decisions. Historical/sample analysis is distinct from scheduled production monitoring.</p></Section>
+    <Section heading="8. Intellectual property and user content"><p>Skolvo and its software, design, and documentation remain the property of the operator and licensors. You retain ownership of content you provide and grant us only the permission needed to host, process, protect, and return it for the service. You confirm that you have the right to provide that content.</p></Section>
+    <Section heading="9. Availability, beta features, and third parties"><p>We do not promise uninterrupted or error-free access. We may change or withdraw unfinished features and will describe material availability limits honestly. Services may rely on hosting, databases, public data sources, authentication, and payment providers; their systems and terms may also apply.</p></Section>
+    <Section heading="10. Disclaimers and limitation"><p>To the extent permitted by law, services are provided as available without implied warranties of fitness, uninterrupted operation, or a particular outcome. Our aggregate liability relating to a paid service is limited to fees paid for that service in the 12 months before the claim. We are not liable for indirect or consequential loss. Nothing excludes liability that cannot legally be excluded, including fraud or mandatory consumer rights.</p></Section>
+    <Section heading="11. Suspension, termination, and governing law"><p>You may stop using a free service or cancel a subscription. We may suspend access for material misuse, security risk, or non-payment and will give notice where reasonably possible. These terms are governed at a high level by the laws of Pakistan, without removing mandatory rights you have under applicable consumer law.</p></Section>
+    <Section heading="12. Contact"><p>Questions or legal notices may be sent to <a className="link-underline" href={`mailto:${SITE_CONFIG.supportEmail}`}>{SITE_CONFIG.supportEmail}</a>.</p></Section>
+  </LegalLayout>;
 }

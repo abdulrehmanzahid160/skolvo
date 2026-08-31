@@ -1,16 +1,16 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Availability',
-  description: 'Current product stages and availability for SignalWatch and CampusNova. Public pricing has not been published.',
+  title: 'Pricing',
+  description: 'Transparent free allowances and planned subscription pricing for Skolvo Agent, CampusNova, and SignalWatch.',
   openGraph: {
-    title: 'Skolvo Product Availability',
-    description: 'Current stages for SignalWatch and CampusNova, without invented plans or launch pricing.',
+    title: 'Skolvo Pricing',
+    description: 'Free allowances and subscription pricing for three Skolvo software products.',
     url: 'https://www.skolvo.online/pricing',
   },
   twitter: {
-    title: 'Skolvo Product Availability',
-    description: 'Current stages for SignalWatch and CampusNova, without invented plans or launch pricing.',
+    title: 'Skolvo Pricing',
+    description: 'Free allowances and subscription pricing for three Skolvo software products.',
   },
 };
 

@@ -335,8 +335,8 @@ export default function ContactPage() {
                 </a>
 
                 <p className="mt-5 border-t border-line pt-4 text-body-sm text-ink-mute">
-                  Those are the only two channels we run. We would rather show two that work than
-                  five that do not.
+                  Skolvo is operated from Pakistan. No office address or phone support is published;
+                  email and LinkedIn are the current contact channels.
                 </p>
               </div>
             </Reveal>

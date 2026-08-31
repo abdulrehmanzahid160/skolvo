@@ -42,7 +42,7 @@ export default function StudioSignal() {
     <div className="signal-stage" aria-label="Two product workflows, each with a verification boundary">
       <div className="signal-stage__grid" aria-hidden />
       <div className="signal-stage__header">
-        <span>LIVE SYSTEM MAP</span>
+        <span>STUDIO SYSTEM MAP</span>
         <span className="signal-stage__status"><i /> DESIGN STATE</span>
       </div>
 

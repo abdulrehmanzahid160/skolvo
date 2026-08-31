@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/Button';
 const NAV_LINKS = [
   { name: 'Products', href: '/#products' },
   { name: 'SignalWatch', href: '/watchdog' },
+  { name: 'Pricing', href: '/pricing' },
   { name: 'Journal', href: '/journal' },
   { name: 'Studio', href: '/about' },
 ];

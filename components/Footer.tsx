@@ -5,9 +5,9 @@ import { ArrowUpRight, Linkedin, Mail } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 
 const links = [
-  { label: 'Products', items: [['SignalWatch', '/watchdog'], ['CampusNova', '/#products'], ['Skolvo Agent · Coming Soon', '/agent'], ['Availability', '/pricing']] },
-  { label: 'Studio', items: [['About', '/about'], ['Journal', '/journal'], ['Contact', '/contact']] },
-  { label: 'Policy', items: [['Privacy', '/privacy'], ['Terms', '/terms'], ['Security', '/security']] },
+  { label: 'Products', items: [['Skolvo Agent', '/agent'], ['CampusNova', '/campusnova'], ['SignalWatch', '/watchdog'], ['Pricing', '/pricing']] },
+  { label: 'Company', items: [['About', '/about'], ['Journal', '/journal'], ['Contact', '/contact']] },
+  { label: 'Legal', items: [['Terms of Service', '/terms'], ['Privacy Policy', '/privacy'], ['Refund Policy', '/refund-policy'], ['Security', '/security']] },
 ] as const;
 
 export default function Footer() {
@@ -42,7 +42,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-7 text-xs text-white/38 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Skolvo. Products shown may be prototypes or validation builds.</p>
+          <p>© {new Date().getFullYear()} Skolvo. A software brand operated from Pakistan. Product status varies by service.</p>
           <div className="flex items-center gap-4">
             <a href="mailto:support@skolvo.online" className="inline-flex items-center gap-1.5 hover:text-white"><Mail className="h-3.5 w-3.5" /> Email</a>
             <a href="https://www.linkedin.com/company/skolvo/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-white"><Linkedin className="h-3.5 w-3.5" /> LinkedIn <ArrowUpRight className="h-3 w-3" /></a>

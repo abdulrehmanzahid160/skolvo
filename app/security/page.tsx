@@ -13,7 +13,7 @@ export default function SecurityPage() {
       eyebrow="Engineering"
       title="Security Architecture"
       updated="24 August 2026"
-      summary="Current controls and intended product boundaries. CampusNova is a prototype and SignalWatch is a validation build; this is not an audit report or certification."
+      summary="Current controls and intended boundaries across Skolvo Agent, CampusNova, and SignalWatch. This is not an audit report or certification."
     >
       <Section heading="1. The design rule">
         <p>
@@ -67,7 +67,15 @@ export default function SecurityPage() {
         </p>
       </Section>
 
-      <Section heading="7. What we do not yet claim">
+      <Section heading="7. Skolvo Agent data boundary">
+        <p>
+          Skolvo Agent may process candidate profiles, work-authorisation details, CV files, job
+          records, and application workflow state. Live external submission is not currently
+          presented as available; actions requiring user review must remain visible.
+        </p>
+      </Section>
+
+      <Section heading="8. What we do not yet claim">
         <p>
           We are a small studio in early access. We do not currently hold SOC 2, ISO 27001, or
           HIPAA certification, and we will not imply otherwise on a marketing page. The products
@@ -77,7 +85,7 @@ export default function SecurityPage() {
         </p>
       </Section>
 
-      <Section heading="8. Reporting a vulnerability">
+      <Section heading="9. Reporting a vulnerability">
         <p>
           If you find a security issue, email <strong>support@skolvo.online</strong> with
           &ldquo;security&rdquo; in the subject. Please give us a reasonable window to fix it before

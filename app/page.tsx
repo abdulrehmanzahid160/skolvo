@@ -8,7 +8,6 @@ import {
 } from 'lucide-react';
 import StudioSignal from '@/components/hero/StudioSignal';
 import AgentAnnouncement from '@/components/agent/AgentAnnouncement';
-import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const journal = [
@@ -19,7 +18,6 @@ const journal = [
 
 export default function HomePage() {
   const reduce = useReducedMotion();
-  const { openWaitlist } = useWaitlist();
 
   return (
     <>
@@ -39,7 +37,7 @@ export default function HomePage() {
               ))}
             </h1>
             <motion.div className="studio-hero__intro" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.52, ease }}>
-              <p>Skolvo is a small product studio working on three focused systems: regulatory intelligence, privacy-conscious academy operations, and a more deliberate job opportunity workflow.</p>
+              <p>Skolvo is a software product studio offering three focused SaaS products: regulatory intelligence, academy operations, and a more deliberate job-opportunity workflow.</p>
               <div className="studio-actions">
                 <a href="#products" className="studio-button studio-button--light">Explore the work <ArrowRight aria-hidden /></a>
                 <Link href="/journal" className="studio-text-link studio-text-link--light">Read the build journal <BookOpen aria-hidden /></Link>
@@ -65,7 +63,7 @@ export default function HomePage() {
 
       <section id="products" className="product-chapter product-chapter--watchdog">
         <div className="studio-shell">
-          <ProductHeading number="01" label="REGULATORY INTELLIGENCE" status="VALIDATION BUILD" title={<>SignalWatch<span>®</span></>} description="A focused workspace for independent medical-device consultants who need to monitor public FDA activity across several clients without mixing their watch terms or evidence." />
+          <ProductHeading number="01" label="REGULATORY INTELLIGENCE" status="VALIDATION BUILD" href="/watchdog" title={<>SignalWatch<span>®</span></>} description="A focused workspace for independent medical-device consultants who need to monitor public FDA activity across several clients without mixing their watch terms or evidence." />
           <div className="product-story">
             <RevealBlock className="product-story__copy">
               <p className="product-lede">The core idea is deliberately narrow: collect public FDA records, match them to a consultant&apos;s watch terms, preserve the sources, and prepare a reviewable brief.</p>
@@ -75,9 +73,10 @@ export default function HomePage() {
                 <li><Check aria-hidden /> Generated briefs are checked against stored source facts.</li>
               </ul>
               <div className="product-disclosure"><strong>CURRENT LIMIT</strong><p>The pipeline has been demonstrated on historical data. Scheduled production monitoring is not currently running, and the product has no paying customers.</p></div>
+              <div className="product-price-line"><span>SAMPLE EVALUATION AVAILABLE</span><strong>$50/month per monitoring service</strong></div>
               <div className="studio-actions">
                 <Link href="/watchdog" className="studio-button">Open product brief <ArrowRight aria-hidden /></Link>
-                <button className="studio-text-link" onClick={() => openWaitlist('SignalWatch')}>Join validation <CircleDot aria-hidden /></button>
+                <Link href="/pricing#signalwatch" className="studio-text-link">View pricing <CircleDot aria-hidden /></Link>
               </div>
             </RevealBlock>
             <RevealBlock className="workflow-board" delay={0.1}>
@@ -91,7 +90,7 @@ export default function HomePage() {
 
       <section className="product-chapter product-chapter--campus">
         <div className="studio-shell">
-          <ProductHeading number="02" label="ACADEMY OPERATIONS" status="PRIVATE PROTOTYPE" title={<>CampusNova<span>®</span></>} description="A prototype operations layer for academies: attendance, parent communication, and fee records, designed around an on-device biometric boundary." dark />
+          <ProductHeading number="02" label="ACADEMY OPERATIONS" status="PRIVATE PROTOTYPE" href="/campusnova" title={<>CampusNova<span>®</span></>} description="A prototype operations layer for academies: attendance, parent communication, and fee records, designed around an on-device biometric boundary." dark />
           <div className="product-story product-story--reverse">
             <RevealBlock className="workflow-board workflow-board--dark" delay={0.1}>
               <div className="workflow-board__top"><span>PRIVACY BOUNDARY / PROTOTYPE</span><span>NO PERFORMANCE CLAIM</span></div>
@@ -110,9 +109,10 @@ export default function HomePage() {
                 <li><Braces aria-hidden /> Attendance, messaging, and fee flows are being prototyped together.</li>
               </ul>
               <div className="product-disclosure product-disclosure--dark"><strong>CURRENT LIMIT</strong><p>CampusNova is not publicly available. Timing, accuracy, pricing, and launch claims will not be published until they can be supported by testing.</p></div>
+              <div className="product-price-line product-price-line--dark"><span>FREE EVALUATION WORKSPACE</span><strong>Plans from $25/month</strong></div>
               <div className="studio-actions">
-                <button className="studio-button studio-button--light" onClick={() => openWaitlist('CampusNova')}>Register interest <ArrowRight aria-hidden /></button>
-                <Link href="/journal/a-face-is-not-a-password" className="studio-text-link studio-text-link--light">Read the privacy note <BookOpen aria-hidden /></Link>
+                <Link href="/campusnova" className="studio-button studio-button--light">CampusNova details <ArrowRight aria-hidden /></Link>
+                <Link href="/pricing#campusnova" className="studio-text-link studio-text-link--light">View pricing</Link>
               </div>
             </RevealBlock>
           </div>
@@ -121,7 +121,7 @@ export default function HomePage() {
 
       <section className="product-chapter product-chapter--agent">
         <div className="studio-shell">
-          <ProductHeading number="03" label="JOB OPPORTUNITY WORKSPACE" status="COMING SOON" title={<>Skolvo Agent</>} description="An autonomous job discovery and application workspace being developed to help users find, evaluate, prepare, and track opportunities." />
+          <ProductHeading number="03" label="JOB OPPORTUNITY WORKSPACE" status="COMING SOON" href="/agent" title={<>Skolvo Agent</>} description="An autonomous job discovery and application workspace being developed to help users find, evaluate, prepare, and track opportunities." />
           <div className="product-story">
             <RevealBlock className="product-story__copy">
               <p className="product-lede">Skolvo Agent is being built to make the work between discovering a role and deciding what to do next more focused and visible.</p>
@@ -131,8 +131,10 @@ export default function HomePage() {
                 <li><Check aria-hidden /> Prepare workflows, track progress, and surface actions needing attention.</li>
               </ul>
               <div className="product-disclosure"><strong>CURRENT LIMIT</strong><p>Skolvo Agent is not publicly available. The planned workflow is still being developed, and no launch date or automatic application submission claim is being made.</p></div>
+              <div className="product-price-line"><span>TRY FREE — NO CARD REQUIRED</span><strong>$5 standard · $2 verified student</strong></div>
               <div className="studio-actions">
                 <Link href="/agent" className="studio-button">Explore Skolvo Agent <ArrowRight aria-hidden /></Link>
+                <Link href="/pricing#skolvo_agent" className="studio-text-link">View pricing</Link>
               </div>
             </RevealBlock>
             <RevealBlock className="workflow-board" delay={0.1}>
@@ -183,8 +185,8 @@ function RevealBlock({ children, className = '', delay = 0 }: { children: React.
   return <motion.div className={className} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.7, delay, ease }}>{children}</motion.div>;
 }
 
-function ProductHeading({ number, label, status, title, description, dark = false }: { number: string; label: string; status: string; title: React.ReactNode; description: string; dark?: boolean }) {
-  return <RevealBlock className={`product-heading ${dark ? 'product-heading--dark' : ''}`}><div className="product-heading__meta"><span>{number} / {label}</span><span>{status}</span></div><div className="product-heading__main"><h2>{title}</h2><p>{description}</p></div></RevealBlock>;
+function ProductHeading({ number, label, status, title, description, href, dark = false }: { number: string; label: string; status: string; title: React.ReactNode; description: string; href: string; dark?: boolean }) {
+  return <RevealBlock className={`product-heading ${dark ? 'product-heading--dark' : ''}`}><div className="product-heading__meta"><span>{number} / {label}</span><span>{status}</span></div><div className="product-heading__main"><h2>{title}</h2><div><p>{description}</p><Link href={href} className={`product-heading__button ${dark ? 'product-heading__button--dark' : ''}`}>View product <ArrowRight aria-hidden /></Link></div></div></RevealBlock>;
 }
 
 function FlowDiagram({ steps, color }: { steps: string[][]; color: 'amber' | 'green' }) {

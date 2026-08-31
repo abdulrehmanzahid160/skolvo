@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight, Check, CircleDot, Database, FileCheck2, Radar, ShieldCheck, TriangleAlert } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
+import ProductOffer from '@/components/commercial/ProductOffer';
 
 const sources = ['510(k) clearances', 'PMA decisions', 'Recalls', 'Enforcement actions'];
 
@@ -25,6 +26,7 @@ export default function WatchdogPageClient() {
           </div>
         </div>
       </header>
+      <div className="studio-shell"><ProductOffer label="SignalWatch" audience="Independent medical-device regulatory consultants reviewing public FDA activity across clients." problem="Manual source checking is repetitive, while each client still needs a separate, reviewable evidence trail." receives={['Client-specific watch configurations', 'Matched 510(k), MAUDE, or Enforcement record review', 'Source-linked intelligence reports for professional review']} freeAllowance="1 sample historical intelligence report per service — no card required." price="$50/month per selected monitoring service" status="Historical-data validation build; scheduled production monitoring is not running." /></div>
 
       <section className="watchdog-status studio-shell">
         <div className="section-masthead"><span>STATUS / 24 AUG 2026</span><h2>What exists.<br />What does not.</h2></div>

@@ -3,7 +3,7 @@ import WatchdogPageClient from './WatchdogPageClient';
 
 export const metadata: Metadata = {
   title: 'SignalWatch Regulatory Intelligence',
-  description: 'A validation build for source-linked monitoring of public FDA device records across separate consultant client workspaces.',
+  description: 'Source-linked 510(k), MAUDE, and FDA Enforcement monitoring for regulatory consultants. Historical evaluation is available; scheduled service is pending.',
   keywords: [
     'FDA monitoring software',
     'FDA 510(k) alerts',

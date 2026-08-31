@@ -24,7 +24,9 @@ export default function WaitlistModal({
   onClose,
   defaultProduct = 'CampusNova',
 }: WaitlistModalProps) {
-  const isWatchdog = defaultProduct.toLowerCase().includes('watchdog');
+  const productKey = defaultProduct.toLowerCase();
+  const isWatchdog = productKey.includes('watchdog') || productKey.includes('signalwatch');
+  const isAgent = productKey.includes('agent');
 
   const [email, setEmail] = useState('');
   const [role, setRole] = useState('School / Coaching Owner');
@@ -42,9 +44,9 @@ export default function WaitlistModal({
       setSubmitted(false);
       setError('');
       setEmail('');
-      setRole(isWatchdog ? 'Independent Regulatory Consultant' : 'School / Coaching Owner');
+      setRole(isWatchdog ? 'Independent Regulatory Consultant' : isAgent ? 'Job Seeker' : 'School / Coaching Owner');
     }
-  }, [isOpen, isWatchdog]);
+  }, [isOpen, isWatchdog, isAgent]);
 
   // Focus the first field on open; restore the trigger's focus on close.
   useEffect(() => {
@@ -181,6 +183,8 @@ export default function WaitlistModal({
                 <p className="prose-measure mt-3 text-body-sm text-ink-soft">
                   {isWatchdog
                     ? 'Register to help validate a source-linked FDA monitoring workflow. Production scheduling is not currently running.'
+                    : isAgent
+                    ? 'Register interest in free or paid access to the implemented job-opportunity workspace. Public hosting and checkout are still pending.'
                     : 'Register interest in the CampusNova prototype for attendance, parent messaging, and fee workflows.'}
                 </p>
 
@@ -200,7 +204,7 @@ export default function WaitlistModal({
                       aria-invalid={error ? true : undefined}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder={isWatchdog ? 'you@consulting.com' : 'owner@academy.com'}
+                      placeholder={isWatchdog ? 'you@consulting.com' : isAgent ? 'you@example.com' : 'owner@academy.com'}
                       className={fieldClass}
                     />
                   </div>
@@ -228,6 +232,13 @@ export default function WaitlistModal({
                             Quality and compliance lead
                           </option>
                           <option value="Regulatory Affairs Team">Regulatory affairs team</option>
+                          <option value="Other Interested Individual">Something else</option>
+                        </>
+                      ) : isAgent ? (
+                        <>
+                          <option value="Job Seeker">Job seeker</option>
+                          <option value="Verified Student Candidate">Student seeking eligibility verification</option>
+                          <option value="Career Adviser">Career adviser</option>
                           <option value="Other Interested Individual">Something else</option>
                         </>
                       ) : (

@@ -1,112 +1,20 @@
 import type { Metadata } from 'next';
 import LegalLayout, { Section } from '../legal/LegalLayout';
+import { SITE_CONFIG } from '@/lib/site';
 
-export const metadata: Metadata = {
-  title: 'Privacy Policy',
-  description:
-    'How Skolvo handles personal data across CampusNova and FDA Regulatory Watchdog, including why facial recognition runs on-device and no face photographs are stored.',
-};
+export const metadata: Metadata = { title: 'Privacy Policy', description: 'How Skolvo handles website, account, product, support, and future billing data.' };
 
 export default function PrivacyPage() {
-  return (
-    <LegalLayout
-      eyebrow="Legal"
-      title="Privacy Policy"
-      updated="24 August 2026"
-      summary="This page separates data collected by the public website from the intended architecture of products that are not generally available."
-    >
-      <Section heading="1. Who we are">
-        <p>
-          Skolvo is a software studio operating the domain <strong>skolvo.online</strong>. We are
-          developing CampusNova and SignalWatch. This policy currently applies to the public website,
-          contact form, waitlist, and any limited product validation we explicitly invite you to join.
-        </p>
-      </Section>
-
-      <Section heading="2. What this website collects">
-        <p>
-          If you join a waitlist or send a contact message, we store the email address you typed,
-          the role you selected, which product you asked about, and the time you submitted it. That
-          is the entire record. We use it to email you about that product and nothing else.
-        </p>
-        <p>
-          We do not run advertising trackers or third-party analytics profiling on this site, and we
-          do not set marketing cookies.
-        </p>
-      </Section>
-
-      <Section heading="3. Biometric data in CampusNova: the important part">
-        <p>
-          CampusNova is a prototype exploring facial recognition for attendance. Its intended data
-          boundary is listed below; these are requirements, not claims about an audited deployment:
-        </p>
-        <ul className="ml-5 list-disc space-y-2">
-          <li>
-            <strong>Matching should run on the device</strong> at the gate rather than in a cloud image service.
-          </li>
-          <li>
-            <strong>The production design should not require a cloud face-photo archive.</strong>
-          </li>
-          <li>
-            Biometric templates, if used, must be treated as sensitive biometric data rather than
-            described as harmless because they are numeric.
-          </li>
-          <li>
-            Deletion and revocation behaviour must be tested and documented before public availability.
-          </li>
-        </ul>
-        <p>
-          Any future deployment will require the institution to identify its consent obligations and
-          Skolvo to publish accurate technical documentation for the implemented system.
-        </p>
-      </Section>
-
-      <Section heading="4. Data in FDA Regulatory Watchdog">
-        <p>
-          Watchdog reads <strong>public</strong> FDA data: the 510(k) clearance database, MAUDE
-          adverse-event reports, and weekly Enforcement Reports. It does not touch your clients&apos;
-          confidential submissions, and you should not upload them to it.
-        </p>
-        <p>
-          During invited validation, we may store an account email and the watch configuration needed
-          to test the workflow. The product is not generally available today.
-        </p>
-      </Section>
-
-      <Section heading="5. Who else can see your data">
-        <p>
-          This website uses hosting and a managed database for contact and waitlist submissions.
-          Future product subprocessors will be listed before the relevant service becomes available.
-        </p>
-        <p>
-          <strong>We do not sell personal data, and we do not share it for advertising.</strong> If
-          we are ever legally compelled to disclose something, we will tell the affected account
-          unless we are legally forbidden from doing so.
-        </p>
-      </Section>
-
-      <Section heading="6. How long we keep things">
-        <p>
-          Waitlist and contact details are kept until they are no longer needed for the request or you
-          ask us to remove them. Product retention periods have not been published because the products
-          are not generally available.
-        </p>
-      </Section>
-
-      <Section heading="7. Your rights">
-        <p>
-          You can ask us what we hold about you, ask for it to be corrected, or ask for it to be
-          deleted. Email <strong>support@skolvo.online</strong> and we will action it. We do not
-          require you to use a form or prove a legal basis to ask.
-        </p>
-      </Section>
-
-      <Section heading="8. Changes">
-        <p>
-          If we change this policy in a way that materially affects what we collect, we will update
-          the date at the top and email account holders rather than quietly editing the page.
-        </p>
-      </Section>
-    </LegalLayout>
-  );
+  return <LegalLayout eyebrow="Legal" title="Privacy Policy" updated="31 August 2026" summary="This policy explains data handling for the public website and, where the relevant workflow is used, Skolvo Agent, CampusNova, and SignalWatch.">
+    <Section heading="1. Who is responsible"><p>Skolvo is a software brand operated by <strong>{SITE_CONFIG.legalOwnerName}</strong>, an individual / sole proprietor in {SITE_CONFIG.legalCountry}. Contact <a className="link-underline" href={`mailto:${SITE_CONFIG.supportEmail}`}>{SITE_CONFIG.supportEmail}</a> about privacy or your data.</p></Section>
+    <Section heading="2. Data we process"><p>Depending on the service you use, we may process account details and email; contact and support messages; waitlist product and role selections; usage and activity records; and security logs needed to operate the service.</p><p>Product data may include CV/resume files and job-profile information in Skolvo Agent; student-verification information when a discount is requested; institution, workspace, student, teacher, fee, and report data in CampusNova; and client watch configurations and public-record matches in SignalWatch. We process only the categories relevant to the workflow being used.</p></Section>
+    <Section heading="3. Why we process it"><p>We use data to provide and secure accounts and software workflows, apply usage allowances, respond to support, verify student eligibility, produce requested outputs, improve reliability, prevent misuse, keep necessary records, and meet legal obligations. We do not sell personal data or share it for advertising.</p></Section>
+    <Section heading="4. Website storage and analytics"><p>The site stores a versioned local preference in your browser when you dismiss an announcement so it does not appear on every reload. Contact and interest forms store the information you submit. The current site does not use advertising trackers or third-party behavioural analytics and does not add marketing cookies for these features.</p></Section>
+    <Section heading="5. Payments"><p>When Paddle Billing is activated, billing identifiers, subscription status, transaction references, and limited buyer details may be exchanged with Paddle as payment provider and Merchant of Record. Payment-card details will be collected and processed by the payment provider and are not intended to be stored directly by Skolvo.</p></Section>
+    <Section heading="6. Providers and international processing"><p>We use service providers where needed for hosting, managed databases, authentication, communications, and eventually payments. Data may therefore be processed outside your country. We select providers and safeguards appropriate to the service and will update material processor information as production services are activated.</p></Section>
+    <Section heading="7. Retention"><p>We retain information only while needed to provide the service, maintain security and transaction records, resolve disputes, or meet legal obligations. Contact and waitlist records are removed when no longer needed or upon a valid deletion request. Product retention depends on account status, configuration, backups, and applicable law; deletion may take a limited period to propagate through backups.</p></Section>
+    <Section heading="8. Security"><p>We use reasonable technical and organisational safeguards appropriate to the product stage, including access controls and data minimisation. No internet service can guarantee absolute security. Please report a suspected issue through our <a className="link-underline" href="/security">Security page</a>.</p></Section>
+    <Section heading="9. Your choices and rights"><p>You may ask to access, correct, export, or delete personal data, object to or restrict certain processing, or withdraw consent where processing relies on it. Some records may need to be retained for security, legal, or transaction purposes. Contact us at {SITE_CONFIG.supportEmail}; we may need to verify your identity before acting.</p></Section>
+    <Section heading="10. Changes"><p>We will update the date above when this policy changes. Material changes affecting account holders will be communicated through a reasonable product or email notice where appropriate.</p></Section>
+  </LegalLayout>;
 }
