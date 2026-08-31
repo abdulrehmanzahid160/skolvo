@@ -40,8 +40,8 @@ server-side webhook verification are complete. `.env.example` documents the clie
 identifiers and the server-only API key/webhook secret. Never expose a Paddle secret through a
 `NEXT_PUBLIC_*` variable.
 
-The public legal pages read the seller name from `LEGAL_OWNER_NAME`. Configure the operator's
-legal full name before Paddle review; the repository intentionally does not invent a company name.
+The public legal pages identify Abdul Rehman as the individual / sole-proprietor operator. The
+`LEGAL_OWNER_NAME` variable remains available as the centralized deployment override.
 
 ## Stack
 
