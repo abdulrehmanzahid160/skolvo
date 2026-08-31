@@ -5,27 +5,35 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'motion/react';
-import { Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 import { ScrollProgress, EASE, DUR_EXIT } from '@/components/motion/Primitives';
 import { Button } from '@/components/ui/Button';
 
 const NAV_LINKS = [
-  { name: 'Products', href: '/#products' },
-  { name: 'SignalWatch', href: '/watchdog' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Journal', href: '/journal' },
   { name: 'Studio', href: '/about' },
 ];
 
+const PRODUCT_LINKS = [
+  { name: 'Skolvo Agent', href: '/agent', description: 'Job discovery, fit review, preparation, and application tracking.' },
+  { name: 'CampusNova', href: '/campusnova', description: 'Student, teacher, fee, receipt, and academy reporting workflows.' },
+  { name: 'SignalWatch', href: '/watchdog', description: 'Source-linked FDA regulatory monitoring and intelligence.' },
+] as const;
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [productsOpen, setProductsOpen] = useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const pathname = usePathname();
   const { openWaitlist } = useWaitlist();
 
   const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  const productsRef = useRef<HTMLDivElement>(null);
+  const productsToggleRef = useRef<HTMLButtonElement>(null);
 
   // useScroll instead of a scroll event listener: Motion batches reads on its
   // own frame loop, so this never contributes a layout read per scroll frame.
@@ -36,20 +44,38 @@ export default function Navbar() {
   });
 
   // Close on route change, so tapping a link in the drawer does not leave it open.
-  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    setMenuOpen(false);
+    setProductsOpen(false);
+    setMobileProductsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!productsOpen) return;
+    const onPointerDown = (event: PointerEvent) => {
+      if (!productsRef.current?.contains(event.target as Node)) setProductsOpen(false);
+    };
+    document.addEventListener('pointerdown', onPointerDown);
+    return () => document.removeEventListener('pointerdown', onPointerDown);
+  }, [productsOpen]);
 
   // Escape to dismiss, and return focus to the control that opened the drawer.
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen && !productsOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setMenuOpen(false);
-        toggleRef.current?.focus();
+        if (productsOpen) {
+          setProductsOpen(false);
+          productsToggleRef.current?.focus();
+        } else {
+          setMenuOpen(false);
+          toggleRef.current?.focus();
+        }
       }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [menuOpen]);
+  }, [menuOpen, productsOpen]);
 
   // Keep Tab inside the open drawer. Without this, tabbing walks invisibly
   // through the page behind the overlay.
@@ -98,6 +124,40 @@ export default function Navbar() {
 
         {/* Desktop nav. Five items on one line, well inside the 1024px breakpoint. */}
         <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+          <div ref={productsRef} className="relative">
+            <button
+              ref={productsToggleRef}
+              type="button"
+              onClick={() => setProductsOpen((open) => !open)}
+              aria-expanded={productsOpen}
+              aria-controls="desktop-products-menu"
+              className={`relative flex items-center gap-1 rounded-full px-3.5 py-2 text-body-sm font-medium transition-colors duration-[--dur] ${PRODUCT_LINKS.some((product) => pathname === product.href) ? 'text-white' : 'text-white/55 hover:text-white'}`}
+            >
+              Products
+              <ChevronDown aria-hidden className={`h-3.5 w-3.5 transition-transform ${productsOpen ? 'rotate-180' : ''}`} />
+              {PRODUCT_LINKS.some((product) => pathname === product.href) && <span className="absolute inset-x-3.5 -bottom-0.5 h-[2px] rounded-full bg-[#79e7bf]" />}
+            </button>
+            <AnimatePresence>
+              {productsOpen && (
+                <motion.div
+                  id="desktop-products-menu"
+                  initial={{ opacity: 0, y: -8, scale: .98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: .98 }}
+                  transition={{ duration: .2, ease: EASE }}
+                  className="absolute left-1/2 top-[calc(100%+1rem)] w-[29rem] -translate-x-1/2 overflow-hidden rounded-card border border-white/10 bg-[#101a16] p-2 shadow-[0_24px_60px_rgba(0,0,0,.35)]"
+                >
+                  <p className="px-3 pb-2 pt-2 font-data text-[9px] tracking-[.13em] text-white/35">SKOLVO PRODUCTS / SELECT A WORKSPACE</p>
+                  {PRODUCT_LINKS.map((product) => (
+                    <Link key={product.href} href={product.href} className="group grid grid-cols-[1fr_auto] items-center gap-4 rounded-control px-3 py-3 transition-colors hover:bg-white/[.06] focus-visible:bg-white/[.06] focus-visible:outline-none">
+                      <span><strong className="block text-body-sm text-white">{product.name}</strong><small className="mt-1 block text-xs leading-relaxed text-white/48">{product.description}</small></span>
+                      <ArrowRight aria-hidden className="h-4 w-4 text-[#79e7bf] transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
           {NAV_LINKS.map((link) => {
             // Hash links (/#campusnova) are sections of the homepage, not
             // routes, so they never take the active underline.
@@ -156,6 +216,18 @@ export default function Navbar() {
           >
             <nav className="mx-auto max-w-6xl px-4 py-4" aria-label="Mobile">
               <ul className="flex flex-col">
+                <li>
+                  <button type="button" onClick={() => setMobileProductsOpen((open) => !open)} aria-expanded={mobileProductsOpen} aria-controls="mobile-products-list" className="flex min-h-12 w-full items-center justify-between rounded-control px-3 text-body font-medium text-white/65 transition-colors hover:bg-white/5 hover:text-white">
+                    Products <ChevronDown aria-hidden className={`h-4 w-4 transition-transform ${mobileProductsOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {mobileProductsOpen && (
+                      <motion.ul id="mobile-products-list" initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: .24, ease: EASE }} className="overflow-hidden border-l border-white/12 pl-2">
+                        {PRODUCT_LINKS.map((product) => <li key={product.href}><Link href={product.href} onClick={() => setMenuOpen(false)} className="group grid min-h-16 grid-cols-[1fr_auto] items-center gap-3 rounded-control px-3 py-2 hover:bg-white/5"><span><strong className="block text-sm text-white">{product.name}</strong><small className="mt-0.5 block text-[11px] leading-snug text-white/42">{product.description}</small></span><ArrowRight aria-hidden className="h-4 w-4 text-[#79e7bf]" /></Link></li>)}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </li>
                 {NAV_LINKS.map((link) => (
                   <li key={link.name}>
                     <Link
