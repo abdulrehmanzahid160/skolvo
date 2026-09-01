@@ -102,7 +102,7 @@ export const journalPosts: JournalPost[] = [
         heading: 'Three products, different stages',
         paragraphs: [
           'SignalWatch and CampusNova are both under development, but that does not mean they have identical readiness. SignalWatch has a working data, matching, and briefing pipeline demonstrated against historical records. CampusNova is a private product prototype with interface and workflow work in progress.',
-          'The products should not be described as generally available. SignalWatch has no paying customers and scheduled production monitoring is not running. CampusNova has no published performance results. Skolvo Agent has an implemented workflow, while public hosting and paid access remain pending. Prices are published for planning, but checkout is not active.',
+          'The products should not be described as if they share one readiness level. SignalWatch has no paying customers and scheduled production monitoring is not running. CampusNova has no published performance results. Since this note was first published, Skolvo Agent has moved to a public deployment at agent.skolvo.online; paid access and external submission actions remain available only where the product explicitly enables them.',
         ],
       },
       {

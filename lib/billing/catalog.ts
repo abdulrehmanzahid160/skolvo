@@ -27,7 +27,7 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
     id: 'skolvo_agent',
     name: 'Skolvo Agent',
     href: '/agent',
-    stage: 'Application implemented; production hosting and paid access are pending',
+    stage: 'Public web app live; paid plans remain unavailable until checkout is enabled',
     audience: 'Job seekers who want one place to evaluate opportunities and prepare application work.',
     freeAllowance: 'Core profile setup and up to 3 prepared and tracked job-application workflows. No card required.',
     plans: [

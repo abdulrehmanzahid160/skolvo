@@ -22,22 +22,26 @@ export default function AgentPageClient() {
         <div className="studio-hero__noise" aria-hidden />
         <div className="studio-shell agent-hero__grid">
           <div className="agent-hero__copy">
-            <motion.div className="studio-eyebrow studio-eyebrow--light" initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EASE }}><span>SKOLVO / AGENT</span><span>COMING SOON</span></motion.div>
-            <motion.p className="agent-hero__status" initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08, ease: EASE }}>COMING SOON</motion.p>
+            <motion.div className="studio-eyebrow studio-eyebrow--light" initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, ease: EASE }}><span>SKOLVO / AGENT</span><span>LIVE WEB APP</span></motion.div>
+            <motion.p className="agent-hero__status" initial={reduce ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55, delay: 0.08, ease: EASE }}>LIVE AT AGENT.SKOLVO.ONLINE</motion.p>
             <h1 className="agent-hero__title">
               {['A more intelligent way', 'to discover and manage', 'job opportunities.'].map((line, index) => (
                 <span key={line} className="block overflow-hidden pb-[.08em]"><motion.i className="block not-italic" initial={reduce ? false : { y: '110%' }} animate={{ y: 0 }} transition={{ duration: 0.75, delay: 0.12 + index * 0.08, ease: EASE }}>{line}</motion.i></span>
               ))}
             </h1>
-            <motion.p className="agent-hero__lede" initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.42, ease: EASE }}>Skolvo Agent is an implemented job-opportunity workspace being prepared for public hosting—designed to help people assess opportunities, prepare next steps, and keep the work visible.</motion.p>
+            <motion.p className="agent-hero__lede" initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.42, ease: EASE }}>Skolvo Agent is a live job-opportunity workspace designed to help people assess opportunities, prepare next steps, and keep the work visible.</motion.p>
+            <motion.div className="studio-actions mt-7" initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.5, ease: EASE }}>
+              <a href="https://agent.skolvo.online" className="studio-button studio-button--light">Open Skolvo Agent <ArrowRight aria-hidden /></a>
+              <Link href="/pricing#skolvo_agent" className="studio-text-link studio-text-link--light">View pricing</Link>
+            </motion.div>
           </div>
           <motion.figure className="agent-hero__visual" initial={reduce ? false : { opacity: 0, scale: 0.975, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.75, delay: 0.28, ease: EASE }}>
             <div className="relative aspect-[1122/1402] w-full"><Image src="/skolvo-agent-promo.jpg" alt="Skolvo Agent concept visual showing job discovery, profile matching, and application preparation" fill priority sizes="(max-width: 767px) 100vw, 44vw" className="object-contain" /></div>
-            <figcaption>PRODUCT VISUAL / PUBLIC HOSTING AND PAID ACCESS ARE PENDING</figcaption>
+            <figcaption>PRODUCT VISUAL / PUBLIC WEB APP NOW LIVE</figcaption>
           </motion.figure>
         </div>
       </section>
-      <div className="studio-shell"><ProductOffer label="Skolvo Agent" audience="Job seekers who want one place to assess opportunities and prepare application work." problem="Discovery, eligibility review, preparation, status, and user decisions are usually split across tools." receives={['Candidate profile and work-authorisation setup', 'Opportunity discovery with separate fit and eligibility review', 'Application preparation, validation, tracking, and an action queue']} freeAllowance="Core profile plus up to 3 prepared and tracked application workflows — no card required." price="$5/month Standard · $2/month for verified students" status="The workflow is implemented; production hosting, paid access, and live external submission are pending." /></div>
+      <div className="studio-shell"><ProductOffer label="Skolvo Agent" audience="Job seekers who want one place to assess opportunities and prepare application work." problem="Discovery, eligibility review, preparation, status, and user decisions are usually split across tools." receives={['Candidate profile and work-authorisation setup', 'Opportunity discovery with separate fit and eligibility review', 'Application preparation, validation, tracking, and an action queue']} freeAllowance="Core profile plus up to 3 prepared and tracked application workflows — no card required." price="$5/month Standard · $2/month for verified students" status="The public web app is live. Paid checkout and live external submission are available only when explicitly enabled inside the product." /></div>
       <section className="agent-purpose">
         <div className="studio-shell agent-purpose__grid">
           <Reveal className="agent-purpose__index"><span>01</span><p>THE PURPOSE</p></Reveal>
@@ -57,10 +61,10 @@ export default function AgentPageClient() {
       </section>
       <section className="agent-boundary">
         <div className="studio-shell agent-boundary__grid">
-          <Reveal><span>03 / CURRENT BOUNDARY</span><h2>Coming soon means not available yet.</h2></Reveal>
+          <Reveal><span>03 / CURRENT BOUNDARY</span><h2>Live now, with the limits visible.</h2></Reveal>
           <Reveal className="agent-boundary__copy" delay={0.1}>
-            <ul><li><Check aria-hidden /> The core workspace is implemented but public production hosting is pending.</li><li><Check aria-hidden /> Live external application submission is not presented as currently available.</li><li><Check aria-hidden /> Paid checkout remains disabled until production and billing are ready.</li></ul>
-            <Link href="/pricing#skolvo_agent" className="studio-button studio-button--light">View Agent pricing <ArrowRight aria-hidden /></Link>
+            <ul><li><Check aria-hidden /> The public production deployment is available at agent.skolvo.online.</li><li><Check aria-hidden /> External application actions remain explicit and user-controlled.</li><li><Check aria-hidden /> Paid features are presented only when checkout is enabled in the app.</li></ul>
+            <a href="https://agent.skolvo.online" className="studio-button studio-button--light">Launch the app <ArrowRight aria-hidden /></a>
           </Reveal>
         </div>
       </section>
