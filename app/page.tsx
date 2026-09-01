@@ -121,7 +121,7 @@ export default function HomePage() {
 
       <section className="product-chapter product-chapter--agent">
         <div className="studio-shell">
-          <ProductHeading number="03" label="JOB OPPORTUNITY WORKSPACE" status="PUBLIC ACCESS PENDING" href="/agent" title={<>Skolvo Agent</>} description="An implemented job-opportunity workspace being prepared for public hosting, with discovery, evaluation, preparation, and tracking workflows." />
+          <ProductHeading number="03" label="JOB OPPORTUNITY WORKSPACE" status="LIVE WEB APP" href="/agent" title={<>Skolvo Agent</>} description="A live job-opportunity workspace for discovery, evaluation, preparation, and application tracking." />
           <div className="product-story">
             <RevealBlock className="product-story__copy">
               <p className="product-lede">Skolvo Agent makes the work between discovering a role and deciding what to do next more focused and visible.</p>
@@ -130,17 +130,17 @@ export default function HomePage() {
                 <li><Check aria-hidden /> Consider job fit and eligibility against a user-provided profile.</li>
                 <li><Check aria-hidden /> Prepare workflows, track progress, and surface actions needing attention.</li>
               </ul>
-              <div className="product-disclosure"><strong>CURRENT LIMIT</strong><p>The core workflow is implemented, but public production hosting and paid access are pending. Live external application submission is not presented as available.</p></div>
+              <div className="product-disclosure"><strong>NOW AVAILABLE</strong><p>The public web app is live at agent.skolvo.online. Automated external application submission and paid checkout are introduced only where the app explicitly marks them as available.</p></div>
               <div className="product-price-line"><span>FREE ALLOWANCE — NO CARD REQUIRED</span><strong>$5/month standard · $2/month verified student</strong></div>
               <div className="studio-actions">
-                <Link href="/agent" className="studio-button">Explore Skolvo Agent <ArrowRight aria-hidden /></Link>
-                <Link href="/pricing#skolvo_agent" className="studio-text-link">View pricing</Link>
+                <a href="https://agent.skolvo.online" className="studio-button">Open Skolvo Agent <ArrowRight aria-hidden /></a>
+                <Link href="/agent" className="studio-text-link">View product details</Link>
               </div>
             </RevealBlock>
             <RevealBlock className="workflow-board" delay={0.1}>
-              <div className="workflow-board__top"><span>IMPLEMENTED WORKFLOW</span><span>PUBLIC ACCESS PENDING</span></div>
+              <div className="workflow-board__top"><span>IMPLEMENTED WORKFLOW</span><span>PUBLIC WEB APP</span></div>
               <FlowDiagram color="green" steps={[["01","DISCOVER","Relevant roles"],["02","EVALUATE","Fit and eligibility"],["03","PREPARE","Application work"],["04","TRACK","Next actions"]]} />
-              <div className="workflow-board__result"><CircleDot aria-hidden /><div><span>STATUS</span><strong>Production hosting pending</strong></div><span className="status-chip status-chip--green">ACCESS PENDING</span></div>
+              <div className="workflow-board__result"><CircleDot aria-hidden /><div><span>STATUS</span><strong>Live at agent.skolvo.online</strong></div><span className="status-chip status-chip--green">LIVE</span></div>
             </RevealBlock>
           </div>
         </div>

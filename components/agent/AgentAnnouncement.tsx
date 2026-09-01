@@ -7,7 +7,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, X } from 'lucide-react';
 import { DUR_EXIT, EASE } from '@/components/motion/Primitives';
 
-const STORAGE_KEY = 'skolvo-agent-announcement-v1';
+const STORAGE_KEY = 'skolvo-agent-launch-v1';
 const OPEN_DELAY_MS = 1100;
 
 export default function AgentAnnouncement() {
@@ -112,13 +112,13 @@ export default function AgentAnnouncement() {
               <X className="h-5 w-5" aria-hidden />
             </button>
             <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
-              <div className="font-data text-[10px] font-semibold tracking-[.14em] text-accent">COMING SOON / PRODUCT 03</div>
+              <div className="font-data text-[10px] font-semibold tracking-[.14em] text-accent">NOW LIVE / PRODUCT 03</div>
               <h2 id="agent-announcement-title" className="font-display mt-4 max-w-[12ch] text-display text-ink">Skolvo Agent</h2>
-              <p className="font-display mt-4 max-w-[19ch] text-title leading-tight text-ink">Your autonomous job discovery and application workspace.</p>
-              <p id="agent-announcement-description" className="prose-measure mt-4 text-body-sm text-ink-soft">Skolvo Agent is being built to help people discover, evaluate, prepare, and track job opportunities in one focused workflow.</p>
+              <p className="font-display mt-4 max-w-[19ch] text-title leading-tight text-ink">Your job discovery and application workspace is live.</p>
+              <p id="agent-announcement-description" className="prose-measure mt-4 text-body-sm text-ink-soft">Discover, evaluate, prepare, and track job opportunities in one focused workflow at agent.skolvo.online.</p>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Link href="/agent" onClick={dismiss} className="studio-button">Explore Skolvo Agent <ArrowRight aria-hidden /></Link>
-                <button type="button" onClick={dismiss} className="studio-text-link justify-center sm:justify-start">Not now</button>
+                <a href="https://agent.skolvo.online" onClick={dismiss} className="studio-button">Open Skolvo Agent <ArrowRight aria-hidden /></a>
+                <Link href="/agent" onClick={dismiss} className="studio-text-link justify-center sm:justify-start">View details</Link>
               </div>
             </div>
             <figure className="min-h-0 overflow-hidden border-t border-line bg-[#f7f4ed] md:border-l md:border-t-0">
