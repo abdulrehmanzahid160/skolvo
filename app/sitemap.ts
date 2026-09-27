@@ -35,6 +35,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
+      url: `${BASE_URL}/services`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.9,
+    },
+    {
       url: `${BASE_URL}/pricing`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -88,7 +94,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...routes,
     ...journalPosts.map((post) => ({
       url: `${BASE_URL}/journal/${post.slug}`,
-      lastModified: new Date('2026-08-24'),
+      lastModified: new Date(post.serviceId ? '2026-09-27' : '2026-08-24'),
       changeFrequency: 'yearly' as const,
       priority: 0.65,
     })),

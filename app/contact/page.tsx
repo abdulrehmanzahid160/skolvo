@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Linkedin, Loader2, Mail, Send } from 'lucide-react';
 import { Reveal } from '@/components/motion/Primitives';
+import { getServiceNiche } from '@/lib/services';
 
 /* ============================================================
    CONTACT
@@ -22,6 +23,15 @@ import { Reveal } from '@/components/motion/Primitives';
    ============================================================ */
 
 type Field = 'name' | 'email' | 'message';
+type ContactProjectType = 'business-website' | 'custom-workflow' | 'focused-prototype' | 'skolvo-product' | 'other';
+
+const PROJECT_TYPE_LABELS: Record<ContactProjectType, string> = {
+  'business-website': 'Business website',
+  'custom-workflow': 'Custom workflow tool',
+  'focused-prototype': 'Focused software prototype',
+  'skolvo-product': 'An existing Skolvo product',
+  other: 'Something else',
+};
 
 const REQUIRED_LABEL: Record<Field, string> = {
   name: 'your name',
@@ -34,8 +44,10 @@ export default function ContactPage() {
     name: '',
     email: '',
     academyName: '',
+    projectType: 'focused-prototype' as ContactProjectType,
     message: '',
   });
+  const [serviceContext, setServiceContext] = useState('');
 
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({});
   const [loading, setLoading] = useState(false);
@@ -47,6 +59,25 @@ export default function ContactPage() {
     email: useRef<HTMLInputElement>(null),
     message: useRef<HTMLTextAreaElement>(null),
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const project = params.get('project');
+    const service = params.get('service');
+    const allowed = Object.keys(PROJECT_TYPE_LABELS) as ContactProjectType[];
+
+    if (project && allowed.includes(project as ContactProjectType)) {
+      setFormData((prev) => ({ ...prev, projectType: project as ContactProjectType }));
+    }
+
+    if (service) {
+      const selectedService = getServiceNiche(service);
+      if (selectedService) {
+        setServiceContext(selectedService.title);
+        setFormData((prev) => ({ ...prev, projectType: selectedService.projectType }));
+      }
+    }
+  }, []);
 
   const validate = useCallback((field: Field, value: string): string | undefined => {
     if (!value.trim()) return `Enter ${REQUIRED_LABEL[field]}.`;
@@ -67,7 +98,7 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear an existing error as soon as the field becomes valid, so the
     // correction is acknowledged immediately.
-    if (field !== 'academyName' && errors[field]) {
+    if ((field === 'name' || field === 'email' || field === 'message') && errors[field]) {
       const message = validate(field, value);
       if (!message) setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
@@ -96,7 +127,17 @@ export default function ContactPage() {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          academyName: formData.academyName,
+          message: [
+            `Project type: ${PROJECT_TYPE_LABELS[formData.projectType]}`,
+            serviceContext ? `Service context: ${serviceContext}` : '',
+            '',
+            formData.message,
+          ].filter(Boolean).join('\n'),
+        }),
       });
 
       const data = await res.json();
@@ -124,7 +165,7 @@ export default function ContactPage() {
           <Reveal>
             <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / CONTACT</span><span>DIRECT TO THE STUDIO</span></div>
             <h1>Bring us the<br /><i>difficult</i> part.</h1>
-            <p>Questions about the products, the architecture, or a workflow we should understand. Messages go to the studio inbox.</p>
+            <p>Tell us about a business website, a custom workflow, a focused prototype, or one of the existing Skolvo products. Messages go directly to the studio inbox.</p>
           </Reveal>
         </div>
       </section>
@@ -138,6 +179,28 @@ export default function ContactPage() {
                 {!submitted ? (
                   <form onSubmit={handleSubmit} noValidate className="space-y-5">
                     <h2 className="font-display text-title text-ink">Send a message</h2>
+
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="contact-project-type" className="text-label font-semibold text-ink">
+                        What would you like to discuss?
+                      </label>
+                      <select
+                        id="contact-project-type"
+                        name="projectType"
+                        value={formData.projectType}
+                        onChange={(e) => handleChange('projectType', e.target.value as ContactProjectType)}
+                        className={fieldClass(false)}
+                      >
+                        {Object.entries(PROJECT_TYPE_LABELS).map(([value, label]) => (
+                          <option value={value} key={value}>{label}</option>
+                        ))}
+                      </select>
+                      {serviceContext && (
+                        <p className="text-body-sm text-ink-mute">
+                          Service selected: <strong className="font-semibold text-ink">{serviceContext}</strong>
+                        </p>
+                      )}
+                    </div>
 
                     <div className="flex flex-col gap-2">
                       <label htmlFor="contact-name" className="text-label font-semibold text-ink">
@@ -204,7 +267,7 @@ export default function ContactPage() {
                         htmlFor="contact-academy"
                         className="text-label font-semibold text-ink"
                       >
-                        Academy, school, or company
+                        Business or organisation
                       </label>
                       <input
                         id="contact-academy"
@@ -213,7 +276,7 @@ export default function ContactPage() {
                         autoComplete="organization"
                         value={formData.academyName}
                         onChange={(e) => handleChange('academyName', e.target.value)}
-                        placeholder="Apex Coaching Institute"
+                        placeholder="Your business name"
                         className={fieldClass(false)}
                       />
                       <p className="text-body-sm text-ink-mute">Optional.</p>
@@ -237,7 +300,7 @@ export default function ContactPage() {
                         value={formData.message}
                         onChange={(e) => handleChange('message', e.target.value)}
                         onBlur={() => handleBlur('message')}
-                        placeholder="We run a 300-student academy and want to see the attendance demo."
+                        placeholder="Tell us what happens today, where the process becomes difficult, and what you would like to improve."
                         className={`${fieldClass(!!errors.message)} resize-y`}
                       />
                       {errors.message && (
@@ -291,7 +354,8 @@ export default function ContactPage() {
                     <button
                       onClick={() => {
                         setSubmitted(false);
-                        setFormData({ name: '', email: '', academyName: '', message: '' });
+                        setFormData({ name: '', email: '', academyName: '', projectType: 'focused-prototype', message: '' });
+                        setServiceContext('');
                         setErrors({});
                       }}
                       className="mt-6 min-h-11 cursor-pointer rounded-full border border-line-strong bg-surface px-6 text-body-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent-hover"

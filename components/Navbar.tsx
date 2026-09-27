@@ -6,11 +6,10 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from 'motion/react';
 import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
-import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 import { ScrollProgress, EASE, DUR_EXIT } from '@/components/motion/Primitives';
-import { Button } from '@/components/ui/Button';
 
 const NAV_LINKS = [
+  { name: 'Services', href: '/services' },
   { name: 'Pricing', href: '/pricing' },
   { name: 'Journal', href: '/journal' },
   { name: 'Studio', href: '/about' },
@@ -29,7 +28,6 @@ export default function Navbar() {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const reduceMotion = useReducedMotion();
   const pathname = usePathname();
-  const { openWaitlist } = useWaitlist();
 
   const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
@@ -190,7 +188,7 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Link href="/contact" className="flex min-h-10 items-center rounded-full border border-white/20 px-5 text-body-sm font-semibold text-white transition-colors hover:border-[#79e7bf] hover:bg-[#79e7bf] hover:text-[#09100d]">Start a conversation</Link>
+          <Link href="/contact?project=focused-prototype" className="flex min-h-10 items-center rounded-full border border-white/20 px-5 text-body-sm font-semibold text-white transition-colors hover:border-[#79e7bf] hover:bg-[#79e7bf] hover:text-[#09100d]">Discuss a project</Link>
         </div>
 
         <button
@@ -246,15 +244,13 @@ export default function Navbar() {
                 ))}
               </ul>
               <div className="mt-3 border-t border-white/10 pt-3">
-                <Button
-                  onClick={() => {
-                    setMenuOpen(false);
-                    openWaitlist();
-                  }}
-                  className="w-full bg-[#79e7bf] text-[#09100d] hover:bg-white"
+                <Link
+                  href="/contact?project=focused-prototype"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex min-h-12 w-full items-center justify-center rounded-full bg-[#79e7bf] px-5 text-body-sm font-semibold text-[#09100d] transition-colors hover:bg-white"
                 >
-                  Request access
-                </Button>
+                  Discuss a project
+                </Link>
               </div>
             </nav>
           </motion.div>

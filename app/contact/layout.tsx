@@ -3,17 +3,17 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Contact',
   description:
-    'Contact Skolvo about Skolvo Agent, CampusNova, SignalWatch, product access, support, or technical questions.',
+    'Contact Skolvo about a business website, custom workflow, focused prototype, or an existing Skolvo product.',
   openGraph: {
     title: 'Contact the Skolvo Studio',
     description:
-      'Contact Skolvo about Skolvo Agent, CampusNova, SignalWatch, support, or product access.',
+      'Discuss a business website, custom workflow, focused prototype, or an existing Skolvo product.',
     url: 'https://www.skolvo.online/contact',
   },
   twitter: {
     title: 'Contact the Skolvo Studio',
     description:
-      'Contact Skolvo about Skolvo Agent, CampusNova, SignalWatch, support, or product access.',
+      'Discuss a business website, custom workflow, focused prototype, or an existing Skolvo product.',
   },
 };
 

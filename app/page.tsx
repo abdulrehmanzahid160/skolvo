@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import StudioSignal from '@/components/hero/StudioSignal';
 import AgentAnnouncement from '@/components/agent/AgentAnnouncement';
+import { serviceCategories, serviceNiches } from '@/lib/services';
 
 const ease = [0.22, 1, 0.36, 1] as const;
 const journal = [
@@ -29,18 +30,18 @@ export default function HomePage() {
             <motion.div className="studio-eyebrow studio-eyebrow--light" initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease }}>
               <span>SKOLVO / PRODUCT STUDIO</span><span>PAKISTAN · BUILDING IN PUBLIC</span>
             </motion.div>
-            <h1 className="studio-hero__title" aria-label="Software with evidence built in">
-              {['Software', 'with evidence', 'built in.'].map((line, index) => (
+            <h1 className="studio-hero__title" aria-label="Products and focused software built clearly">
+              {['Products and', 'focused software,', 'built clearly.'].map((line, index) => (
                 <span className={index === 1 ? 'is-outline' : ''} key={line}>
                   <motion.i initial={reduce ? false : { y: '110%', rotate: 2 }} animate={{ y: 0, rotate: 0 }} transition={{ duration: 0.85, delay: 0.12 + index * 0.09, ease }}>{line}</motion.i>
                 </span>
               ))}
             </h1>
             <motion.div className="studio-hero__intro" initial={reduce ? false : { opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.52, ease }}>
-              <p>Skolvo is a software product studio offering three focused SaaS products: regulatory intelligence, academy operations, and a more deliberate job-opportunity workflow.</p>
+              <p>Skolvo builds its own products and creates business websites, workflow tools, and focused software prototypes for organisations with a process worth improving.</p>
               <div className="studio-actions">
-                <a href="#products" className="studio-button studio-button--light">Explore the work <ArrowRight aria-hidden /></a>
-                <Link href="/journal" className="studio-text-link studio-text-link--light">Read the build journal <BookOpen aria-hidden /></Link>
+                <Link href="/contact?project=focused-prototype" className="studio-button studio-button--light">Discuss a project <ArrowRight aria-hidden /></Link>
+                <a href="#products" className="studio-text-link studio-text-link--light">Explore our products <BookOpen aria-hidden /></a>
               </div>
             </motion.div>
           </div>
@@ -48,8 +49,61 @@ export default function HomePage() {
         </div>
         <div className="truth-rail" aria-label="Product principles">
           <motion.div animate={reduce ? undefined : { x: ['0%', '-50%'] }} transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}>
-            {[0, 1].map((copy) => <span key={copy} aria-hidden={copy === 1}><i>01</i> SOURCES BEFORE SUMMARIES <b>•</b><i>02</i> PRIVACY BEFORE CONVENIENCE <b>•</b><i>03</i> STATUS BEFORE SALES COPY <b>•</b></span>)}
+            {[0, 1].map((copy) => <span key={copy} aria-hidden={copy === 1}><i>01</i> PRODUCTS WE OWN <b>•</b><i>02</i> SERVICES WE SHAPE <b>•</b><i>03</i> STATUS BEFORE SALES COPY <b>•</b></span>)}
           </motion.div>
+        </div>
+      </section>
+
+      <section className="home-services" aria-labelledby="home-services-title">
+        <div className="studio-shell">
+          <div className="home-section-head">
+            <span>00 / SERVICES</span>
+            <h2 id="home-services-title">A focused way to improve how the work moves.</h2>
+            <div>
+              <p>Selected client work sits alongside our own products. The first scope stays narrow enough to understand, test, and use.</p>
+              <Link href="/services" className="studio-text-link">Explore all services <ArrowRight aria-hidden /></Link>
+            </div>
+          </div>
+          <div className="home-services__grid">
+            {serviceCategories.map((service, index) => (
+              <motion.article
+                key={service.title}
+                initial={reduce ? false : { opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.55, delay: index * 0.07, ease }}
+              >
+                <span>{service.number}</span>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+                <Link href={service.href}>See where it fits <ArrowRight aria-hidden /></Link>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="home-industries" aria-labelledby="home-industries-title">
+        <div className="studio-shell">
+          <div className="home-section-head home-section-head--dark">
+            <span>01 / INDUSTRIES WE CAN HELP</span>
+            <h2 id="home-industries-title">Eleven practical places to begin.</h2>
+            <div>
+              <p>These are service opportunities we can discuss and build, not completed client projects or prebuilt demos.</p>
+              <Link href="/services" className="studio-text-link studio-text-link--light">Read the full service guide <ArrowRight aria-hidden /></Link>
+            </div>
+          </div>
+          <ol className="home-industries__list">
+            {serviceNiches.map((service) => (
+              <li key={service.id}>
+                <Link href={`/services#${service.id}`}>
+                  <span>{service.number}</span>
+                  <div><h3>{service.title}</h3><p>{service.short}</p></div>
+                  <ArrowRight aria-hidden />
+                </Link>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

@@ -1,3 +1,5 @@
+import { serviceNiches } from '@/lib/services';
+
 export type JournalSection = {
   heading: string;
   paragraphs: string[];
@@ -12,10 +14,12 @@ export type JournalPost = {
   dek: string;
   published: string;
   readTime: string;
+  category: 'Product development' | 'Business workflows';
+  serviceId?: string;
   sections: JournalSection[];
 };
 
-export const journalPosts: JournalPost[] = [
+export const productDevelopmentPosts: JournalPost[] = [
   {
     slug: 'facts-before-fluency',
     number: '01',
@@ -24,6 +28,7 @@ export const journalPosts: JournalPost[] = [
     dek: 'Why SignalWatch keeps retrieval, ordering, validation, and rendering as separate steps.',
     published: '24 August 2026',
     readTime: '4 min read',
+    category: 'Product development',
     sections: [
       {
         heading: 'The tempting shortcut',
@@ -61,6 +66,7 @@ export const journalPosts: JournalPost[] = [
     dek: 'The boundary we are using while prototyping biometric attendance for CampusNova.',
     published: '24 August 2026',
     readTime: '3 min read',
+    category: 'Product development',
     sections: [
       {
         heading: 'Biometrics change the burden',
@@ -97,6 +103,7 @@ export const journalPosts: JournalPost[] = [
     dek: 'A status label should describe access and product maturity, not create urgency.',
     published: '24 August 2026',
     readTime: '3 min read',
+    category: 'Product development',
     sections: [
       {
         heading: 'Three products, different stages',
@@ -119,6 +126,24 @@ export const journalPosts: JournalPost[] = [
       },
     ],
   },
+];
+
+export const businessWorkflowPosts: JournalPost[] = serviceNiches.map((service) => ({
+  slug: service.article.slug,
+  number: `W${service.number}`,
+  tag: service.title,
+  title: service.article.title,
+  dek: service.article.dek,
+  published: service.article.published,
+  readTime: service.article.readTime,
+  category: 'Business workflows',
+  serviceId: service.id,
+  sections: service.article.sections,
+}));
+
+export const journalPosts: JournalPost[] = [
+  ...productDevelopmentPosts,
+  ...businessWorkflowPosts,
 ];
 
 export function getJournalPost(slug: string) {

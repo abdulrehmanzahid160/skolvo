@@ -6,7 +6,7 @@ import { motion, useReducedMotion } from 'motion/react';
 
 const links = [
   { label: 'Products', items: [['Skolvo Agent', '/agent'], ['CampusNova', '/campusnova'], ['SignalWatch', '/watchdog'], ['Pricing', '/pricing']] },
-  { label: 'Company', items: [['About', '/about'], ['Journal', '/journal'], ['Contact', '/contact']] },
+  { label: 'Company', items: [['Services', '/services'], ['About', '/about'], ['Journal', '/journal'], ['Contact', '/contact']] },
   { label: 'Legal', items: [['Terms of Service', '/terms'], ['Privacy Policy', '/privacy'], ['Refund Policy', '/refund-policy'], ['Security', '/security']] },
 ] as const;
 
@@ -21,7 +21,7 @@ export default function Footer() {
             <Link href="/" className="mt-5 block w-fit font-display text-[clamp(4.5rem,12vw,9rem)] font-semibold leading-[.8] tracking-[-.08em] text-white no-underline">
               Skolvo<span className="text-[#79e7bf]">.</span>
             </Link>
-            <p className="mt-8 max-w-md text-body text-white/55">Three products under development. Clear boundaries, visible evidence, and no production claim before production exists.</p>
+            <p className="mt-8 max-w-md text-body text-white/55">We build our own products and selected websites, workflow tools, and focused prototypes for businesses.</p>
           </div>
           <div className="grid grid-cols-3 gap-5">
             {links.map((group) => (
@@ -42,7 +42,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-7 text-xs text-white/38 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Skolvo. A software brand operated from Pakistan. Product status varies by service.</p>
+          <p>© {new Date().getFullYear()} Skolvo. A software brand operated from Pakistan. Product status varies by product.</p>
           <div className="flex items-center gap-4">
             <a href="mailto:support@skolvo.online" className="inline-flex items-center gap-1.5 hover:text-white"><Mail className="h-3.5 w-3.5" /> Email</a>
             <a href="https://www.linkedin.com/company/skolvo/" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 hover:text-white"><Linkedin className="h-3.5 w-3.5" /> LinkedIn <ArrowUpRight className="h-3 w-3" /></a>

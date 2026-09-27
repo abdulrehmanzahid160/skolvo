@@ -35,14 +35,17 @@ export const metadata: Metadata = {
   // get "Page Name | Skolvo". The `default` is used for the homepage and any
   // page that doesn't export its own metadata.
   title: {
-    default: 'Skolvo: Software with evidence built in',
+    default: 'Skolvo: Products, Websites and Focused Software',
     template: '%s | Skolvo',
   },
   description:
-    'Skolvo is a software product studio offering Skolvo Agent, CampusNova, and SignalWatch with clear free allowances and subscription pricing.',
+    'Skolvo builds its own products and creates business websites, focused workflow tools, and software prototypes for organisations.',
   keywords: [
     'Skolvo',
     'Skolvo Agent',
+    'business website development',
+    'custom workflow software',
+    'software prototype development',
     'job discovery workspace',
     'CampusNova',
     'FDA Regulatory Watchdog',
@@ -57,9 +60,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Skolvo Team' }],
   metadataBase: new URL('https://www.skolvo.online'),
   openGraph: {
-    title: 'Skolvo | Software with evidence built in',
+    title: 'Skolvo | Products, Websites and Focused Software',
     description:
-      'Three focused software products: Skolvo Agent, CampusNova, and SignalWatch.',
+      'Skolvo builds its own products and creates business websites, workflow tools, and focused software prototypes.',
     url: 'https://www.skolvo.online',
     siteName: 'Skolvo',
     // NOTE: /logo.png is a square app icon (1024×1024), which works for
@@ -80,9 +83,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Skolvo | Software with evidence built in',
+    title: 'Skolvo | Products, Websites and Focused Software',
     description:
-      'Three focused software products: Skolvo Agent, CampusNova, and SignalWatch.',
+      'Products, business websites, workflow tools, and focused software prototypes from Skolvo.',
     images: ['/logo.png'],
   },
   icons: {

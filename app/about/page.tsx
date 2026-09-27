@@ -19,7 +19,7 @@ export default function AboutPage() {
         <div className="studio-shell">
           <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / THE STUDIO</span><span>SMALL TEAM · NARROW PRODUCTS</span></div>
           <motion.h1 initial={reduce ? false : { opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [0.22,1,0.36,1] }}>We build where<br />the <i>boundary</i> matters.</motion.h1>
-          <p>{SITE_CONFIG.legalOperatorDisclosure} A three-person product team is developing three products and documenting their limits as carefully as their features.</p>
+          <p>{SITE_CONFIG.legalOperatorDisclosure} A three-person product team is developing three products and takes on selected website, workflow, and prototype work without blurring the two.</p>
         </div>
       </header>
       <section className="about-thesis studio-shell">
@@ -35,7 +35,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="studio-close"><div className="studio-shell studio-close__grid"><div><span>CONTACT / OPEN</span><h2>Talk to the people building it.</h2></div><div><p>No invented departments and no scripted demo. If your workflow overlaps with one of the three products, speak directly with the studio.</p><div className="studio-actions"><Link href="/contact" className="studio-button studio-button--light">Start a conversation <ArrowRight /></Link><Link href="/journal" className="studio-text-link studio-text-link--light">Read the journal</Link></div></div></div></section>
+      <section className="studio-close"><div className="studio-shell studio-close__grid"><div><span>CONTACT / OPEN</span><h2>Talk to the people building it.</h2></div><div><p>No invented departments and no scripted tailored demo. Discuss one of the products, or show us a website or workflow your business needs.</p><div className="studio-actions"><Link href="/contact?project=focused-prototype" className="studio-button studio-button--light">Discuss a project <ArrowRight /></Link><Link href="/services" className="studio-text-link studio-text-link--light">Explore services</Link></div></div></div></section>
     </div>
   );
 }
