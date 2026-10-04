@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
 import { Reveal } from '@/components/motion/Primitives';
-import { serviceCategories, serviceContactHref, serviceNiches } from '@/lib/services';
+import { formatServiceStartingPrice, serviceCategories, serviceContactHref, serviceNiches } from '@/lib/services';
 
 export default function ServicesPage() {
   return (
@@ -76,6 +76,8 @@ export default function ServicesPage() {
                     <span>{service.number}</span>
                     <h2>{service.title}</h2>
                     <p>{service.short}</p>
+                    <p className="service-detail__price">{formatServiceStartingPrice(service.startingUsd)}</p>
+                    <small>Indicative USD budget for the focused first version. Final scope, delivery, and any ongoing costs are quoted before work begins.</small>
                   </div>
                   <div className="service-detail__body">
                     <div>

@@ -2,15 +2,15 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Transparent free allowances and planned subscription pricing for Skolvo Agent, CampusNova, and SignalWatch.',
+  description: 'Introductory subscription prices and starting budgets for Skolvo custom projects.',
   openGraph: {
     title: 'Skolvo Pricing',
-    description: 'Free allowances and subscription pricing for three Skolvo software products.',
+    description: 'Introductory subscription prices and starting budgets for Skolvo custom projects.',
     url: 'https://www.skolvo.online/pricing',
   },
   twitter: {
     title: 'Skolvo Pricing',
-    description: 'Free allowances and subscription pricing for three Skolvo software products.',
+    description: 'Introductory subscription prices and starting budgets for Skolvo custom projects.',
   },
 };
 

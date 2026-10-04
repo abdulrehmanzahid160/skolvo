@@ -34,11 +34,13 @@ the database or the contact and waitlist endpoints.
 
 ## Billing readiness
 
-Published pricing and usage allowances live in `lib/billing/catalog.ts`. Paddle checkout is
-deliberately disabled in `lib/billing/paddle.ts` until seller review, public price IDs, and
-server-side webhook verification are complete. `.env.example` documents the client-safe price
-identifiers and the server-only API key/webhook secret. Never expose a Paddle secret through a
-`NEXT_PUBLIC_*` variable.
+Published pricing and usage allowances live in `lib/billing/catalog.ts`. Safepay is the intended
+payment provider. Checkout remains disabled in `lib/billing/safepay.ts` because this marketing
+site has no authenticated customer account or paid-access system. Do not sell a plan from this
+site until a successful Safepay subscription payment can be linked to the correct product account
+and paid access can be granted, renewed, and revoked. See [Safepay setup](docs/safepay.md).
+The published introductory amounts and custom-project starting budgets are explained in
+[pricing rationale](docs/pricing-rationale.md).
 
 The public legal pages identify Abdul Rehman as the individual / sole-proprietor operator. The
 identity is deliberately fixed in `lib/site.ts` so a stale deployment variable cannot change it.

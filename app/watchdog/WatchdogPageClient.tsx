@@ -26,7 +26,7 @@ export default function WatchdogPageClient() {
           </div>
         </div>
       </header>
-      <div className="studio-shell"><ProductOffer label="SignalWatch" audience="Independent medical-device regulatory consultants reviewing public FDA activity across clients." problem="Manual source checking is repetitive, while each client still needs a separate, reviewable evidence trail." receives={['Client-specific watch configurations', 'Matched 510(k), MAUDE, or Enforcement record review', 'Source-linked intelligence reports for professional review']} freeAllowance="1 sample historical intelligence report per service — no card required." price="$50/month per selected monitoring service" status="Historical-data validation build; scheduled production monitoring is not running." /></div>
+      <div className="studio-shell"><ProductOffer label="SignalWatch" audience="Independent medical-device regulatory consultants reviewing public FDA activity across clients." problem="Manual source checking is repetitive, while each client still needs a separate, reviewable evidence trail." receives={['Client-specific watch configurations', 'Matched 510(k), MAUDE, or Enforcement record review', 'Source-linked intelligence reports for professional review']} freeAllowance="1 sample historical intelligence report per service — no card required." price="Planned: $29/month per selected monitoring service" status="Historical-data validation build; scheduled production monitoring is not running." /></div>
 
       <section className="watchdog-status studio-shell">
         <div className="section-masthead"><span>STATUS / 24 AUG 2026</span><h2>What exists.<br />What does not.</h2></div>

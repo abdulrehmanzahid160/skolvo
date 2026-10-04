@@ -127,7 +127,7 @@ export default function HomePage() {
                 <li><Check aria-hidden /> Generated briefs are checked against stored source facts.</li>
               </ul>
               <div className="product-disclosure"><strong>CURRENT LIMIT</strong><p>The pipeline has been demonstrated on historical data. Scheduled production monitoring is not currently running, and the product has no paying customers.</p></div>
-              <div className="product-price-line"><span>SAMPLE EVALUATION AVAILABLE</span><strong>$50/month per monitoring service</strong></div>
+              <div className="product-price-line"><span>SAMPLE EVALUATION AVAILABLE</span><strong>Planned from $29/month per monitoring service</strong></div>
               <div className="studio-actions">
                 <Link href="/watchdog" className="studio-button">Open product brief <ArrowRight aria-hidden /></Link>
                 <Link href="/pricing#signalwatch" className="studio-text-link">View pricing <CircleDot aria-hidden /></Link>
@@ -163,7 +163,7 @@ export default function HomePage() {
                 <li><Braces aria-hidden /> Attendance, messaging, and fee flows are being prototyped together.</li>
               </ul>
               <div className="product-disclosure product-disclosure--dark"><strong>CURRENT LIMIT</strong><p>CampusNova is not publicly available. Timing, accuracy, pricing, and launch claims will not be published until they can be supported by testing.</p></div>
-              <div className="product-price-line product-price-line--dark"><span>FREE EVALUATION WORKSPACE</span><strong>Plans from $25/month</strong></div>
+              <div className="product-price-line product-price-line--dark"><span>FREE EVALUATION WORKSPACE</span><strong>Planned from $15/month</strong></div>
               <div className="studio-actions">
                 <Link href="/campusnova" className="studio-button studio-button--light">CampusNova details <ArrowRight aria-hidden /></Link>
                 <Link href="/pricing#campusnova" className="studio-text-link studio-text-link--light">View pricing</Link>
@@ -185,7 +185,7 @@ export default function HomePage() {
                 <li><Check aria-hidden /> Prepare workflows, track progress, and surface actions needing attention.</li>
               </ul>
               <div className="product-disclosure"><strong>NOW AVAILABLE</strong><p>The public web app is live at agent.skolvo.online. Automated external application submission and paid checkout are introduced only where the app explicitly marks them as available.</p></div>
-              <div className="product-price-line"><span>FREE ALLOWANCE — NO CARD REQUIRED</span><strong>$5/month standard · $2/month verified student</strong></div>
+              <div className="product-price-line"><span>FREE ALLOWANCE — NO CARD REQUIRED</span><strong>$9/month standard · $4/month verified student when paid access opens</strong></div>
               <div className="studio-actions">
                 <a href="https://agent.skolvo.online" className="studio-button">Open Skolvo Agent <ArrowRight aria-hidden /></a>
                 <Link href="/agent" className="studio-text-link">View product details</Link>

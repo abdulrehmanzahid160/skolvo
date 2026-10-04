@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ArrowRight, Check, CircleDot } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { BILLING_CATALOG } from '@/lib/billing/catalog';
+import { serviceNiches } from '@/lib/services';
 import { SITE_CONFIG } from '@/lib/site';
 import { useWaitlist } from '@/components/waitlist/WaitlistProvider';
 
@@ -15,8 +16,8 @@ export default function PricingPage() {
       <header className="pricing-hero"><div className="studio-shell">
         <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / PRICING</span><span>USAGE-LIMITED FREE ACCESS</span></div>
         <motion.h1 initial={reduce ? false : { opacity: 0, y: 48 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .8, ease: [0.22, 1, 0.36, 1] }}>Clear plans.<br /><i>Honest status.</i></motion.h1>
-        <p>Request usage-limited evaluation access without a payment card. Paid prices are visible before checkout, which will open only when the relevant service is ready.</p>
-        <div className="pricing-hero__facts"><span><Check /> No time-limited trials</span><span><Check /> No card for free use</span><span><CircleDot /> Payments launching soon</span></div>
+        <p>Compare introductory subscription prices and starting budgets for custom projects. Paid checkout opens only when the relevant product is ready.</p>
+        <div className="pricing-hero__facts"><span><Check /> No time-limited trials</span><span><Check /> No card for free use</span><span><CircleDot /> Paid checkout is not active</span></div>
       </div></header>
       <main className="studio-shell pricing-catalog">
         {BILLING_CATALOG.map((product, productIndex) => (
@@ -28,13 +29,18 @@ export default function PricingPage() {
                 <h3>{plan.priceLabel}</h3><p>{plan.summary}</p>
                 <ul>{plan.entitlements.map((item) => <li key={item}><Check aria-hidden />{item}</li>)}</ul>
                 {plan.eligibilityNote && <small>{plan.eligibilityNote}</small>}
-                <button onClick={() => openWaitlist(plan.status === 'free' ? product.name : `${product.name} / ${plan.name}`)}>{plan.status === 'free' ? 'Request free access — no card required' : plan.id === 'skolvo_agent_student' ? 'Verify student eligibility' : 'Register for paid access'} <ArrowRight /></button>
-                {plan.status !== 'free' && <em>Checkout is not active. Payments launching soon.</em>}
+                <button onClick={() => openWaitlist(plan.status === 'free' ? product.name : `${product.name} / ${plan.name}`)}>{plan.status === 'free' ? 'Request free access — no card required' : plan.id === 'skolvo_agent_student' ? 'Register student interest' : 'Register interest'} <ArrowRight /></button>
+                {plan.status !== 'free' && <em>{plan.status === 'planned' ? 'Indicative price. This product is not ready for paid access.' : 'Checkout is not active. Payments launching soon.'}</em>}
               </article>
             ))}</div>
             <p className="pricing-free-note"><strong>Free allowance:</strong> {product.freeAllowance}</p>
           </motion.section>
         ))}
+        <section className="pricing-services" id="custom-services">
+          <div className="pricing-services__intro"><div><span>04 / CUSTOM PROJECTS</span><h2>Starting budgets for focused work.</h2></div><p>These are tailored projects, priced for the first version described on the Services page. A final fixed quote follows a scope discussion; hosting, third-party services, migration, and ongoing support are quoted separately where needed.</p></div>
+          <div className="pricing-services__list">{serviceNiches.map((service) => <Link key={service.id} href={`/services#${service.id}`}><span>{service.title}</span><strong>From ${service.startingUsd.toLocaleString('en-US')}</strong></Link>)}</div>
+          <p className="pricing-services__note">All guide prices are in USD. No project is purchased from this page.</p>
+        </section>
         <section className="pricing-review-note"><span>BILLING / CURRENT STATUS</span><h2>Software subscriptions under one seller identity.</h2><p>{SITE_CONFIG.legalOperatorDisclosure} Checkout is intentionally disabled until paid access and billing support are ready.</p><div><Link href="/terms">Terms of Service</Link><Link href="/privacy">Privacy Policy</Link><Link href="/refund-policy">Refund Policy</Link><Link href="/contact">Contact support</Link></div></section>
       </main>
     </div>

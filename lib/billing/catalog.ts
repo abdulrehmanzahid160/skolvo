@@ -9,7 +9,7 @@ export interface PlanDefinition {
   summary: string;
   entitlements: readonly string[];
   eligibilityNote?: string;
-  paddlePriceEnv?: string;
+  safepayPlanEnv?: string;
 }
 
 export interface ProductDefinition {
@@ -47,8 +47,8 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
       {
         id: 'skolvo_agent_standard',
         name: 'Standard',
-        monthlyUsd: 5,
-        priceLabel: '$5/month',
+        monthlyUsd: 9,
+        priceLabel: '$9/month',
         status: 'payments_launching_soon',
         summary: 'Ongoing access beyond the free application-workflow allowance.',
         entitlements: [
@@ -56,13 +56,13 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
           'Application preparation and lifecycle tracking',
           'Action Center for decisions that still require user attention',
         ],
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_AGENT_STANDARD_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_AGENT_STANDARD_PLAN_ID',
       },
       {
         id: 'skolvo_agent_student',
         name: 'Student',
-        monthlyUsd: 2,
-        priceLabel: '$2/month',
+        monthlyUsd: 4,
+        priceLabel: '$4/month',
         status: 'payments_launching_soon',
         summary: 'Discounted access to the same core product workflow as Standard.',
         entitlements: [
@@ -71,7 +71,7 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
           'Discount activated only after eligibility verification',
         ],
         eligibilityNote: 'Student eligibility is verified before discounted pricing is activated.',
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_AGENT_STUDENT_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_AGENT_STUDENT_PLAN_ID',
       },
     ],
   },
@@ -99,22 +99,22 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
       {
         id: 'campusnova_basic',
         name: 'Basic',
-        monthlyUsd: 25,
-        priceLabel: '$25/month',
-        status: 'payments_launching_soon',
+        monthlyUsd: 15,
+        priceLabel: '$15/month',
+        status: 'planned',
         summary: 'The implemented core academy administration workflow for one academy.',
         entitlements: [
           'Student and teacher management',
           'Fee and salary payment records',
           'PDF receipts and printable reports',
         ],
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_CAMPUSNOVA_BASIC_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_CAMPUSNOVA_BASIC_PLAN_ID',
       },
       {
         id: 'campusnova_pro',
         name: 'Pro',
-        monthlyUsd: 50,
-        priceLabel: '$50/month',
+        monthlyUsd: 30,
+        priceLabel: '$30/month',
         status: 'planned',
         summary: 'A planned tier for wider academy operations; it will not be sold until the listed prototype capabilities are ready.',
         entitlements: [
@@ -122,7 +122,7 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
           'Invitation-based roles and parent communication when released',
           'Privacy-conscious attendance workflows when released and tested',
         ],
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_CAMPUSNOVA_PRO_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_CAMPUSNOVA_PRO_PLAN_ID',
       },
     ],
   },
@@ -137,32 +137,32 @@ export const BILLING_CATALOG: readonly ProductDefinition[] = [
       {
         id: 'signalwatch_510k',
         name: '510(k) Monitoring',
-        monthlyUsd: 50,
-        priceLabel: '$50/month per service',
-        status: 'payments_launching_soon',
+        monthlyUsd: 29,
+        priceLabel: '$29/month per service',
+        status: 'planned',
         summary: 'Source-linked monitoring of public FDA 510(k) clearance records when scheduled service activates.',
         entitlements: ['Separate client watch configuration', 'Matched 510(k) review queue', 'Source-linked intelligence report'],
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_SIGNALWATCH_510K_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_SIGNALWATCH_510K_PLAN_ID',
       },
       {
         id: 'signalwatch_maude',
         name: 'MAUDE Monitoring',
-        monthlyUsd: 50,
-        priceLabel: '$50/month per service',
-        status: 'payments_launching_soon',
+        monthlyUsd: 29,
+        priceLabel: '$29/month per service',
+        status: 'planned',
         summary: 'Tracked-code review of public MAUDE adverse-event reports when scheduled service activates.',
         entitlements: ['Tracked product-code configuration', 'MAUDE event-count and record review', 'Source-linked intelligence report'],
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_SIGNALWATCH_MAUDE_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_SIGNALWATCH_MAUDE_PLAN_ID',
       },
       {
         id: 'signalwatch_enforcement',
         name: 'Enforcement Monitoring',
-        monthlyUsd: 50,
-        priceLabel: '$50/month per service',
-        status: 'payments_launching_soon',
+        monthlyUsd: 29,
+        priceLabel: '$29/month per service',
+        status: 'planned',
         summary: 'Review of public FDA Enforcement Report records when scheduled service activates.',
         entitlements: ['Client-specific watch terms', 'Matched enforcement/recall records', 'Source-linked intelligence report'],
-        paddlePriceEnv: 'NEXT_PUBLIC_PADDLE_SIGNALWATCH_ENFORCEMENT_PRICE_ID',
+        safepayPlanEnv: 'SAFEPAY_SIGNALWATCH_ENFORCEMENT_PLAN_ID',
       },
     ],
   },

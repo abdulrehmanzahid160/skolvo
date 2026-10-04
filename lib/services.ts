@@ -15,6 +15,7 @@ export type ServiceNiche = {
   firstVersion: string;
   includes: string[];
   projectType: ProjectType;
+  startingUsd: number;
   article: {
     slug: string;
     title: string;
@@ -24,6 +25,10 @@ export type ServiceNiche = {
     sections: ServiceArticleSection[];
   };
 };
+
+export function formatServiceStartingPrice(amountUsd: number) {
+  return `From $${amountUsd.toLocaleString('en-US')} per project`;
+}
 
 export const serviceCategories = [
   {
@@ -53,6 +58,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '01',
     id: 'print-sign-shops',
+    startingUsd: 2500,
     title: 'Print and sign shops',
     short: 'Keep artwork proofs, revision notes, and customer approval in one visible thread.',
     problem:
@@ -98,6 +104,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '02',
     id: 'home-service-companies',
+    startingUsd: 1500,
     title: 'Home service companies',
     short: 'Track open quotes and make the next follow-up visible before an enquiry goes cold.',
     problem:
@@ -143,6 +150,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '03',
     id: 'overdue-invoices',
+    startingUsd: 2000,
     title: 'Businesses managing invoices',
     short: 'See overdue invoices, promised payment dates, and reminder activity without rebuilding accounting.',
     problem:
@@ -188,6 +196,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '04',
     id: 'accounting-firms',
+    startingUsd: 3000,
     title: 'Accounting firms',
     short: 'Turn recurring client document requests into a visible submission checklist.',
     problem:
@@ -233,6 +242,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '05',
     id: 'inspection-businesses',
+    startingUsd: 2500,
     title: 'Inspection businesses',
     short: 'Capture required photos against a checklist and assemble a consistent branded report.',
     problem:
@@ -278,6 +288,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '06',
     id: 'property-managers',
+    startingUsd: 3000,
     title: 'Property managers',
     short: 'Connect maintenance requests, tenant updates, and contractor progress in one timeline.',
     problem:
@@ -323,6 +334,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '07',
     id: 'vendor-compliance',
+    startingUsd: 2500,
     title: 'Businesses managing vendors',
     short: 'Track insurance certificates, licences, expiry dates, and missing renewals.',
     problem:
@@ -368,6 +380,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '08',
     id: 'construction-subcontractors',
+    startingUsd: 2500,
     title: 'Construction subcontractors',
     short: 'Record change order requests, supporting evidence, revisions, and approvals.',
     problem:
@@ -413,6 +426,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '09',
     id: 'equipment-suppliers',
+    startingUsd: 2500,
     title: 'Equipment suppliers',
     short: 'Give warranty claims and return authorisations a clear status from intake to resolution.',
     problem:
@@ -458,6 +472,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '10',
     id: 'training-academies',
+    startingUsd: 1500,
     title: 'Training academies',
     short: 'Keep admission enquiries, course interest, and follow-up actions together.',
     problem:
@@ -503,6 +518,7 @@ export const serviceNiches: ServiceNiche[] = [
   {
     number: '11',
     id: 'restaurants-cafes-takeaways',
+    startingUsd: 900,
     title: 'Restaurants, cafés, and takeaways',
     short: 'Publish a fast mobile website with the menu, hours, location, contact details, and existing order links.',
     problem:
