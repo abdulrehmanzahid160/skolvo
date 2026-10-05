@@ -5,10 +5,12 @@ import { ArrowRight, Linkedin } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { SITE_CONFIG } from '@/lib/site';
 
-const team = [
+const team: { number: string; name: string; focus: string; initials: string; linkedin?: string }[] = [
   { number: '01', name: 'Abdul Rehman', focus: 'Generative AI and product systems', initials: 'AR', linkedin: 'https://www.linkedin.com/in/abdul-rehman-5845373a4/' },
   { number: '02', name: 'Muhammad Hammad', focus: 'Machine learning and biometrics', initials: 'MH', linkedin: 'https://www.linkedin.com/in/muhammad-hammad-9a8905379/' },
   { number: '03', name: 'Waqar Ahmad', focus: 'Full-stack engineering and infrastructure', initials: 'WA', linkedin: 'https://www.linkedin.com/in/waqar-ahmed-2592aa332/' },
+  { number: '04', name: 'Muhammad Ayan', focus: 'Team member', initials: 'MA' },
+  { number: '05', name: 'Abid Haider', focus: 'Team member', initials: 'AH' },
 ];
 
 export default function AboutPage() {
@@ -19,7 +21,7 @@ export default function AboutPage() {
         <div className="studio-shell">
           <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / THE STUDIO</span><span>SMALL TEAM · NARROW PRODUCTS</span></div>
           <motion.h1 initial={reduce ? false : { opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [0.22,1,0.36,1] }}>We build where<br />the <i>boundary</i> matters.</motion.h1>
-          <p>{SITE_CONFIG.legalOperatorDisclosure} A three-person product team is developing three products and takes on selected website, workflow, and prototype work without blurring the two.</p>
+          <p>{SITE_CONFIG.legalOperatorDisclosure} A five-person product team is developing three products and takes on selected website, workflow, and prototype work without blurring the two.</p>
         </div>
       </header>
       <section className="about-thesis studio-shell">
@@ -29,9 +31,9 @@ export default function AboutPage() {
       </section>
       <section className="about-team">
         <div className="studio-shell">
-          <div className="section-masthead"><span>01 / TEAM</span><h2>Three people.<br />No invented departments.</h2></div>
+          <div className="section-masthead"><span>01 / TEAM</span><h2>Five people.<br />No invented departments.</h2></div>
           <div className="about-team__list">
-            {team.map((member, index) => <motion.article key={member.name} initial={reduce ? false : { opacity: 0, x: -35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .6, delay: index * .08 }}><span>{member.number}</span><div className="about-team__mark">{member.initials}</div><h3>{member.name}</h3><p>{member.focus}</p><a href={member.linkedin} target="_blank" rel="noreferrer" aria-label={`${member.name} on LinkedIn`}><Linkedin /></a></motion.article>)}
+            {team.map((member, index) => <motion.article key={member.name} initial={reduce ? false : { opacity: 0, x: -35 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: .5 }} transition={{ duration: .6, delay: index * .08 }}><span>{member.number}</span><div className="about-team__mark">{member.initials}</div><h3>{member.name}</h3><p>{member.focus}</p>{member.linkedin && <a href={member.linkedin} target="_blank" rel="noreferrer" aria-label={`${member.name} on LinkedIn`}><Linkedin /></a>}</motion.article>)}
           </div>
         </div>
       </section>

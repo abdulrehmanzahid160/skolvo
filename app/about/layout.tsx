@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'About Us',
   description:
-    'The three-person team developing Skolvo Agent, CampusNova, and SignalWatch, and the product boundaries guiding the work.',
+    'The five-person team developing Skolvo Agent, CampusNova, and SignalWatch, and the product boundaries guiding the work.',
   openGraph: {
     title: 'About the Skolvo Studio',
     description:
