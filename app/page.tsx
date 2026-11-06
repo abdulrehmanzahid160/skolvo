@@ -21,7 +21,7 @@ const products = [
     mark: true,
     stage: 'Private prototype',
     description:
-      'Attendance, parent messages, and fee records for academies, with face matching designed to stay on the device.',
+      'Student, teacher, and fee records for academies, with receipts and reports. Parent messages and on-device attendance are still prototype work.',
     note: 'Not publicly available yet.',
     price: 'Planned from $15/month',
     href: '/campusnova',
@@ -51,6 +51,7 @@ const journal = [
 export default function HomePage() {
   return (
     <div className="home">
+      <noscript><style>{'.home [style*="opacity:0"]{opacity:1!important;transform:none!important}'}</style></noscript>
       <AgentAnnouncement />
 
       <section className="home-hero">
@@ -120,7 +121,7 @@ export default function HomePage() {
             <ul className="home-services__list">
               {serviceCategories.map((service) => (
                 <li key={service.title}>
-                  <Link href={service.href}>
+                  <Link href="/services#focused-first-version">
                     <div><h3>{service.title}</h3><p>{service.description}</p></div>
                     <ArrowRight aria-hidden />
                   </Link>
@@ -128,7 +129,7 @@ export default function HomePage() {
               ))}
             </ul>
             <div className="home-industries">
-              <h3>Where we often start</h3>
+              <h3>Where we can start</h3>
               <p>Areas we can build for, not a list of past clients.</p>
               <ul>
                 {serviceNiches.map((niche) => <li key={niche.id}><Link href={`/services#${niche.id}`}>{niche.title}</Link></li>)}

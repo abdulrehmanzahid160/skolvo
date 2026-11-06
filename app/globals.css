@@ -522,7 +522,14 @@ body {
 .home-link { display: inline-flex; min-height: 2.75rem; align-items: center; gap: .45rem; color: var(--accent); font-size: var(--text-body-sm); font-weight: 700; text-decoration: none; }
 .home-link svg { width: 1rem; height: 1rem; transition: transform var(--dur) var(--ease); }
 .home-link:hover svg { transform: translateX(4px); }
-.home .studio-text-link--light { color: var(--home-on-night); }
+.home .studio-text-link--light { color: var(--home-on-night); transition: color var(--dur) var(--ease); }
+.home .studio-text-link--light:hover { color: var(--home-glow); }
+.home-hero :focus-visible, .home-product--featured :focus-visible, .home-close :focus-visible { outline-color: var(--home-glow); }
+.home-lede, .home-product > p, .home-services__list p, .home-approach__rules p, .home-journal__list p, .home-close p { text-wrap: pretty; }
+.home-product__meta strong { text-wrap: balance; }
+@keyframes home-rise { from { opacity: 0; transform: translateY(16px); } }
+.home-rise { animation: home-rise .6s var(--ease) both; }
+@media (prefers-reduced-motion: reduce) { .home-rise { animation: none; } }
 
 /* Hero */
 .home-hero { background: var(--home-night); color: var(--home-on-night); padding-block: clamp(4.5rem, 9vw, 6rem) clamp(4.5rem, 9vw, 7rem); }
@@ -558,6 +565,13 @@ body {
 .home-product .home-link { margin-top: .75rem; align-self: flex-start; }
 .home-product .home-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .home-product:hover .home-link svg { transform: translateX(4px); }
+@media (min-width: 901px) {
+  /* Featured tile matches the height of the two tiles beside it; steps as rows fill that height instead of leaving an empty band. */
+  .home-product__steps { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 0; }
+  .home-product__steps li { display: grid; grid-template-columns: minmax(6.5rem, 9rem) minmax(0, 1fr); align-items: baseline; gap: 1rem; border-bottom: 1px solid var(--home-night-line); padding-block: .95rem; }
+  .home-product__steps span { margin-top: 0; }
+  .home-product--featured > p { margin-bottom: 2rem; }
+}
 
 /* Services: sticky intro beside the list it introduces */
 .home-services__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
