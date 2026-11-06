@@ -11,7 +11,7 @@ const streams = [
     input: 'Public FDA records',
     boundary: 'Fact validation',
     output: 'Review brief',
-    color: '#f2b84b',
+    color: 'var(--home-glow, #79e7bf)',
     Icon: ScanSearch,
   },
   {
@@ -20,7 +20,7 @@ const streams = [
     input: 'On-device check',
     boundary: 'Privacy boundary',
     output: 'Attendance event',
-    color: '#79e7bf',
+    color: 'var(--home-glow, #79e7bf)',
     Icon: Fingerprint,
   },
 ] as const;

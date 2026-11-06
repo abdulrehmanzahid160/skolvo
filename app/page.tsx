@@ -21,7 +21,7 @@ export default function HomePage() {
   const reduce = useReducedMotion();
 
   return (
-    <>
+    <div className="home-page">
       <AgentAnnouncement />
       <section className="studio-hero">
         <div className="studio-hero__noise" aria-hidden />
@@ -85,12 +85,12 @@ export default function HomePage() {
 
       <section className="home-industries" aria-labelledby="home-industries-title">
         <div className="studio-shell">
-          <div className="home-section-head home-section-head--dark">
+          <div className="home-section-head">
             <span>01 / INDUSTRIES WE CAN HELP</span>
             <h2 id="home-industries-title">Eleven practical places to begin.</h2>
             <div>
               <p>These are service opportunities we can discuss and build, not completed client projects or prebuilt demos.</p>
-              <Link href="/services" className="studio-text-link studio-text-link--light">Read the full service guide <ArrowRight aria-hidden /></Link>
+              <Link href="/services" className="studio-text-link">Read the full service guide <ArrowRight aria-hidden /></Link>
             </div>
           </div>
           <ol className="home-industries__list">
@@ -231,7 +231,7 @@ export default function HomePage() {
           <div><p>If you work close to one of these problems, tell us where the current process breaks. Product access follows validation—not the other way around.</p><div className="studio-actions"><Link href="/contact" className="studio-button studio-button--light">Start a conversation <ArrowRight aria-hidden /></Link><Link href="/about" className="studio-text-link studio-text-link--light">Meet the studio</Link></div></div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 
