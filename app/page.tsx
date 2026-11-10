@@ -65,7 +65,7 @@ export default function HomePage() {
           <Reveal onMount delay={0.12} className="home-hero__body">
             <p>Skolvo is a small software studio. We run our own products and build websites and workflow tools for businesses.</p>
             <div className="studio-actions">
-              <Link href="/contact?project=focused-prototype" className="studio-button studio-button--light">Discuss a project <ArrowRight aria-hidden /></Link>
+              <Link href="/start-project" className="studio-button studio-button--light">Discuss a project <ArrowRight aria-hidden /></Link>
               <a href="#products" className="studio-text-link studio-text-link--light">See our products <ArrowDown aria-hidden /></a>
             </div>
           </Reveal>
@@ -183,7 +183,7 @@ export default function HomePage() {
           <Reveal delay={0.08}>
             <p>Tell us where your current process breaks, and we will tell you honestly whether a small first version can help.</p>
             <div className="studio-actions">
-              <Link href="/contact?project=focused-prototype" className="studio-button studio-button--light">Discuss a project <ArrowRight aria-hidden /></Link>
+              <Link href="/start-project" className="studio-button studio-button--light">Discuss a project <ArrowRight aria-hidden /></Link>
               <Link href="/about" className="studio-text-link studio-text-link--light">Meet the studio</Link>
             </div>
           </Reveal>

@@ -38,7 +38,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="studio-close"><div className="studio-shell studio-close__grid"><div><span>CONTACT / OPEN</span><h2>Talk to the people building it.</h2></div><div><p>No invented departments and no scripted tailored demo. Discuss one of the products, or show us a website or workflow your business needs.</p><div className="studio-actions"><Link href="/contact?project=focused-prototype" className="studio-button studio-button--light">Discuss a project <ArrowRight /></Link><Link href="/services" className="studio-text-link studio-text-link--light">Explore services</Link></div></div></div></section>
+      <section className="studio-close"><div className="studio-shell studio-close__grid"><div><span>CONTACT / OPEN</span><h2>Talk to the people building it.</h2></div><div><p>No invented departments and no scripted tailored demo. Discuss one of the products, or show us a website or workflow your business needs.</p><div className="studio-actions"><Link href="/start-project" className="studio-button studio-button--light">Discuss a project <ArrowRight /></Link><Link href="/services" className="studio-text-link studio-text-link--light">Explore services</Link></div></div></div></section>
     </div>
   );
 }

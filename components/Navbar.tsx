@@ -188,7 +188,7 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Link href="/contact?project=focused-prototype" className="flex min-h-10 items-center rounded-full border border-white/20 px-5 text-body-sm font-semibold text-white transition-colors hover:border-[#79e7bf] hover:bg-[#79e7bf] hover:text-[#09100d]">Discuss a project</Link>
+          <Link href="/start-project" className="flex min-h-10 items-center rounded-full border border-white/20 px-5 text-body-sm font-semibold text-white transition-colors hover:border-[#79e7bf] hover:bg-[#79e7bf] hover:text-[#09100d]">Start a project</Link>
         </div>
 
         <button
@@ -245,11 +245,11 @@ export default function Navbar() {
               </ul>
               <div className="mt-3 border-t border-white/10 pt-3">
                 <Link
-                  href="/contact?project=focused-prototype"
+                  href="/start-project"
                   onClick={() => setMenuOpen(false)}
                   className="flex min-h-12 w-full items-center justify-center rounded-full bg-[#79e7bf] px-5 text-body-sm font-semibold text-[#09100d] transition-colors hover:bg-white"
                 >
-                  Discuss a project
+                  Start a project
                 </Link>
               </div>
             </nav>

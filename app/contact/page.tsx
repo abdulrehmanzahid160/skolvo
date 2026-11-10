@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { CheckCircle2, Linkedin, Loader2, Mail, Send } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, CheckCircle2, Linkedin, Loader2, Mail, Send } from 'lucide-react';
 import { Reveal } from '@/components/motion/Primitives';
 import { getServiceNiche } from '@/lib/services';
 
@@ -179,6 +180,17 @@ export default function ContactPage() {
                 {!submitted ? (
                   <form onSubmit={handleSubmit} noValidate className="space-y-5">
                     <h2 className="font-display text-title text-ink">Send a message</h2>
+
+                    <Link
+                      href="/start-project"
+                      className="flex items-center justify-between gap-3 rounded-control border border-accent-line bg-accent-wash px-4 py-3 text-body-sm text-ink transition-colors hover:border-accent"
+                    >
+                      <span>
+                        <strong className="block font-semibold">Planning a website, store or app?</strong>
+                        <span className="text-ink-soft">Use the project planner for a quote within 24 hours.</span>
+                      </span>
+                      <ArrowRight aria-hidden className="h-4 w-4 shrink-0 text-accent" />
+                    </Link>
 
                     <div className="flex flex-col gap-2">
                       <label htmlFor="contact-project-type" className="text-label font-semibold text-ink">

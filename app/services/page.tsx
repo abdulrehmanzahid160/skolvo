@@ -26,7 +26,7 @@ export default function ServicesPage() {
                 work. We begin with the business process, choose a narrow useful first version,
                 and state clearly what it will and will not do.
               </p>
-              <Link href="/contact?project=focused-prototype" className="studio-button studio-button--light">
+              <Link href="/start-project" className="studio-button studio-button--light">
                 Discuss a project <ArrowRight aria-hidden />
               </Link>
             </Reveal>
@@ -121,7 +121,7 @@ export default function ServicesPage() {
                 You do not need a technical specification. Explain what arrives, who handles it,
                 where progress becomes difficult to see, and what a better outcome would mean.
               </p>
-              <Link href="/contact?project=custom-workflow" className="studio-button studio-button--light">
+              <Link href="/start-project?type=management-system" className="studio-button studio-button--light">
                 Discuss a project <ArrowRight aria-hidden />
               </Link>
             </div>
