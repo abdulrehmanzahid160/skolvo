@@ -2,17 +2,19 @@
    LEAD DELIVERY
 
    Default: FormSubmit (formsubmit.co) — no account, no API key.
-   Each lead is POSTed server-side and FormSubmit emails it to
-   LEADS_TO. The very first submission triggers an "Activate Form"
-   email to that inbox; leads flow once it has been clicked.
+   FormSubmit blocks requests from cloud servers, so the API route
+   validates the lead and returns a ready-made FormSubmit request
+   (formSubmitRelay) that the visitor's browser sends — see
+   lib/relay.ts. FormSubmit then emails it to LEADS_TO.
 
    Optional: set RESEND_API_KEY (and EMAIL_FROM with a verified
-   domain) on Vercel to switch delivery to Resend instead.
+   domain) on Vercel to send server-side through Resend instead.
 
-   Server-only module: the inbox address never reaches the browser.
+   Server-only module: the inbox address is not in any page bundle.
    ============================================================ */
 
 import { SITE_CONFIG } from '@/lib/site';
+import type { Relay } from '@/lib/relay';
 
 const LEADS_TO = process.env.LEADS_TO_EMAIL || 'abdulrehman.zahid160@gmail.com';
 const TIMEOUT_MS = 10_000;
@@ -26,21 +28,16 @@ export type Lead = {
   /** Rich versions used when delivering through Resend. */
   html: string;
   text: string;
-  /** Short plain-text confirmation sent to the client, if the provider supports it. */
+  /** Fixed-text confirmation sent to the client, if the provider supports it. */
   autoReply?: { subject: string; html: string; text: string };
 };
 
-type Result = { ok: boolean; provider: 'formsubmit' | 'resend'; error?: string };
+export const resendEnabled = () => !!process.env.RESEND_API_KEY;
 
-export async function deliverLead(lead: Lead): Promise<Result> {
-  return process.env.RESEND_API_KEY ? viaResend(lead) : viaFormSubmit(lead);
-}
+/* ---------- FormSubmit (sent by the browser) ---------- */
 
-/* ---------- FormSubmit ---------- */
-
-async function viaFormSubmit(lead: Lead): Promise<Result> {
-  const page = `${SITE_CONFIG.canonicalUrl}/start-project`;
-  const payload: Record<string, string> = {
+export function formSubmitRelay(lead: Lead): Relay {
+  const body: Record<string, string> = {
     _subject: lead.subject,
     _replyto: lead.replyTo,
     _template: 'table',
@@ -48,39 +45,15 @@ async function viaFormSubmit(lead: Lead): Promise<Result> {
     ...(lead.autoReply ? { _autoresponse: lead.autoReply.text } : {}),
   };
   // FormSubmit sends the auto-response to the field literally named "email".
-  payload.email = lead.replyTo;
+  body.email = lead.replyTo;
   for (const [k, v] of Object.entries(lead.fields)) {
     if (k.startsWith('_') || k === 'email') continue;
-    payload[k] = v;
+    body[k] = v;
   }
-
-  try {
-    const res = await fetch(`https://formsubmit.co/ajax/${LEADS_TO}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        // FormSubmit ties activation to the sending site and rejects requests without one.
-        Referer: page,
-        Origin: SITE_CONFIG.canonicalUrl,
-      },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(TIMEOUT_MS),
-    });
-    const data = (await res.json().catch(() => null)) as { success?: string | boolean; message?: string } | null;
-    const ok = res.ok && (data?.success === true || data?.success === 'true');
-    if (!ok) {
-      console.error('[email] FormSubmit did not accept the lead:', res.status, data?.message ?? '');
-      return { ok: false, provider: 'formsubmit', error: data?.message || `HTTP ${res.status}` };
-    }
-    return { ok: true, provider: 'formsubmit' };
-  } catch (err) {
-    console.error('[email] FormSubmit request failed:', err);
-    return { ok: false, provider: 'formsubmit', error: 'network' };
-  }
+  return { endpoint: `https://formsubmit.co/ajax/${LEADS_TO}`, body };
 }
 
-/* ---------- Resend (optional) ---------- */
+/* ---------- Resend (optional, server-side) ---------- */
 
 async function resendSend(input: { to: string; subject: string; html: string; text: string; replyTo?: string }) {
   const from = process.env.EMAIL_FROM || 'Skolvo <onboarding@resend.dev>';
@@ -100,12 +73,12 @@ async function resendSend(input: { to: string; subject: string; html: string; te
   if (!res.ok) throw new Error(`Resend ${res.status}: ${await res.text()}`);
 }
 
-async function viaResend(lead: Lead): Promise<Result> {
+export async function deliverViaResend(lead: Lead): Promise<{ ok: boolean; error?: string }> {
   try {
     await resendSend({ to: LEADS_TO, subject: lead.subject, html: lead.html, text: lead.text, replyTo: lead.replyTo });
   } catch (err) {
     console.error('[email] Resend rejected the lead:', err);
-    return { ok: false, provider: 'resend', error: String(err) };
+    return { ok: false, error: String(err) };
   }
   // Client confirmation needs a verified sender; the resend.dev test sender cannot reach clients.
   const from = process.env.EMAIL_FROM || '';
@@ -116,7 +89,7 @@ async function viaResend(lead: Lead): Promise<Result> {
       console.error('[email] confirmation email failed (lead was delivered):', err);
     }
   }
-  return { ok: true, provider: 'resend' };
+  return { ok: true };
 }
 
 /* ---------- helpers ---------- */

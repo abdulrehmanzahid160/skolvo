@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, CheckCircle2, Linkedin, Loader2, Mail, Send } from 'lucide-react';
 import { Reveal } from '@/components/motion/Primitives';
 import { getServiceNiche } from '@/lib/services';
+import { relayLead } from '@/lib/relay';
 
 /* ============================================================
    CONTACT
@@ -143,7 +144,11 @@ export default function ContactPage() {
 
       const data = await res.json();
       if (data.success) {
-        setSubmitted(true);
+        if (await relayLead(data.relay)) {
+          setSubmitted(true);
+        } else {
+          setFormError('Your message could not be sent. Please try again, or email support@skolvo.online.');
+        }
       } else {
         setFormError(data.message || 'That did not send. Try again in a moment.');
       }

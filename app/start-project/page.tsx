@@ -16,6 +16,7 @@ import {
   type Question,
 } from '@/lib/requirements';
 import { SITE_CONFIG } from '@/lib/site';
+import { relayLead } from '@/lib/relay';
 
 /* ============================================================
    START A PROJECT
@@ -127,6 +128,10 @@ export default function StartProjectPage() {
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok && data.success) {
+        if (!(await relayLead(data.relay))) {
+          setFormError(`Your request could not be sent. Please try again, or email ${SITE_CONFIG.supportEmail}.`);
+          return;
+        }
         setSubmitted(true);
         try {
           localStorage.removeItem(DRAFT_KEY);

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import ProjectRequest from '@/models/ProjectRequest';
 import { SECTIONS, projectTypeLabel, sanitizeAnswers, summarize, val, validateSection, type Answers } from '@/lib/requirements';
-import { deliverLead, emailShell, escapeHtml, oneLine, type Lead } from '@/lib/email';
+import { deliverViaResend, emailShell, escapeHtml, formSubmitRelay, oneLine, resendEnabled, type Lead } from '@/lib/email';
 import { clientIp, rateLimited } from '@/lib/rateLimit';
 import { SITE_CONFIG } from '@/lib/site';
 
@@ -108,9 +108,10 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Deliver by email and keep a database copy when configured. Either one means the lead is safe.
-  const sent = await deliverLead(buildLead(answers));
+  const lead = buildLead(answers);
+  const sent = resendEnabled() ? await deliverViaResend(lead) : null;
 
+  // Keep a database copy when configured.
   let stored = false;
   try {
     const conn = await connectToDatabase();
@@ -121,13 +122,16 @@ export async function POST(req: NextRequest) {
         email: val(answers, 'email'),
         phone: val(answers, 'phone'),
         answers,
-        emailed: sent.ok,
+        emailed: !!sent?.ok,
       });
       stored = true;
     }
   } catch (err) {
     console.error('[project-request] database write failed:', err);
   }
+
+  // Default path: the browser forwards the prepared message to FormSubmit.
+  if (!sent) return NextResponse.json({ success: true, relay: formSubmitRelay(lead) });
 
   if (!sent.ok && !stored) {
     console.error('[project-request] LEAD NOT DELIVERED', sent.error, JSON.stringify(answers));

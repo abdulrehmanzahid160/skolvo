@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import Contact from '@/models/Contact';
-import { deliverLead, emailShell, escapeHtml, oneLine } from '@/lib/email';
+import { deliverViaResend, emailShell, escapeHtml, formSubmitRelay, oneLine, resendEnabled, type Lead } from '@/lib/email';
 import { clientIp, rateLimited } from '@/lib/rateLimit';
 import { SITE_CONFIG } from '@/lib/site';
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const sent = await deliverLead({
+    const lead: Lead = {
       subject: `New message from ${name}${academyName ? ` (${academyName})` : ''}`,
       replyTo: email,
       fields: { Name: name, Business: academyName || '-', Message: message },
@@ -47,7 +47,8 @@ ${academyName ? `<p style="margin:0 0 4px;font-size:14px"><strong>Business:</str
 <p style="margin:16px 0 0;font-size:14px;line-height:1.6;white-space:pre-wrap">${escapeHtml(message)}</p>`,
       ),
       text: `Message from ${name}\nEmail: ${email}\nBusiness: ${academyName || '-'}\n\n${message}`,
-    });
+    };
+    const sent = resendEnabled() ? await deliverViaResend(lead) : null;
 
     let stored = false;
     try {
@@ -59,6 +60,9 @@ ${academyName ? `<p style="margin:0 0 4px;font-size:14px"><strong>Business:</str
     } catch (err) {
       console.error('[contact] database write failed:', err);
     }
+
+    // Default path: the browser forwards the prepared message to FormSubmit.
+    if (!sent) return NextResponse.json({ success: true, relay: formSubmitRelay(lead) });
 
     if (!sent.ok && !stored) {
       console.error('[contact] MESSAGE NOT DELIVERED', sent.error, JSON.stringify({ name, email, academyName, message }));
