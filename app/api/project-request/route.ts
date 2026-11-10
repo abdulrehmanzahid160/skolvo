@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import ProjectRequest from '@/models/ProjectRequest';
 import { SECTIONS, projectTypeLabel, sanitizeAnswers, summarize, val, validateSection, type Answers } from '@/lib/requirements';
-import { canEmailCustomers, emailConfig, emailShell, escapeHtml, sendEmail } from '@/lib/email';
+import { deliverLead, emailShell, escapeHtml, oneLine, type Lead } from '@/lib/email';
 import { clientIp, rateLimited } from '@/lib/rateLimit';
 import { SITE_CONFIG } from '@/lib/site';
 
@@ -18,58 +18,65 @@ function waLink(phone: string) {
   return `https://wa.me/${digits}`;
 }
 
-function leadEmail(a: Answers) {
-  const name = val(a, 'name');
+function buildLead(a: Answers): Lead {
+  const name = oneLine(val(a, 'name'));
   const email = val(a, 'email');
   const phone = val(a, 'phone');
+  const business = oneLine(val(a, 'business'));
+  const type = projectTypeLabel(a);
   const sections = summarize(a);
 
-  const quick = `
-<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px">
-<tr>
-<td style="padding-right:8px"><a href="mailto:${escapeHtml(email)}" style="display:inline-block;background:#0f6b54;color:#fff;text-decoration:none;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:bold">Reply by email</a></td>
-<td><a href="${waLink(phone)}" style="display:inline-block;background:#25d366;color:#fff;text-decoration:none;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:bold">WhatsApp ${escapeHtml(phone)}</a></td>
-</tr></table>`;
+  // Flat, ordered fields for FormSubmit's table email.
+  const fields: Record<string, string> = {
+    Name: name,
+    'WhatsApp / phone': phone,
+    'WhatsApp chat link': waLink(phone),
+  };
+  for (const s of sections) {
+    for (const r of s.rows) {
+      if (['name', 'email', 'phone'].includes(r.id)) continue;
+      const key = r.label in fields ? `${s.title}: ${r.label}` : r.label;
+      fields[key] = r.value;
+    }
+  }
 
+  const quick = `
+<table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 20px"><tr>
+<td style="padding-right:8px"><a href="mailto:${escapeHtml(email)}" style="display:inline-block;background:#0f6b54;color:#fff;text-decoration:none;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:bold">Reply by email</a></td>
+<td><a href="${escapeHtml(waLink(phone))}" style="display:inline-block;background:#25d366;color:#fff;text-decoration:none;padding:10px 16px;border-radius:999px;font-size:14px;font-weight:bold">WhatsApp ${escapeHtml(phone)}</a></td>
+</tr></table>`;
   const body = sections
     .map(
-      (s) => `
-<h2 style="margin:20px 0 8px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#0f6b54">${escapeHtml(s.title)}</h2>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px">
-${s.rows
-  .map(
-    (r) => `<tr>
-<td style="padding:8px 12px 8px 0;border-bottom:1px solid #eef2ee;color:#5a6a62;vertical-align:top;width:38%">${escapeHtml(r.label)}</td>
-<td style="padding:8px 0;border-bottom:1px solid #eef2ee;vertical-align:top;white-space:pre-wrap">${escapeHtml(r.value)}</td>
-</tr>`,
-  )
-  .join('')}
-</table>`,
+      (s) => `<h2 style="margin:20px 0 8px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#0f6b54">${escapeHtml(s.title)}</h2>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px">${s.rows
+        .map(
+          (r) => `<tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid #eef2ee;color:#5a6a62;vertical-align:top;width:38%">${escapeHtml(r.label)}</td><td style="padding:8px 0;border-bottom:1px solid #eef2ee;vertical-align:top;white-space:pre-wrap">${escapeHtml(r.value)}</td></tr>`,
+        )
+        .join('')}</table>`,
     )
     .join('');
-
   const text = sections
     .map((s) => `== ${s.title.toUpperCase()} ==\n${s.rows.map((r) => `${r.label}: ${r.value}`).join('\n')}`)
     .join('\n\n');
 
+  const first = name.split(/\s+/)[0] || 'there';
   return {
-    subject: `New project request: ${projectTypeLabel(a)} — ${name}${val(a, 'business') ? ` (${val(a, 'business')})` : ''}`,
-    html: emailShell(`${projectTypeLabel(a)} request from ${name}`, quick + body),
+    subject: `New project request: ${type} — ${name}${business ? ` (${business})` : ''}`,
+    replyTo: email,
+    fields,
+    html: emailShell(`${type} request from ${name}`, quick + body),
     text: `New project request from ${name}\nEmail: ${email}\nWhatsApp: ${phone} (${waLink(phone)})\n\n${text}`,
+    autoReply: {
+      subject: 'We received your project request — Skolvo',
+      html: emailShell(
+        `Thanks, ${first}. We have your project request.`,
+        `<p style="font-size:15px;line-height:1.6;margin:0 0 12px">We received the details for your ${escapeHtml(type.toLowerCase())} and will reply within <strong>24 hours</strong> with questions or a proposal.</p><p style="font-size:15px;line-height:1.6;margin:0">— The Skolvo studio</p>`,
+      ),
+      // Fixed text only: nothing the submitter typed is echoed back, so the
+      // auto-reply cannot be used to send arbitrary content to a third party.
+      text: `Thank you for your project request. The Skolvo studio will review your requirements and reply within 24 hours with questions or a proposal. If anything changes, reply to this email or write to ${SITE_CONFIG.supportEmail}. — Skolvo (${SITE_CONFIG.canonicalUrl})`,
+    },
   };
-}
-
-function confirmationEmail(a: Answers) {
-  const first = val(a, 'name').split(/\s+/)[0] || 'there';
-  const type = projectTypeLabel(a).toLowerCase();
-  const html = emailShell(
-    `Thanks, ${first}. We have your project request.`,
-    `<p style="font-size:15px;line-height:1.6;margin:0 0 12px">We received the details for your ${escapeHtml(type)} and will review them carefully.</p>
-<p style="font-size:15px;line-height:1.6;margin:0 0 12px">You will hear from us within <strong>24 hours</strong> with questions or a proposal. If anything changes in the meantime, just reply to this email.</p>
-<p style="font-size:15px;line-height:1.6;margin:0">— The Skolvo studio</p>`,
-  );
-  const text = `Thanks, ${first}. We have your project request.\n\nWe received the details for your ${type} and will reply within 24 hours with questions or a proposal. If anything changes, just reply to this email.\n\n— The Skolvo studio\n${SITE_CONFIG.canonicalUrl}`;
-  return { subject: 'We received your project request — Skolvo', html, text };
 }
 
 export async function POST(req: NextRequest) {
@@ -101,9 +108,8 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // 1. Email the studio. 2. Store a copy. Either one succeeding means the lead is safe.
-  const lead = leadEmail(answers);
-  const sent = await sendEmail({ to: emailConfig().to, replyTo: val(answers, 'email'), ...lead });
+  // Deliver by email and keep a database copy when configured. Either one means the lead is safe.
+  const sent = await deliverLead(buildLead(answers));
 
   let stored = false;
   try {
@@ -124,17 +130,8 @@ export async function POST(req: NextRequest) {
   }
 
   if (!sent.ok && !stored) {
-    console.error('[project-request] LEAD NOT DELIVERED', JSON.stringify(answers));
-    if (process.env.NODE_ENV !== 'production') {
-      // Local development without credentials: log it and let the UI flow be tested.
-      return NextResponse.json({ success: true, dev: true });
-    }
+    console.error('[project-request] LEAD NOT DELIVERED', sent.error, JSON.stringify(answers));
     return fail(`We could not send your request. Please email ${SITE_CONFIG.supportEmail} or try again.`, 502);
-  }
-
-  if (canEmailCustomers()) {
-    const confirmation = confirmationEmail(answers);
-    await sendEmail({ to: val(answers, 'email'), replyTo: emailConfig().to, ...confirmation });
   }
 
   return NextResponse.json({ success: true });

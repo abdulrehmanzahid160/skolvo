@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import Contact from '@/models/Contact';
-import { emailConfig, emailShell, escapeHtml, sendEmail } from '@/lib/email';
+import { deliverLead, emailShell, escapeHtml, oneLine } from '@/lib/email';
 import { clientIp, rateLimited } from '@/lib/rateLimit';
 import { SITE_CONFIG } from '@/lib/site';
 
@@ -10,9 +10,9 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const name = String(body.name ?? '').trim().slice(0, 120);
+    const name = oneLine(String(body.name ?? ''));
     const email = String(body.email ?? '').trim().slice(0, 200);
-    const academyName = String(body.academyName ?? '').trim().slice(0, 150);
+    const academyName = oneLine(String(body.academyName ?? ''), 150);
     const message = String(body.message ?? '').trim().slice(0, 5000);
 
     if (!name || !email || !message) {
@@ -36,10 +36,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const sent = await sendEmail({
-      to: emailConfig().to,
-      replyTo: email,
+    const sent = await deliverLead({
       subject: `New message from ${name}${academyName ? ` (${academyName})` : ''}`,
+      replyTo: email,
+      fields: { Name: name, Business: academyName || '-', Message: message },
       html: emailShell(
         `Message from ${name}`,
         `<p style="margin:0 0 4px;font-size:14px"><strong>Email:</strong> <a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></p>
@@ -61,10 +61,7 @@ ${academyName ? `<p style="margin:0 0 4px;font-size:14px"><strong>Business:</str
     }
 
     if (!sent.ok && !stored) {
-      console.error('[contact] MESSAGE NOT DELIVERED', JSON.stringify({ name, email, academyName, message }));
-      if (process.env.NODE_ENV !== 'production') {
-        return NextResponse.json({ success: true, dev: true });
-      }
+      console.error('[contact] MESSAGE NOT DELIVERED', sent.error, JSON.stringify({ name, email, academyName, message }));
       return NextResponse.json(
         { success: false, message: `We could not send your message. Please email ${SITE_CONFIG.supportEmail}.` },
         { status: 502 }
