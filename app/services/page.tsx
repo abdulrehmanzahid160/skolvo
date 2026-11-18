@@ -10,7 +10,7 @@ export default function ServicesPage() {
         <div className="studio-shell">
           <div className="studio-eyebrow studio-eyebrow--light">
             <span>SKOLVO / SERVICES</span>
-            <span>WEBSITES · WORKFLOWS · PROTOTYPES</span>
+            <span>WEBSITES / WORKFLOWS / PROTOTYPES</span>
           </div>
           <div className="services-hero__grid">
             <Reveal>

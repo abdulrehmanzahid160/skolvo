@@ -10,14 +10,14 @@ import './home.css';
 const unbounded = Unbounded({ subsets: ['latin'], variable: '--font-unbounded', display: 'swap' });
 
 // Each service gets its own colour "world".
-const worldTheme = ['skh-world--blue', 'skh-world--orange', 'skh-world--mint'];
+const worldTheme = ['skh-world--pink', 'skh-world--lime', 'skh-world--cocoa'];
 
 // Illustrations of the kind of work our tools do, not claims about past clients.
 const chips = [
-  { dot: 'blue', title: 'Artwork approved', detail: 'Print shop · proof v3' },
-  { dot: 'orange', title: 'Reminder sent', detail: 'Invoice #1042 · 7 days overdue' },
-  { dot: 'mint', title: 'New enquiry', detail: 'Next step: call back today' },
-  { dot: 'ink', title: 'Report ready', detail: 'Inspection · 24 photos' },
+  { dot: 'purple', title: 'Artwork approved', detail: 'Print shop, proof v3' },
+  { dot: 'pink', title: 'Reminder sent', detail: 'Invoice #1042, 7 days overdue' },
+  { dot: 'lime', title: 'New enquiry', detail: 'Next step: call back today' },
+  { dot: 'ink', title: 'Report ready', detail: 'Inspection, 24 photos' },
 ];
 
 const products = [
@@ -92,7 +92,7 @@ export default function HomePage() {
       <HomeMotion />
 
       <a href="https://agent.skolvo.online" className="skh-ribbon">
-        <span className="skh-ribbon__dot" aria-hidden /> Skolvo Agent is live: your job search, organised <ArrowUpRight aria-hidden />
+        Skolvo Agent is live: your job search, organised <ArrowUpRight aria-hidden />
       </a>
 
       {/* Hero */}
@@ -102,13 +102,13 @@ export default function HomePage() {
         <div className="skh-blob skh-blob--c" aria-hidden />
         <div className="skh-wrap skh-hero__grid">
           <div className="skh-hero__text">
-            <p className="skh-eyebrow" data-rise>Skolvo · software studio</p>
+            <p className="skh-eyebrow" data-rise>Skolvo / software studio</p>
             <h1 id="skh-hero-title"><Chars lines={['Small studio.', 'Serious', 'software.']} /></h1>
             <p className="skh-hero__lede" data-rise>
               We run our own products and build websites, workflow tools and focused prototypes for businesses.
             </p>
             <div className="skh-actions" data-rise>
-              <Link href="/start-project" className="skh-btn skh-btn--ink">Start a project <ArrowRight aria-hidden /></Link>
+              <Link href="/start-project" className="skh-btn skh-btn--lime">Start a project <ArrowRight aria-hidden /></Link>
               <a href="#build" className="skh-btn skh-btn--ghost">See what we build <ArrowDown aria-hidden /></a>
             </div>
           </div>
@@ -192,7 +192,7 @@ export default function HomePage() {
           <div className="skh-products__grid" data-stagger>
             {products.map((product) => (
               <article key={product.name} className={`skh-product${product.live ? ' skh-product--live' : ''}`}>
-                <span className="skh-stage-tag"><i aria-hidden /> {product.stage}</span>
+                <span className="skh-stage-tag">{product.stage}</span>
                 <h3>{product.name}</h3>
                 <p>{product.description}</p>
                 <small>{product.note}</small>
@@ -246,7 +246,7 @@ export default function HomePage() {
           <h2 id="skh-close-title"><Chars lines={['Bring us the', 'difficult part.']} /></h2>
           <p data-reveal>Tell us where your current process breaks, and we will tell you honestly whether a small first version can help.</p>
           <div className="skh-actions skh-actions--center" data-reveal>
-            <Link href="/start-project" className="skh-btn skh-btn--sun">Start a project <ArrowRight aria-hidden /></Link>
+            <Link href="/start-project" className="skh-btn skh-btn--lime">Start a project <ArrowRight aria-hidden /></Link>
             <a href="mailto:support@skolvo.online" className="skh-btn skh-btn--ghost-light">support@skolvo.online</a>
           </div>
         </div>

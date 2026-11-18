@@ -29,7 +29,7 @@ export default async function JournalArticle({ params }: { params: Promise<{ slu
       <header>
         <div className="studio-shell">
           <Link href="/journal" className="journal-back"><ArrowLeft aria-hidden /> Journal index</Link>
-          <div className="journal-article__meta"><span>{post.number} / {post.category} / {post.tag}</span><span>{post.published} · {post.readTime}</span></div>
+          <div className="journal-article__meta"><span>{post.number} / {post.category} / {post.tag}</span><span>{post.published} / {post.readTime}</span></div>
           <h1>{post.title}</h1><p>{post.dek}</p>
         </div>
       </header>

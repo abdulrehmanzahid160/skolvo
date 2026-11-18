@@ -15,7 +15,7 @@ export default function WatchdogPageClient() {
     <div className="watchdog-page">
       <header className="watchdog-hero">
         <div className="studio-shell">
-          <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / SIGNALWATCH</span><span>VALIDATION BUILD · NOT PRODUCTION MONITORING</span></div>
+          <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / SIGNALWATCH</span><span>VALIDATION BUILD / NOT PRODUCTION MONITORING</span></div>
           <div className="watchdog-hero__grid">
             <div>
               <motion.p initial={reduce ? false : { opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>REGULATORY INTELLIGENCE / 01</motion.p>

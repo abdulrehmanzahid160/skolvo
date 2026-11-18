@@ -107,6 +107,6 @@ export function emailShell(title: string, bodyHtml: string) {
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:#ffffff;border:1px solid #dce3dd;border-radius:12px;overflow:hidden">
 <tr><td style="background:#09100d;padding:20px 24px;color:#79e7bf;font-size:13px;letter-spacing:2px;font-weight:bold">SKOLVO</td></tr>
 <tr><td style="padding:24px"><h1 style="margin:0 0 16px;font-size:20px;line-height:1.3">${escapeHtml(title)}</h1>${bodyHtml}</td></tr>
-<tr><td style="padding:16px 24px;border-top:1px solid #dce3dd;font-size:12px;color:#5a6a62">${escapeHtml(SITE_CONFIG.canonicalUrl.replace('https://', ''))} · ${escapeHtml(SITE_CONFIG.supportEmail)}</td></tr>
+<tr><td style="padding:16px 24px;border-top:1px solid #dce3dd;font-size:12px;color:#5a6a62">${escapeHtml(SITE_CONFIG.canonicalUrl.replace('https://', ''))} / ${escapeHtml(SITE_CONFIG.supportEmail)}</td></tr>
 </table></td></tr></table></body></html>`;
 }

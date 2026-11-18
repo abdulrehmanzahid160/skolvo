@@ -37,7 +37,7 @@ export default function Footer() {
 
         <div className="mt-20 border-t border-white/10 pt-7">
           <motion.div className="flex w-max items-center gap-6 font-display text-[clamp(2.2rem,6vw,5.5rem)] font-semibold tracking-[-.055em] text-white/12" animate={reduce ? undefined : { x: ['0%', '-35%'] }} transition={{ duration: 18, repeat: Infinity, ease: 'linear' }} aria-hidden>
-            <span>SHOW THE WORK</span><span>•</span><span>STATE THE LIMIT</span><span>•</span><span>KEEP THE HUMAN</span><span>•</span><span>SHOW THE WORK</span>
+            <span>SHOW THE WORK</span><span>/</span><span>STATE THE LIMIT</span><span>/</span><span>KEEP THE HUMAN</span><span>/</span><span>SHOW THE WORK</span>
           </motion.div>
         </div>
 

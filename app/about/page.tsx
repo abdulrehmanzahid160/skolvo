@@ -20,7 +20,7 @@ export default function AboutPage() {
     <div className="about-studio">
       <header>
         <div className="studio-shell">
-          <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / THE STUDIO</span><span>SMALL TEAM · NARROW PRODUCTS</span></div>
+          <div className="studio-eyebrow studio-eyebrow--light"><span>SKOLVO / THE STUDIO</span><span>SMALL TEAM / NARROW PRODUCTS</span></div>
           <motion.h1 initial={reduce ? false : { opacity: 0, y: 60 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .85, ease: [0.22,1,0.36,1] }}>We build where<br />the <i>boundary</i> matters.</motion.h1>
           <p>{SITE_CONFIG.legalOperatorDisclosure} A six-person product team is developing three products and takes on selected website, workflow, and prototype work without blurring the two.</p>
         </div>

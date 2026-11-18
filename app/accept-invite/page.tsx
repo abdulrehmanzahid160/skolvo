@@ -298,7 +298,7 @@ function SecurityFooter() {
   return (
     <div className="flex items-center justify-center gap-1.5 text-data text-gray-500">
       <Shield className="w-3.5 h-3.5 text-[#3FAE8C]" />
-      <span>Secure Invite Portal • Official Domain skolvo.online</span>
+      <span>Secure Invite Portal / Official Domain skolvo.online</span>
     </div>
   );
 }
