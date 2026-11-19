@@ -100,18 +100,13 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', onKey);
   }, [menuOpen]);
 
-  // The homepage has its own pale background, so the bar is see-through there with dark text,
-  // and turns frosted once the page scrolls under it.
-  const light = pathname === '/';
-  const fg = light ? 'text-[#181818]' : 'text-white';
-  const fgMuted = light ? 'text-[#181818]/60 hover:text-[#181818]' : 'text-white/55 hover:text-white';
-  const surface = light
-    ? scrolled ? 'border-[#181818]/10 bg-[#e9e6f2]/85 backdrop-blur-xl' : 'border-transparent bg-transparent'
-    : scrolled ? 'border-white/10 bg-[#09100d]/90 shadow-[0_8px_30px_rgba(0,0,0,.16)] backdrop-blur-xl' : 'border-white/10 bg-[#09100d]';
-
   return (
     <header
-      className={`skolvo-nav fixed inset-x-0 top-0 z-50 h-16 border-b ${fg} transition-all duration-[--dur] ${surface}`}
+      className={`skolvo-nav fixed inset-x-0 top-0 z-50 h-16 border-b text-white transition-all duration-[--dur] ${
+        scrolled
+          ? 'border-white/10 bg-[#09100d]/90 shadow-[0_8px_30px_rgba(0,0,0,.16)] backdrop-blur-xl'
+          : 'border-white/10 bg-[#09100d]'
+      }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
@@ -122,8 +117,8 @@ export default function Navbar() {
           <span className="relative h-8 w-8 overflow-hidden rounded-control border border-white/15 bg-white">
             <Image src="/logo.png" alt="" fill sizes="32px" className="object-contain p-0.5" priority />
           </span>
-          <span className={`font-display text-title ${fg}`}>Skolvo</span>
-          <span className={`hidden font-data text-[10px] tracking-[.12em] sm:inline ${light ? 'text-[#181818]/45' : 'text-white/35'}`}>STUDIO / 2026</span>
+          <span className="font-display text-title text-white">Skolvo</span>
+          <span className="hidden font-data text-[10px] tracking-[.12em] text-white/35 sm:inline">STUDIO / 2026</span>
         </Link>
 
         {/* Desktop nav. Five items on one line, well inside the 1024px breakpoint. */}
@@ -135,7 +130,7 @@ export default function Navbar() {
               onClick={() => setProductsOpen((open) => !open)}
               aria-expanded={productsOpen}
               aria-controls="desktop-products-menu"
-              className={`relative flex items-center gap-1 rounded-full px-3.5 py-2 text-body-sm font-medium transition-colors duration-[--dur] ${PRODUCT_LINKS.some((product) => pathname === product.href) ? fg : fgMuted}`}
+              className={`relative flex items-center gap-1 rounded-full px-3.5 py-2 text-body-sm font-medium transition-colors duration-[--dur] ${PRODUCT_LINKS.some((product) => pathname === product.href) ? 'text-white' : 'text-white/55 hover:text-white'}`}
             >
               Products
               <motion.span aria-hidden animate={{ rotate: productsOpen ? 180 : 0 }} transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 28 }}><ChevronDown className="h-3.5 w-3.5" /></motion.span>
@@ -176,7 +171,7 @@ export default function Navbar() {
                 href={link.href}
                 aria-current={isActive ? 'page' : undefined}
                 className={`relative rounded-full px-3.5 py-2 text-body-sm font-medium transition-colors duration-[--dur] ${
-                  isActive ? fg : fgMuted
+                  isActive ? 'text-white' : 'text-white/55 hover:text-white'
                 }`}
               >
                 {link.name}
@@ -193,13 +188,13 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Link href="/start-project" className={`flex min-h-10 items-center rounded-full border px-5 text-body-sm font-semibold transition-colors ${light ? 'border-[#181818]/25 text-[#181818] hover:border-[#e4fc78] hover:bg-[#e4fc78]' : 'border-white/20 text-white hover:border-[#79e7bf] hover:bg-[#79e7bf] hover:text-[#09100d]'}`}>Start a project</Link>
+          <Link href="/start-project" className="flex min-h-10 items-center rounded-full border border-white/20 px-5 text-body-sm font-semibold text-white transition-colors hover:border-[#79e7bf] hover:bg-[#79e7bf] hover:text-[#09100d]">Start a project</Link>
         </div>
 
         <button
           ref={toggleRef}
           onClick={() => setMenuOpen((o) => !o)}
-          className={`flex h-11 w-11 items-center justify-center rounded-control border md:hidden ${light ? 'border-[#181818]/15 bg-white/50 text-[#181818]' : 'border-white/15 bg-white/5 text-white'}`}
+          className="flex h-11 w-11 items-center justify-center rounded-control border border-white/15 bg-white/5 text-white md:hidden"
           aria-label={menuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
